@@ -1,0 +1,11 @@
+{
+  "Companies": [
+    {
+      "Id": 1,
+      "Username": "Jakob",
+      "Password": "Jakob123",
+      "Email": "Jakob@gmail.com"
+    }
+  ],
+  "Events": null
+}
