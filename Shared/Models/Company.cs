@@ -7,9 +7,8 @@ public class Company
     public string Password { get; set; }
     public string Email { get; set; }
 
-    public Company(int id, string username, string password, string email)
+    public Company(string username, string password, string email)
     {
-        Id = id;
         Username = username;
         Password = password;
         Email = email;

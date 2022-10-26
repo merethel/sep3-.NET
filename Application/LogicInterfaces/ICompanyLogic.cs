@@ -1,6 +1,9 @@
-﻿namespace Application.LogicInterfaces;
+﻿using Shared;
+using Shared.Dtos;
 
-public class ICompanyLogic
+namespace Application.LogicInterfaces;
+
+public interface ICompanyLogic
 {
-    
+    Task<Company> CreateAsync(CompanyCreationDto companyToCreate);
 }

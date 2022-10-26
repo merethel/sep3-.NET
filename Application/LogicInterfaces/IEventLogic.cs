@@ -1,6 +1,6 @@
 ﻿namespace Application.LogicInterfaces;
 
-public class IEventLogic
+public interface IEventLogic
 {
     
 }
