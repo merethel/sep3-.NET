@@ -1,6 +1,6 @@
 ﻿using Shared;
 
-namespace Application.Daos;
+namespace Application.DaoInterfaces;
 
 public interface ICompanyDao
 {

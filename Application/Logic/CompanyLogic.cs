@@ -1,18 +1,16 @@
 ﻿
-
-using System.Reflection;
-using Application.Daos;
+using Application.DaoInterfaces;
 using Application.LogicInterfaces;
 using Shared;
 using Shared.Dtos;
 
 namespace Application.Logic;
 
-public class UserLogic : ICompanyLogic
+public class CompanyLogic : ICompanyLogic
 {
     private readonly ICompanyDao userDao;
 
-    public UserLogic(ICompanyDao userDao)
+    public CompanyLogic(ICompanyDao userDao)
     {
         this.userDao = userDao;
     }

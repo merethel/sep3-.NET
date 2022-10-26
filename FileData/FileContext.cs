@@ -5,7 +5,7 @@ namespace FileData;
 
 public class FileContext
 {
-    private const string filePath = "data.json";
+    private const string FilePath = "data.json";
 
     private DataContainer? dataContainer;
 
@@ -37,14 +37,17 @@ public class FileContext
 
     private void LoadData()
     {
-        string content = File.ReadAllText(filePath);
+        string content = File.ReadAllText(FilePath);
         dataContainer = JsonSerializer.Deserialize<DataContainer>(content);
     }
 
     public void SaveChanges()
     {
-        string serialized = JsonSerializer.Serialize(dataContainer);
-        File.WriteAllText(filePath, serialized);
+        string serialized = JsonSerializer.Serialize(dataContainer, new JsonSerializerOptions
+        {
+            WriteIndented = true
+        });
+        File.WriteAllText(FilePath, serialized);
         dataContainer = null;
     }
 }
