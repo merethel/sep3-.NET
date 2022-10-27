@@ -17,9 +17,9 @@ public class EventLogic : IEventLogic
     }
     public async Task<Event> CreateAsync(EventCreationDto dto)
     {
-        Company? owner = await CompanyDao.GetByIdAsync(dto.CompanyId);
+        Company? owner = await CompanyDao.GetByUsernameAsync(dto.Username);
         if (owner == null)
-            throw new Exception($"The Company with this id: {dto.CompanyId} does not exist");
+            throw new Exception($"The Company with this username: {dto.Username} does not exist");
         
         ValidateData(dto);
         Event toCreate = new Event(owner: owner, title: dto.Title, description: dto.Description, dateTime: dto.DateTime);
