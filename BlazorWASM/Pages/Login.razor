@@ -9,11 +9,11 @@
             <h3>Please login</h3>
             <div class="field">
                 <label>User name:</label><br/>
-                <input type="text" @bind="userName"/>
+                <input type="text" @bind="userName" @bind:event="oninput"/>
             </div>
             <div class="field">
                 <label style="text-align: center">Password:</label><br/>
-                <input type="password" @bind="password"/>
+                <input type="password" @bind="password" @bind:event="oninput"/>
             </div>
             @if (!string.IsNullOrEmpty(errorLabel))
             {
@@ -24,7 +24,10 @@
                 </div>
             }
             <div class="field">
-                <button class="loginbtn" @onclick="LoginAsync">Log in</button>
+                <button class="loginbtn" disabled="@( string.IsNullOrEmpty(userName)|| string.IsNullOrEmpty(password))" @onclick="LoginAsync">Log in</button>
+                <button class="loginbtn" @onclick="NavigateToCreateCompany">Sign Up</button>
+                
+
             </div>
         </div>
     </NotAuthorized>
@@ -52,5 +55,9 @@
             Console.WriteLine(e);
             errorLabel = $"Error: {e.Message}";
         }
+    }   
+    private void NavigateToCreateCompany()
+    {
+        navMgr.NavigateTo("/CreateCompany");
     }   
 }
