@@ -36,4 +36,11 @@ public class CompanyFileDao : ICompanyDao
         );
         return Task.FromResult(existing);
     }
+
+    public Task<Company?> GetByIdAsync(int id)
+    {
+        Company? existing = context.Companies.First(c => c.Id == id);
+        return Task.FromResult(existing)!;
+
+    }
 }

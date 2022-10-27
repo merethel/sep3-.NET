@@ -21,8 +21,8 @@ public class CompanyController : ControllerBase
     {
         try
         {
-            Company user = await CompanyLogic.CreateAsync(dto);
-            return Created($"/users/{user.Id}", user);
+            Company company = await CompanyLogic.CreateAsync(dto);
+            return Created($"/users/{company.Id}", company);
         }
         catch (Exception e)
         {

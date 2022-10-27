@@ -8,23 +8,23 @@ namespace Application.Logic;
 
 public class CompanyLogic : ICompanyLogic
 {
-    private readonly ICompanyDao userDao;
+    private readonly ICompanyDao CompanyDao;
 
-    public CompanyLogic(ICompanyDao userDao)
+    public CompanyLogic(ICompanyDao companyDao)
     {
-        this.userDao = userDao;
+        CompanyDao = companyDao;
     }
 
     public async Task<Company> CreateAsync(CompanyCreationDto dto)
     {
-        Company? existing = await userDao.GetByUsernameAsync(dto.Username);
+        Company? existing = await CompanyDao.GetByUsernameAsync(dto.Username);
         if (existing != null)
             throw new Exception("Username already taken!");
 
         ValidateData(dto);
         Company toCreate = new Company(username: dto.Username, password: dto.Password, email: dto.Email);
         
-        Company created = await userDao.CreateAsync(toCreate);
+        Company created = await CompanyDao.CreateAsync(toCreate);
         
         return created;
     }
