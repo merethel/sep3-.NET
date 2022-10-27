@@ -22,11 +22,28 @@ public class CompanyLogic : ICompanyLogic
             throw new Exception("Username already taken!");
 
         ValidateData(dto);
-        Company toCreate = new Company(username: dto.Username, password: dto.Password, email: dto.Email);
+        Company toCreate = new Company(username: dto.Username, password: dto.Password, email: dto.Email, securityLevel: 2);
         
         Company created = await CompanyDao.CreateAsync(toCreate);
         
         return created;
+    }
+
+    public async Task<Company> ValidateCompany(string username, string password)
+    {
+        Company? existingCompany = await CompanyDao.GetByUsernameAsync(username);
+
+        if (existingCompany == null)
+        {
+            throw new Exception("Company not found");
+        }
+
+        if (!existingCompany.Password.Equals(password))
+        {
+            throw new Exception("Password incorrect");
+        }
+
+        return await Task.FromResult(existingCompany);
     }
 
     private static void ValidateData(CompanyCreationDto CompanyToCreate)

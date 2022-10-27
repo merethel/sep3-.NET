@@ -6,11 +6,11 @@ using Shared.Dtos;
 
 namespace HttpClients.Implementations;
 
-public class CompanyHttpClients : ICompanyService
+public class CompanyHttpClient : ICompanyService
 {
     private readonly HttpClient Client;
 
-    public CompanyHttpClients(HttpClient client)
+    public CompanyHttpClient(HttpClient client)
     {
         Client = client;
     }

@@ -7,9 +7,9 @@ public class EventCreationDto
     public string Description { get; set; }
     public DateTime DateTime { get; set; }
     
-    public EventCreationDto(int ownerId, string title, string description, DateTime dateTime)
+    public EventCreationDto(int companyId, string title, string description, DateTime dateTime)
     {
-        ownerId = ownerId;
+        CompanyId = companyId;
         Title = title;
         Description = description;
         DateTime = dateTime;

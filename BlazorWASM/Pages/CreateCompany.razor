@@ -1,6 +1,62 @@
 ﻿@page "/CreateCompany"
+@using HttpClients.ClientInterfaces
+@using global::Shared.Dtos
+@inject ICompanyService CompanyService
 <h3>CreateCompany</h3>
 
+<div>
+    <h2>Create Company</h2>
+    <div>
+        <label>Username:</label>
+        <input type="text" @bind="Username" @bind:event="oninput"/>
+        
+        <label>Password:</label>
+        <input type="text" @bind="Password" @bind:event="oninput"/>
+        
+        <label>Email:</label>
+        <input type="text" @bind="Email" @bind:event="oninput"/>
+        
+        @if (!string.IsNullOrEmpty(ResultMsg))
+        {
+            <label style="color: @Color">@ResultMsg</label>
+        }
+        
+    </div>
+    <div>
+        <button @onclick="Create">Create</button>
+    </div>
+</div>
+
+
+
+
+
 @code {
-    
+    private string Username = "";
+    private string Password = "";
+    private string Email = "";
+    private string ResultMsg = "";
+    private string Color = "";
+
+    private async Task Create()
+    {
+        ResultMsg = "";
+
+        try
+        {
+            await CompanyService.Create(new CompanyCreationDto(Username, Password, Email));
+            Username = "";
+            Password = "";
+            Email = "";
+            ResultMsg = "Company created!";
+            Color = "green";
+
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            ResultMsg = e.Message;
+            Color = "red";
+        }
+    }
 }

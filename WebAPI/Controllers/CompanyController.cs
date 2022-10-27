@@ -10,10 +10,12 @@ namespace WebAPI.Controllers;
 public class CompanyController : ControllerBase
 {
     private readonly ICompanyLogic CompanyLogic;
+    private readonly IConfiguration Config;
 
-    public CompanyController(ICompanyLogic companyLogic)
+    public CompanyController(ICompanyLogic companyLogic, IConfiguration config)
     {
         CompanyLogic = companyLogic;
+        Config = config;
     }
 
     [HttpPost]

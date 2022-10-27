@@ -1,0 +1,24 @@
+﻿// log in as AlpacaWalker 
+
+POST https://localhost:7122/auth/login
+Content-Type: application/json
+
+{ "Username" :  "AlpacaWalker", "Password": "alpaca1234"}
+
+###
+
+// log in as AlpacaWalker wrong password
+
+POST https://localhost:7122/auth/login
+Content-Type: application/json
+
+{ "Username" :  "AlpacaWalker", "Password": "alpaca123"}
+
+###
+
+// create post without token
+
+POST https://localhost:7122/event
+Authorization: Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJKV1RTZXJ2aWNlQWNjZXNzVG9rZW4iLCJqdGkiOiI3Yzc1ZmUxNC1lY2EwLTQ0ZTEtODEzNC1jZjY5ZjVmODNmMWEiLCJpYXQiOiIyNy0xMC0yMDIyIDA5OjM1OjMxIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvbmFtZSI6IkFscGFjYVdhbGtlciIsIkVtYWlsIjoiYWxwYWNhNHVAYWxwYWNhLmV1IiwiU2VjdXJpdHlMZXZlbCI6IjAiLCJleHAiOjE2NjY4NjY5MzEsImlzcyI6IkpXVEF1dGhlbnRpY2F0aW9uU2VydmVyIiwiYXVkIjoiSldUU2VydmljZUJsYXpvcldhc21DbGllbnQifQ.3R_cUiW7ix9Eimpjl4i9G5px94rh4pnj7oO1BS9iV6ajESMVE596f0u493YL99OzU9Brw5aJ7D4Qbd0MzOyi6A
+
+
