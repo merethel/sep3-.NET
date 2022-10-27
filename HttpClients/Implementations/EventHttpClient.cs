@@ -20,7 +20,7 @@ public class EventHttpClient : IEventService
         string? jwt = JwtAuthService.Jwt;
         
         HttpRequestMessage requestMessage = new HttpRequestMessage(HttpMethod.Post, "/Event");
-        requestMessage.Headers.Add("Authorization", "bearer " + jwt);
+        requestMessage.Headers.Add("Authorization", "Bearer " + jwt);
         requestMessage.Content = JsonContent.Create(dto);
         HttpResponseMessage response = await Client.SendAsync(requestMessage);
         

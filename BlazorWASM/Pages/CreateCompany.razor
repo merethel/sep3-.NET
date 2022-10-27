@@ -2,19 +2,18 @@
 @using HttpClients.ClientInterfaces
 @using global::Shared.Dtos
 @inject ICompanyService CompanyService
-<h3>CreateCompany</h3>
 
 <div>
     <h2>Create Company</h2>
     <div>
-        <label>Username:</label>
-        <input type="text" @bind="Username" @bind:event="oninput"/>
+        <label>Username:</label><br/>
+        <input type="text" @bind="Username" @bind:event="oninput"/><br/>
         
-        <label>Password:</label>
-        <input type="text" @bind="Password" @bind:event="oninput"/>
+        <label>Password:</label><br/>
+        <input type="text" @bind="Password" @bind:event="oninput"/><br/>
         
-        <label>Email:</label>
-        <input type="text" @bind="Email" @bind:event="oninput"/>
+        <label>Email:</label><br/>
+        <input type="text" @bind="Email" @bind:event="oninput"/><br/>
         
         @if (!string.IsNullOrEmpty(ResultMsg))
         {

@@ -9,7 +9,6 @@ namespace WebAPI.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-[Authorize]
 public class EventController : ControllerBase
 {
     private readonly IEventLogic EventLogic;

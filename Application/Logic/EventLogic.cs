@@ -45,9 +45,12 @@ public class EventLogic : IEventLogic
         {
             throw new Exception("Description cannot be empty");
         }
-        if (date.CompareTo(today) < 1)
+        if (date.CompareTo(today) < 0)
         {
             throw new Exception("The date for your event has to be later than todays date.");
         }
+
+        if (date.Year > 2100)
+            throw new Exception("Please pick a date in this century");
     }
 }

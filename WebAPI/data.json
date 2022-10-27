@@ -5,21 +5,21 @@
       "Username": "Jakob",
       "Password": "Jakob123",
       "Email": "Jakob@gmail.com",
-      "SecurityLevel": 0
+      "SecurityLevel": 2
     },
     {
       "Id": 2,
       "Username": "CocaCola",
       "Password": "colaergodt",
       "Email": "cola@cola.dk",
-      "SecurityLevel": 0
+      "SecurityLevel": 2
     },
     {
       "Id": 3,
       "Username": "AlpacaWalker",
       "Password": "alpaca1234",
       "Email": "alpaca4u@alpaca.eu",
-      "SecurityLevel": 0
+      "SecurityLevel": 2
     },
     {
       "Id": 4,
@@ -55,6 +55,58 @@
       "Title": "Krager er s\u00F8de",
       "Description": "Vi skal ud og finde krager i naturen, og tr\u00E6ne dem til kamp",
       "DateTime": "2022-10-29T09:21:36.605Z"
+    },
+    {
+      "Id": 3,
+      "Owner": {
+        "Id": 3,
+        "Username": "AlpacaWalker",
+        "Password": "alpaca1234",
+        "Email": "alpaca4u@alpaca.eu",
+        "SecurityLevel": 2
+      },
+      "Title": "skdadsiodasjio",
+      "Description": "adajisodsajio",
+      "DateTime": "2022-10-30T12:00:00"
+    },
+    {
+      "Id": 4,
+      "Owner": {
+        "Id": 3,
+        "Username": "AlpacaWalker",
+        "Password": "alpaca1234",
+        "Email": "alpaca4u@alpaca.eu",
+        "SecurityLevel": 2
+      },
+      "Title": "dasdsad",
+      "Description": "dsadssad",
+      "DateTime": "2022-10-30T12:00:00"
+    },
+    {
+      "Id": 5,
+      "Owner": {
+        "Id": 3,
+        "Username": "AlpacaWalker",
+        "Password": "alpaca1234",
+        "Email": "alpaca4u@alpaca.eu",
+        "SecurityLevel": 2
+      },
+      "Title": "I wanna walk a",
+      "Description": "come join me",
+      "DateTime": "9999-12-31T23:59:59.9999999"
+    },
+    {
+      "Id": 6,
+      "Owner": {
+        "Id": 3,
+        "Username": "AlpacaWalker",
+        "Password": "alpaca1234",
+        "Email": "alpaca4u@alpaca.eu",
+        "SecurityLevel": 2
+      },
+      "Title": "ASDP",
+      "Description": "SADSAD",
+      "DateTime": "2100-12-28T20:20:00"
     }
   ]
 }

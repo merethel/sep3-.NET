@@ -5,39 +5,35 @@
 @using HttpClients.Implementations
 @inject IEventService EventService
 
-<h3>CreateEvent</h3>
+<h3>Create Your Event</h3>
 <div>
-    <div>
-        <label>Title:</label>
-        <input type="text" @bind="Title" @bind:event="oninput"/>
-        
-        <label>Description:</label>
-        <input type="text" @bind="Description" @bind:event="oninput"/>
-        
-        <label>Date dd:mm:yyyy:</label>
-        <input type="text" @bind="day" @bind:event="oninput"/>:
-        <input type="text" @bind="month" @bind:event="oninput"/>:
-        <input type="text" @bind="year" @bind:event="oninput"/>
-        
-        <label>Time hh:mm</label>
-        <input type="text" @bind="hour" @bind:event="oninput"/>:
-        <input type="text" @bind="min" @bind:event="oninput"/>
-
-        
-        @if (!string.IsNullOrEmpty(ResultMsg))
-        {
-            <label style="color: @Color">@ResultMsg</label>
-        }
-        
-    </div>
-    <div>
-        <button @onclick="Create">Create</button>
-    </div>
+    <label>Title:</label><br/>
+    <input type="text" @bind="Title" @bind:event="oninput"/>
+</div>   
+<div>
+    <label>Description:</label><br/>
+    <input type="text" @bind="Description" @bind:event="oninput"/>
+</div>    
+<div>
+    <label>Date</label><br/>
+    Day <input class="smallinput" type="text" @bind="day" @bind:event="oninput"/>
+    Month <input class="smallinput" type="text" @bind="month" @bind:event="oninput"/>
+    Year <input class="smallinput" type="text" @bind="year" @bind:event="oninput"/>
 </div>
-
-
-
-
+<div>
+    <label>Time</label><br/>
+    <input class="smallinput" type="text" @bind="hour" @bind:event="oninput"/>:
+    <input class="smallinput" type="text" @bind="min" @bind:event="oninput"/>
+</div>
+<div>
+    @if (!string.IsNullOrEmpty(ResultMsg))
+    {
+        <label style="color: @Color">@ResultMsg</label>
+    }
+</div>
+<div>
+    <button @onclick="Create">Create</button>
+</div>
 
 @code {
     private string Title = "";
@@ -91,7 +87,7 @@
 
             DateTime = DateTime.MaxValue;
             
-            ResultMsg = "Company created!";
+            ResultMsg = "Event created!";
             Color = "green";
 
         }
