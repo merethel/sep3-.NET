@@ -15,6 +15,7 @@ public class JwtAuthService : IAuthService
         Client = client;
     }
     public static string? Jwt { get; private set; } = "";
+    public static string? Username { get; private set; } = "";
 
     public Action<ClaimsPrincipal> OnAuthStateChanged { get; set; } = null!;
 
@@ -35,6 +36,7 @@ public class JwtAuthService : IAuthService
 
         string token = responseContent;
         Jwt = token;
+        Username = username;
 
         ClaimsPrincipal principal = CreateClaimsPrincipal();
 

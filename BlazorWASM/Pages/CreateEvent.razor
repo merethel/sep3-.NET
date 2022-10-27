@@ -1,4 +1,10 @@
 ﻿@page "/CreateEvent"
+@using HttpClients.ClientInterfaces
+@using Microsoft.AspNetCore.Components
+@using global::Shared.Dtos
+@using HttpClients.Implementations
+@inject IEventService EventService
+
 <h3>CreateEvent</h3>
 <div>
     <div>
@@ -8,12 +14,16 @@
         <label>Description:</label>
         <input type="text" @bind="Description" @bind:event="oninput"/>
         
-        <label>Date:</label>
-        <input type="text" @bind="Date" @bind:event="oninput"/>
+        <label>Date dd:mm:yyyy:</label>
+        <input type="text" @bind="day" @bind:event="oninput"/>:
+        <input type="text" @bind="month" @bind:event="oninput"/>:
+        <input type="text" @bind="year" @bind:event="oninput"/>
         
-        <label>Time:</label>
-        <input type="text" @bind="Time" @bind:event="oninput"/>
+        <label>Time hh:mm</label>
+        <input type="text" @bind="hour" @bind:event="oninput"/>:
+        <input type="text" @bind="min" @bind:event="oninput"/>
 
+        
         @if (!string.IsNullOrEmpty(ResultMsg))
         {
             <label style="color: @Color">@ResultMsg</label>
@@ -32,23 +42,55 @@
 @code {
     private string Title = "";
     private string Description = "";
-    private string Date = "";
-    private string Time = "";
+
+    private string year = "";
+    private string month = "";
+    private string day = "";
+
+    private string hour = "";
+    private string min = "";
+    
     private DateTime DateTime;
     private string ResultMsg = "";
     private string Color = "";
+    private string? username = "";
 
+    
+    
     private async Task Create()
     {
         ResultMsg = "";
-        
 
         try
         {
-            await CompanyService.Create(new CompanyCreationDto(Username, Password, Email));
-            Username = "";
-            Password = "";
-            Email = "";
+            DateTime = new DateTime(
+                Int32.Parse(year),
+                Int32.Parse(month),
+                Int32.Parse(day),
+                Int32.Parse(hour),
+                Int32.Parse(min),
+                0);
+        }
+        catch (Exception e)
+        {
+            Color = "red";
+            ResultMsg = "Invalid date or time";
+        }
+        
+        try
+        {
+            username = JwtAuthService.Username;
+            await EventService.CreateAsync(new EventCreationDto(username, Title, Description, DateTime));
+            Title = "";
+            Description = "";
+            year = "";
+            month = "";
+            day = "";
+            hour = "";
+            min = "";
+
+            DateTime = DateTime.MaxValue;
+            
             ResultMsg = "Company created!";
             Color = "green";
 

@@ -18,6 +18,7 @@ builder.Services.AddScoped(sp => new HttpClient
 });
 builder.Services.AddScoped<ICompanyService, CompanyHttpClient>();
 builder.Services.AddScoped<IAuthService, JwtAuthService>();
+builder.Services.AddScoped<IEventService, EventHttpClient>();
 builder.Services.AddScoped<AuthenticationStateProvider, CustomAuthProvider>();
 
 AuthorizationPolicies.AddPolicies(builder.Services);
