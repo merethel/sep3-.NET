@@ -9,15 +9,10 @@ main {
 }
 
 .sidebar {
-    background-image: linear-gradient(180deg, #AF210B 0%, #AF520B 70%);
+    background-image: linear-gradient(180deg, #242526 0%, #242526 70%);
 }
 
-.login-div {
-    background-color: #AF520B;
-    padding: 0.5rem;
-    border-radius: 5px;
-    border: 2px solid #AF210B;
-}
+
 
 .top-row {
     background-color: #f7f7f7;

@@ -3,31 +3,38 @@
 @inject IAuthService authService
 @inject NavigationManager navMgr
 
+
+<link rel="stylesheet" href="css/Login.css">
+
 <AuthorizeView>
     <NotAuthorized>
-        <div class="card">
-            <h3>Please login</h3>
-            <div class="field">
-                <label>User name:</label><br/>
-                <input type="text" @bind="userName" @bind:event="oninput"/>
+        <div class="form">
+            <div class="imgcontainer">
+                <img src="img/img_avatar2.png" alt="Avatar" class="avatar">
             </div>
-            <div class="field">
-                <label style="text-align: center">Password:</label><br/>
-                <input type="password" @bind="password" @bind:event="oninput"/>
-            </div>
-            @if (!string.IsNullOrEmpty(errorLabel))
-            {
-                <div class="field">
-                    <label style="color: red">
-                        @errorLabel
-                    </label>
-                </div>
-            }
-            <div class="field">
-                <button class="loginbtn" disabled="@( string.IsNullOrEmpty(userName)|| string.IsNullOrEmpty(password))" @onclick="LoginAsync">Log in</button>
-                <button class="loginbtn" @onclick="NavigateToCreateCompany">Sign Up</button>
-                
+            <div class="container">
+                <label>
+                    <b>Username</b>
+                </label>
+                <input type="text" placeholder="Enter Username" @bind="userName" @bind:event="oninput">
 
+                <label>
+                    <b>Password</b>
+                </label>
+                <input type="password" placeholder="Enter Password" @bind="password" @bind:event="oninput">
+                <div class="button-container">
+                    <button @onclick="LoginAsync" disabled="@(string.IsNullOrEmpty(userName) || string.IsNullOrEmpty(password))">Login</button><br/>
+                    <span class="psw">New to 3vent4u? <a class="signup-link" href="/CreateCompany">Sign up</a></span>
+                </div><br/>
+
+                @if (!string.IsNullOrEmpty(errorLabel))
+                {
+                    <div class="field">
+                        <label style="color: red">
+                            @errorLabel
+                        </label>
+                    </div>
+                }
             </div>
         </div>
     </NotAuthorized>
@@ -55,9 +62,5 @@
             Console.WriteLine(e);
             errorLabel = $"Error: {e.Message}";
         }
-    }   
-    private void NavigateToCreateCompany()
-    {
-        navMgr.NavigateTo("/CreateCompany");
-    }   
+    }
 }

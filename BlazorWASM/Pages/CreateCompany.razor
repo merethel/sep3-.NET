@@ -3,33 +3,42 @@
 @using global::Shared.Dtos
 @inject ICompanyService CompanyService
 
-<div>
-    <h2>Create Company</h2>
-    <div>
-        <label>Username:</label><br/>
-        <input type="text" @bind="Username" @bind:event="oninput"/><br/>
-        
-        <label>Password:</label><br/>
-        <input type="text" @bind="Password" @bind:event="oninput"/><br/>
-        
-        <label>Email:</label><br/>
-        <input type="text" @bind="Email" @bind:event="oninput"/><br/>
-        
+<link href="css/Login.css" rel="stylesheet"/>
+
+<div class="form">
+        <h3 style="text-align: center">Create Account</h3>
+
+    <div class="container">
+        <label>
+            <b>Username</b>
+        </label><br/>
+        <input type="text" placeholder="Enter Username" @bind="Username" @bind:event="oninput"/><br/>
+
+        <label>
+            <b>Password</b>
+        </label><br/>
+        <input type="password" placeholder="Enter Password" @bind="Password" @bind:event="oninput"/><br/>
+
+        <label>
+            <b>Email</b>
+        </label><br/>
+        <input type="text" placeholder="Enter Email" @bind="Email" @bind:event="oninput"/><br/>
+
+        <input type="checkbox" @bind="checkbox" @bind:event="oninput"/> <span class="checkboxmsg">Do you agree to sell us your soul and your first born child?</span><br/>
         @if (!string.IsNullOrEmpty(ResultMsg))
         {
             <label style="color: @Color">@ResultMsg</label>
         }
-        
+
     </div>
-    <div>
-        <button 
-            disabled="@(string.IsNullOrEmpty(Username) || string.IsNullOrEmpty(Password) || string.IsNullOrEmpty(Email))"
-            @onclick="Create">Create</button>
+    <div class="button-container">
+        <button
+            disabled="@(string.IsNullOrEmpty(Username) || string.IsNullOrEmpty(Password) || string.IsNullOrEmpty(Email) || !checkbox)"
+            @onclick="Create">
+            Create
+        </button>
     </div>
 </div>
-
-
-
 
 
 @code {
@@ -38,6 +47,7 @@
     private string Email = "";
     private string ResultMsg = "";
     private string Color = "";
+    private bool checkbox = false;
 
     private async Task Create()
     {
@@ -51,7 +61,6 @@
             Email = "";
             ResultMsg = "Company created!";
             Color = "green";
-
         }
         catch (Exception e)
         {
@@ -60,4 +69,5 @@
             Color = "red";
         }
     }
+
 }

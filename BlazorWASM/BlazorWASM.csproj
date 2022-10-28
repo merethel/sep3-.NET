@@ -16,4 +16,8 @@
       <ProjectReference Include="..\HttpClients\HttpClients.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <None Include="wwwroot\css\Login.css" />
+    </ItemGroup>
+
 </Project>

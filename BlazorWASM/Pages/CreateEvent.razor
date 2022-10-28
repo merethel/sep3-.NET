@@ -4,35 +4,44 @@
 @using global::Shared.Dtos
 @using HttpClients.Implementations
 @inject IEventService EventService
-
-<h3>Create Your Event</h3>
-<div>
-    <label>Title:</label><br/>
-    <input type="text" @bind="Title" @bind:event="oninput"/>
-</div>   
-<div>
-    <label>Description:</label><br/>
-    <input type="text" @bind="Description" @bind:event="oninput"/>
-</div>    
-<div>
-    <label>Date</label><br/>
-    <a style="font-size: small">Day</a> <input class="smallinput" type="text" @bind="day" @bind:event="oninput"/>
-    <a style="font-size: small">Month</a> <input class="smallinput" type="text" @bind="month" @bind:event="oninput"/>
-    <a style="font-size: small">Year</a> <input style="width: 60px" class="smallinput" type="text" @bind="year" @bind:event="oninput"/>
-</div>
-<div>
-    <label>Time</label><br/>
-    <input class="smallinput" type="text" @bind="hour" @bind:event="oninput"/>:
-    <input class="smallinput" type="text" @bind="min" @bind:event="oninput"/>
-</div>
-<div>
-    @if (!string.IsNullOrEmpty(ResultMsg))
-    {
-        <label style="color: @Color">@ResultMsg</label>
-    }
-</div>
-<div>
-    <button @onclick="Create">Create</button>
+<div class="card">
+    <h3 style="text-align: center">Create Your Event</h3>
+    <div>
+        <label>
+            <b>Title</b>
+        </label><br/>
+        <input class="full-width" type="text" @bind="Title" @bind:event="oninput"/>
+    </div>
+    <div>
+        <label>
+            <b>Description</b>
+        </label><br/>
+        <input class="full-width" type="text" @bind="Description" @bind:event="oninput"/>
+    </div>
+    <div>
+        <label>
+            <b>Date</b>
+        </label><br/>
+        <a style="font-size: small">Day</a> <input class="smallinput" type="text" @bind="day" @bind:event="oninput"/>
+        <a style="font-size: small">Month</a> <input class="smallinput" type="text" @bind="month" @bind:event="oninput"/>
+        <a style="font-size: small">Year</a> <input style="width: 60px" class="smallinput" type="text" @bind="year" @bind:event="oninput"/>
+    </div>
+    <div>
+        <label>
+            <b>Time</b>
+        </label><br/>
+        <input class="smallinput" type="text" @bind="hour" @bind:event="oninput"/><b style="font-size: large"> :</b>
+        <input class="smallinput" type="text" @bind="min" @bind:event="oninput"/>
+    </div>
+    <div>
+        @if (!string.IsNullOrEmpty(ResultMsg))
+        {
+            <label style="color: @Color">@ResultMsg</label>
+        }
+    </div>
+    <div class="button-container">
+        <button @onclick="Create" disabled="@(string.IsNullOrEmpty(Title) || string.IsNullOrEmpty(Description) || string.IsNullOrEmpty(year) || string.IsNullOrEmpty(month) || string.IsNullOrEmpty(day) || string.IsNullOrEmpty(hour) || string.IsNullOrEmpty(min))">Create Event</button>
+    </div>
 </div>
 
 @code {
@@ -45,14 +54,13 @@
 
     private string hour = "";
     private string min = "";
-    
+
     private DateTime DateTime;
     private string ResultMsg = "";
     private string Color = "";
     private string? username = "";
 
-    
-    
+
     private async Task Create()
     {
         ResultMsg = "";
@@ -73,7 +81,7 @@
             ResultMsg = "Invalid date or time";
             return;
         }
-        
+
         try
         {
             username = JwtAuthService.Username;
@@ -87,10 +95,9 @@
             min = "";
 
             DateTime = DateTime.MaxValue;
-            
+
             ResultMsg = "Event created!";
             Color = "green";
-
         }
         catch (Exception e)
         {

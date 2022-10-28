@@ -27,6 +27,13 @@
       "Password": "8charellermere",
       "Email": "crows@soft.com",
       "SecurityLevel": 2
+    },
+    {
+      "Id": 5,
+      "Username": "Pippeli",
+      "Password": "Pippeli123",
+      "Email": "pippeli69@pippeli.org",
+      "SecurityLevel": 2
     }
   ],
   "Events": [
