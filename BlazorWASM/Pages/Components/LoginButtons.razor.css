@@ -21,6 +21,8 @@
     -webkit-user-select: none;
     touch-action: manipulation;
     vertical-align: middle;
+    margin: 0.5rem;
+    
 }
 
 .button-24:hover,

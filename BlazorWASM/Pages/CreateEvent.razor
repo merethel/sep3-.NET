@@ -18,6 +18,12 @@
         </label><br/>
         <input class="full-width" type="text" @bind="Description" @bind:event="oninput"/>
     </div>
+        <div>
+            <label>
+                <b>Location</b>
+            </label><br/>
+            <input class="full-width" type="text" @bind="location" @bind:event="oninput"/>
+        </div>
     <div>
         <label>
             <b>Date</b>
@@ -59,6 +65,7 @@
     private string ResultMsg = "";
     private string Color = "";
     private string? username = "";
+    private string location = "";
 
 
     private async Task Create()
@@ -85,7 +92,7 @@
         try
         {
             username = JwtAuthService.Username;
-            await EventService.CreateAsync(new EventCreationDto(username, Title, Description, DateTime));
+            await EventService.CreateAsync(new EventCreationDto(username, Title, Description, location, DateTime));
             Title = "";
             Description = "";
             year = "";

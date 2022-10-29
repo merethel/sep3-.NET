@@ -32,7 +32,7 @@
 
     </div>
     <div class="button-container">
-        <button
+        <button class="confirm"
             disabled="@(string.IsNullOrEmpty(Username) || string.IsNullOrEmpty(Password) || string.IsNullOrEmpty(Email) || !checkbox)"
             @onclick="Create">
             Create

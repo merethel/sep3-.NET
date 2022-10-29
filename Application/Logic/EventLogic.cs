@@ -22,7 +22,7 @@ public class EventLogic : IEventLogic
             throw new Exception($"The Company with this username: {dto.Username} does not exist");
         
         ValidateData(dto);
-        Event toCreate = new Event(owner: owner, title: dto.Title, description: dto.Description, dateTime: dto.DateTime);
+        Event toCreate = new Event(owner: owner, title: dto.Title, description: dto.Description, dto.Location, dateTime: dto.DateTime);
         
         Event created = await EventDao.CreateAsync(toCreate);
         
@@ -33,6 +33,7 @@ public class EventLogic : IEventLogic
     {
         string title = eventToCreate.Title;
         string description = eventToCreate.Description;
+        string location = eventToCreate.Location;
         DateTime date = eventToCreate.DateTime;
         DateTime today = DateTime.Today; 
 
@@ -45,12 +46,18 @@ public class EventLogic : IEventLogic
         {
             throw new Exception("Description cannot be empty");
         }
+        
+        if (location.Length <= 0)
+        {
+            throw new Exception("Location cannot be empty");
+        }
+        
         if (date.CompareTo(today) < 0)
         {
-            throw new Exception("The date for your event has to be later than todays date.");
+            throw new Exception("Unless you can time travel please pick a later date.");
         }
 
         if (date.Year > 2100)
-            throw new Exception("Please pick a date in this century");
+            throw new Exception("You are probably gonna be dead by then dont you think?");
     }
 }

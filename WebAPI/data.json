@@ -140,6 +140,19 @@
       "Title": "asdsa",
       "Description": "sadsa",
       "DateTime": "2022-10-30T12:00:00"
+    },
+    {
+      "Id": 9,
+      "Owner": {
+        "Id": 1,
+        "Username": "Jakob",
+        "Password": "Jakob123",
+        "Email": "Jakob@gmail.com",
+        "SecurityLevel": 2
+      },
+      "Title": "Test location",
+      "Description": "location is my house",
+      "DateTime": "2022-10-30T12:00:00"
     }
   ]
 }

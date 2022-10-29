@@ -48,7 +48,7 @@ a.signup-link {
     width: 100%;
 }
 
-button {
+button.confirm {
     background-color: #242526;
     color: white;
     padding: 14px 20px;

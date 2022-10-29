@@ -23,7 +23,7 @@
                 </label>
                 <input type="password" placeholder="Enter Password" @bind="password" @bind:event="oninput">
                 <div class="button-container">
-                    <button @onclick="LoginAsync" disabled="@(string.IsNullOrEmpty(userName) || string.IsNullOrEmpty(password))">Login</button><br/>
+                    <button class="confirm" @onclick="LoginAsync" disabled="@(string.IsNullOrEmpty(userName) || string.IsNullOrEmpty(password))">Login</button><br/>
                     <span class="psw">New to 3vent4u? <a class="signup-link" href="/CreateCompany">Sign up</a></span>
                 </div><br/>
 
