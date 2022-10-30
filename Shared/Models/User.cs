@@ -1,6 +1,6 @@
 ﻿namespace Shared;
 
-public class Company
+public class User
 {
     public int Id { get; set; }
     public string Username { get; set; }
@@ -8,7 +8,7 @@ public class Company
     public string Email { get; set; }
     public int SecurityLevel { get; set; }
 
-    public Company(string username, string password, string email, int securityLevel)
+    public User(string username, string password, string email, int securityLevel)
     {
         Username = username;
         Password = password;

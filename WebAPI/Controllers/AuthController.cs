@@ -15,30 +15,30 @@ namespace WebAPI.Controllers;
 public class AuthController : ControllerBase
 {
     
-    private readonly ICompanyLogic CompanyLogic;
+    private readonly IUserLogic UserLogic;
     private readonly IConfiguration Config;
 
-    public AuthController(ICompanyLogic companyLogic, IConfiguration config)
+    public AuthController(IUserLogic userLogic, IConfiguration config)
     {
-        CompanyLogic = companyLogic;
+        UserLogic = userLogic;
         Config = config;
     }
     
-    private List<Claim> GenerateClaims(Company company) {  
+    private List<Claim> GenerateClaims(User user) {  
         var claims = new[]
         {
             new Claim(JwtRegisteredClaimNames.Sub, Config["Jwt:Subject"]),    
             new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),      
             new Claim(JwtRegisteredClaimNames.Iat, DateTime.UtcNow.ToString()),      
-            new Claim(ClaimTypes.Name, company.Username),
-            new Claim("Email", company.Email),
-            new Claim("SecurityLevel", company.SecurityLevel.ToString())
+            new Claim(ClaimTypes.Name, user.Username),
+            new Claim("Email", user.Email),
+            new Claim("SecurityLevel", user.SecurityLevel.ToString())
         };
         return claims.ToList(); }
     
-    private string GenerateJwt(Company company)
+    private string GenerateJwt(User user)
     {
-        List<Claim> claims = GenerateClaims(company);
+        List<Claim> claims = GenerateClaims(user);
     
         SymmetricSecurityKey key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Config["Jwt:Key"]));
         SigningCredentials signIn = new SigningCredentials(key, SecurityAlgorithms.HmacSha512);
@@ -60,12 +60,12 @@ public class AuthController : ControllerBase
 
 
     [HttpPost, Route("login")]
-    public async Task<ActionResult> Login([FromBody] CompanyLoginDto dto)
+    public async Task<ActionResult> Login([FromBody] UserLoginDto dto)
     {
         try
         {
-            Company company = await CompanyLogic.ValidateCompany(dto.Username, dto.Password);
-            string token = GenerateJwt(company);
+            User user = await UserLogic.ValidateUser(dto.Username, dto.Password);
+            string token = GenerateJwt(user);
 
             return Ok(token);
 

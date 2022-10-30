@@ -48,6 +48,7 @@
       },
       "Title": "Hejsa",
       "Description": "Skal vi dele en cola",
+      "Location": null,
       "DateTime": "2022-10-27T07:34:58.255Z"
     },
     {
@@ -61,6 +62,7 @@
       },
       "Title": "Krager er s\u00F8de",
       "Description": "Vi skal ud og finde krager i naturen, og tr\u00E6ne dem til kamp",
+      "Location": null,
       "DateTime": "2022-10-29T09:21:36.605Z"
     },
     {
@@ -74,6 +76,7 @@
       },
       "Title": "skdadsiodasjio",
       "Description": "adajisodsajio",
+      "Location": null,
       "DateTime": "2022-10-30T12:00:00"
     },
     {
@@ -87,6 +90,7 @@
       },
       "Title": "dasdsad",
       "Description": "dsadssad",
+      "Location": null,
       "DateTime": "2022-10-30T12:00:00"
     },
     {
@@ -100,6 +104,7 @@
       },
       "Title": "I wanna walk a",
       "Description": "come join me",
+      "Location": null,
       "DateTime": "9999-12-31T23:59:59.9999999"
     },
     {
@@ -113,6 +118,7 @@
       },
       "Title": "ASDP",
       "Description": "SADSAD",
+      "Location": null,
       "DateTime": "2100-12-28T20:20:00"
     },
     {
@@ -126,6 +132,7 @@
       },
       "Title": "Walking aplacas",
       "Description": "Come join meee",
+      "Location": null,
       "DateTime": "2023-10-12T12:00:00"
     },
     {
@@ -139,6 +146,7 @@
       },
       "Title": "asdsa",
       "Description": "sadsa",
+      "Location": null,
       "DateTime": "2022-10-30T12:00:00"
     },
     {
@@ -152,7 +160,22 @@
       },
       "Title": "Test location",
       "Description": "location is my house",
+      "Location": null,
       "DateTime": "2022-10-30T12:00:00"
+    },
+    {
+      "Id": 10,
+      "Owner": {
+        "Id": 1,
+        "Username": "Jakob",
+        "Password": "Jakob123",
+        "Email": "Jakob@gmail.com",
+        "SecurityLevel": 2
+      },
+      "Title": "Icecream eating",
+      "Description": "only chocolate chip",
+      "Location": "The pentagon",
+      "DateTime": "2039-10-10T12:00:00"
     }
   ]
 }

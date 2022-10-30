@@ -6,28 +6,28 @@ using Shared.Dtos;
 
 namespace HttpClients.Implementations;
 
-public class CompanyHttpClient : ICompanyService
+public class UserHttpClient : IUserService
 {
     private readonly HttpClient Client;
 
-    public CompanyHttpClient(HttpClient client)
+    public UserHttpClient(HttpClient client)
     {
         Client = client;
     }
 
-    public async Task<Company> Create(CompanyCreationDto dto)
+    public async Task<User> Create(UserCreationDto dto)
     {
-        HttpResponseMessage response = await Client.PostAsJsonAsync("/company", dto);
+        HttpResponseMessage response = await Client.PostAsJsonAsync("/user", dto);
         string result = await response.Content.ReadAsStringAsync();
         if (!response.IsSuccessStatusCode)
         {
             throw new Exception(result);
         }
 
-        Company company = JsonSerializer.Deserialize<Company>(result, new JsonSerializerOptions
+        User user = JsonSerializer.Deserialize<User>(result, new JsonSerializerOptions
         {
             PropertyNameCaseInsensitive = true
         })!;
-        return company;
+        return user;
     }
 }

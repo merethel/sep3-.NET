@@ -1,15 +1,13 @@
 ﻿namespace Shared.Dtos;
 
-public class CompanyCreationDto
+public class UserLoginDto
 {
     public string Username { get; set; }
     public string Password { get; set; }
-    public string Email { get; set; }
 
-    public CompanyCreationDto(string username, string password, string email)
+    public UserLoginDto(string username, string password)
     {
         Username = username;
         Password = password;
-        Email = email;
     }
 }

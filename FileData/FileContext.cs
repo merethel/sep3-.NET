@@ -18,7 +18,7 @@ public class FileContext
         }
     }
 
-    public ICollection<Company> Companies
+    public ICollection<User> Companies
     {
         get
         {

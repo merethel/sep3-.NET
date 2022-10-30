@@ -18,8 +18,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<FileContext>();
-builder.Services.AddScoped<ICompanyDao, CompanyFileDao>();
-builder.Services.AddScoped<ICompanyLogic, CompanyLogic>();
+builder.Services.AddScoped<IUserDao, UserFileDao>();
+builder.Services.AddScoped<IUserLogic, UserLogic>();
 builder.Services.AddScoped<IEventDao, EventFileDao>();
 builder.Services.AddScoped<IEventLogic, EventLogic>();
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>

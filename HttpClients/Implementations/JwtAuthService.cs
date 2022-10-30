@@ -21,10 +21,10 @@ public class JwtAuthService : IAuthService
 
     public async Task LoginAsync(string username, string password)
     {
-        CompanyLoginDto companyLoginDto = new CompanyLoginDto(username, password);
+        UserLoginDto userLoginDto = new UserLoginDto(username, password);
 
-        string companyAsJson = JsonSerializer.Serialize(companyLoginDto);
-        StringContent content = new(companyAsJson, Encoding.UTF8, "application/json");
+        string userAsJson = JsonSerializer.Serialize(userLoginDto);
+        StringContent content = new(userAsJson, Encoding.UTF8, "application/json");
         
         HttpResponseMessage response = await Client.PostAsync("auth/login", content);
         string responseContent = await response.Content.ReadAsStringAsync();

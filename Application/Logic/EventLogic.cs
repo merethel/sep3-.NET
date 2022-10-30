@@ -8,18 +8,18 @@ namespace Application.Logic;
 public class EventLogic : IEventLogic
 {
     private readonly IEventDao EventDao;
-    private readonly ICompanyDao CompanyDao;
+    private readonly IUserDao UserDao;
 
-    public EventLogic(IEventDao eventDao, ICompanyDao companyDao)
+    public EventLogic(IEventDao eventDao, IUserDao userDao)
     {
         EventDao = eventDao;
-        CompanyDao = companyDao;
+        UserDao = userDao;
     }
     public async Task<Event> CreateAsync(EventCreationDto dto)
     {
-        Company? owner = await CompanyDao.GetByUsernameAsync(dto.Username);
+        User? owner = await UserDao.GetByUsernameAsync(dto.Username);
         if (owner == null)
-            throw new Exception($"The Company with this username: {dto.Username} does not exist");
+            throw new Exception($"The User with this username: {dto.Username} does not exist");
         
         ValidateData(dto);
         Event toCreate = new Event(owner: owner, title: dto.Title, description: dto.Description, dto.Location, dateTime: dto.DateTime);

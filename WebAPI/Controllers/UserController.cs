@@ -7,24 +7,24 @@ namespace WebAPI.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class CompanyController : ControllerBase
+public class UserController : ControllerBase
 {
-    private readonly ICompanyLogic CompanyLogic;
+    private readonly IUserLogic UserLogic;
     private readonly IConfiguration Config;
 
-    public CompanyController(ICompanyLogic companyLogic, IConfiguration config)
+    public UserController(IUserLogic userLogic, IConfiguration config)
     {
-        CompanyLogic = companyLogic;
+        UserLogic = userLogic;
         Config = config;
     }
 
     [HttpPost]
-    public async Task<ActionResult<Company>> CreateAsync(CompanyCreationDto dto)
+    public async Task<ActionResult<User>> CreateAsync(UserCreationDto dto)
     {
         try
         {
-            Company company = await CompanyLogic.CreateAsync(dto);
-            return Created($"/users/{company.Id}", company);
+            User user = await UserLogic.CreateAsync(dto);
+            return Created($"/users/{user.Id}", user);
         }
         catch (Exception e)
         {

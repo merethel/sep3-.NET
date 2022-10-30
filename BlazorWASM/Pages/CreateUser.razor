@@ -1,7 +1,7 @@
-﻿@page "/CreateCompany"
+﻿@page "/CreateUser"
 @using HttpClients.ClientInterfaces
 @using global::Shared.Dtos
-@inject ICompanyService CompanyService
+@inject IUserService UserService
 
 <link href="css/Login.css" rel="stylesheet"/>
 
@@ -55,11 +55,11 @@
 
         try
         {
-            await CompanyService.Create(new CompanyCreationDto(Username, Password, Email));
+            await UserService.Create(new UserCreationDto(Username, Password, Email));
             Username = "";
             Password = "";
             Email = "";
-            ResultMsg = "Company created!";
+            ResultMsg = "User created!";
             Color = "green";
         }
         catch (Exception e)
