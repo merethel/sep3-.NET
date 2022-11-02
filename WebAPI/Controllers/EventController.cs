@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Shared;
 using Shared.Dtos;
+using Shared.Models;
 
 namespace WebAPI.Controllers;
 

@@ -2,6 +2,7 @@
 using Shared.Dtos;
 using Microsoft.AspNetCore.Mvc;
 using Shared;
+using Shared.Models;
 
 namespace WebAPI.Controllers;
 

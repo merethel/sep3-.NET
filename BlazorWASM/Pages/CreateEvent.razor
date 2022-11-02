@@ -4,6 +4,7 @@
 @using global::Shared.Dtos
 @using HttpClients.Implementations
 @inject IEventService EventService
+
 <div class="card">
     <h3 style="text-align: center">Create Your Event</h3>
     <div>
@@ -95,6 +96,7 @@
             await EventService.CreateAsync(new EventCreationDto(username, Title, Description, location, DateTime));
             Title = "";
             Description = "";
+            location = "";
             year = "";
             month = "";
             day = "";

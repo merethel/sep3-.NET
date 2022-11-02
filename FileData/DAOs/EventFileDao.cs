@@ -1,5 +1,6 @@
 ﻿using Application.DaoInterfaces;
 using Shared;
+using Shared.Models;
 
 namespace FileData.DAOs;
 

@@ -7,6 +7,7 @@ using Microsoft.IdentityModel.Tokens;
 using Shared;
 using Shared.Authorization;
 using Shared.Dtos;
+using Shared.Models;
 
 namespace WebAPI.Controllers;
 [ApiController]

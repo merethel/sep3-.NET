@@ -3,6 +3,7 @@ using Application.DaoInterfaces;
 using Application.LogicInterfaces;
 using Shared;
 using Shared.Dtos;
+using Shared.Models;
 
 namespace Application.Logic;
 
