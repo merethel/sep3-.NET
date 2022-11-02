@@ -5,18 +5,23 @@ option java_multiple_files = true;
 
 package event;
 
-// The greeting service definition.
-service Greeter {
-  // Sends a greeting
-  rpc sayHello (HelloRequest) returns (HelloReply);
+// The event service definition
+service Event{
+  //Creating event
+  rpc createEvent(CreateEventRequest) returns (StatusResponse);
 }
 
-// The request message containing the user's name.
-message HelloRequest {
-  string name = 1;
+//The event request message containing event description, location, date, time, title
+message CreateEventRequest{
+  string username = 1;
+  string title = 2;
+  string description = 3;
+  string location = 4;
+  string date = 5;
+  string time = 6;
 }
 
-// The response message containing the greetings.
-message HelloReply {
-  string message = 1;
+// Status - if an error happens, false is returned, and vice versa
+message StatusResponse{
+  bool status = 1;
 }

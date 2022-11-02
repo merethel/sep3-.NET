@@ -1,24 +1,27 @@
 ﻿using Grpc.Core;
+using Grpc.Net.Client;
 using Microsoft.Extensions.Logging;
+using Shared.Dtos;
 using Shared.Models;
 
 namespace GrpcClient.Services;
 
-public class EventService : Greeter.GreeterClient
+public class EventService
 {
-    
-    private readonly ILogger<EventService> _logger;
-
-    public EventService(ILogger<EventService> logger)
+    public async void CreateAsync(EventCreationDto eventDto)
     {
-        _logger = logger;
-    }
+        using var channel = GrpcChannel.ForAddress("http://localhost:9090");
+        var client = new Event.EventClient(channel);
 
-    public override Task<HelloReply> sayHello(HelloRequest request, ServerCallContext context)
-    {
-        return Task.FromResult(new HelloReply
-        {
-            Message = "Hello " + request.Name
-        });
+        var reply = await client.createEventAsync(
+            new CreateEventRequest
+            {
+                Username = eventDto.Username,
+                Date = eventDto.DateTime.ToShortDateString(),
+                Description = eventDto.Description,
+                Location = eventDto.Location,
+                Time = eventDto.DateTime.ToShortTimeString(),
+                Title = eventDto.Title
+            });
     }
 }
