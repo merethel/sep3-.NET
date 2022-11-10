@@ -1,5 +1,6 @@
 ﻿using Application.DaoInterfaces;
 using Shared;
+using Shared.Dtos;
 using Shared.Models;
 
 namespace FileData.DAOs;
@@ -13,7 +14,7 @@ public class UserFileDao : IUserDao
         this.context = context;
     }
 
-    public Task<User> CreateAsync(User user)
+    public Task<User> CreateAsync(UserCreationDto user)
     {
         int userId = 1;
         if (context.Companies.Any())

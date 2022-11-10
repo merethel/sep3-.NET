@@ -23,9 +23,8 @@ public class EventLogic : IEventLogic
             throw new Exception($"The User with this username: {dto.Username} does not exist");
         
         ValidateData(dto);
-        Event toCreate = new Event(owner: owner, title: dto.Title, description: dto.Description, dto.Location, dateTime: dto.DateTime);
         
-        Event created = await EventDao.CreateAsync(toCreate);
+        Event created = await EventDao.CreateAsync(dto);
         
         return created;
     }

@@ -15,4 +15,16 @@ public class User
         Email = email;
         SecurityLevel = securityLevel;
     }
+    public User(int id, string username, string password, string email, int securityLevel)
+    {
+        Username = username;
+        Password = password;
+        Email = email;
+        SecurityLevel = securityLevel;
+        Id = id;
+    }
+
+    public User()
+    {
+    }
 }

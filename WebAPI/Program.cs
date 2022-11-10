@@ -1,9 +1,10 @@
 using System.Text;
 using Application.DaoInterfaces;
 using Application.LogicInterfaces;
-using FileData;
-using FileData.DAOs;
 using Application.Logic;
+using GrpcClient.ClientInterfaces;
+using GrpcClient.DAOs;
+using GrpcClient.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Shared.Authorization;
@@ -17,11 +18,14 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddScoped<FileContext>();
-builder.Services.AddScoped<IUserDao, UserFileDao>();
+
+builder.Services.AddScoped<IUserDao, UserDao>();
 builder.Services.AddScoped<IUserLogic, UserLogic>();
-builder.Services.AddScoped<IEventDao, EventFileDao>();
+builder.Services.AddScoped<IEventDao, EventDao>();
 builder.Services.AddScoped<IEventLogic, EventLogic>();
+builder.Services.AddScoped<IUserClient, UserService>();
+builder.Services.AddScoped<IEventClient, EventService>();
+
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
 {
     options.RequireHttpsMetadata = false;

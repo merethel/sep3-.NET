@@ -1,27 +1,29 @@
 ﻿using Grpc.Core;
 using Grpc.Net.Client;
+using GrpcClient.ClientInterfaces;
+using GrpcService1;
 using Microsoft.Extensions.Logging;
 using Shared.Dtos;
 using Shared.Models;
 
 namespace GrpcClient.Services;
 
-public class EventService
+public class EventService : IEventClient
 {
-    public async void CreateAsync(EventCreationDto eventDto)
+    public async Task<Event?> CreateAsync(EventCreationDto eventDto)
     {
-        using var channel = GrpcChannel.ForAddress("http://localhost:9090");
-        var client = new Event.EventClient(channel);
+        var client = GrpcFactory.getEventClient();
 
-        var reply = await client.createEventAsync(
-            new CreateEventRequest
-            {
-                Username = eventDto.Username,
-                Date = eventDto.DateTime.ToShortDateString(),
-                Description = eventDto.Description,
-                Location = eventDto.Location,
-                Time = eventDto.DateTime.ToShortTimeString(),
-                Title = eventDto.Title
-            });
+        EventMessage reply = await client.createAsync(GrpcFactory.fromEventCreationDtoToMessage(eventDto));
+        Event eventToReturn = GrpcFactory.fromMessageToEvent(reply);
+        return eventToReturn;
+    }
+
+    public async Task<Event?> GetByIdAsync(int id)
+    {
+        var client = GrpcFactory.getEventClient();
+        EventMessage replyMessage = await client.getByIdAsync(new IntRequest() {Int = id});
+        Event eventToReturn = GrpcFactory.fromMessageToEvent(replyMessage);
+        return eventToReturn;
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Application.DaoInterfaces;
 using Shared;
+using Shared.Dtos;
 using Shared.Models;
 
 namespace FileData.DAOs;
@@ -13,7 +14,7 @@ public class EventFileDao : IEventDao
         Context = context;
     }
 
-    public Task<Event> CreateAsync(Event @event)
+    public Task<Event> CreateAsync(EventCreationDto@event)
     {
         int eventId = 1;
         if (Context.Events.Any())
