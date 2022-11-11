@@ -40,8 +40,8 @@ public class EventLogic : IEventLogic
         if (title.Length < 3)
             throw new Exception("Title must be at least 3 characters!");
 
-        if (title.Length > 15)
-            throw new Exception("Title must be less than 16 characters!");
+        if (title.Length > 32)
+            throw new Exception("Title must be less than 32 characters!");
         if (description.Length <= 0)
         {
             throw new Exception("Description cannot be empty");
