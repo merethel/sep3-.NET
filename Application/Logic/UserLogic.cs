@@ -22,7 +22,7 @@ public class UserLogic : IUserLogic
         
         //QUICKFIX
         if (existing.Username.Length != 0) 
-            throw new Exception("Username already taken!");
+            throw new Exception("Username already taken!" + " (ノಠ益ಠ)ノ彡┻━┻");
 
         ValidateData(dto);
         
@@ -34,15 +34,16 @@ public class UserLogic : IUserLogic
     public async Task<User> ValidateUser(string username, string password)
     {
         User? existingUser = await UserDao.GetByUsernameAsync(username);
-
+            
+        //QUICKFIX
         if (existingUser.Username.Length != 0)
         {
-            throw new Exception("User not found");
+            throw new Exception("Username not found");
         }
 
         if (!existingUser.Password.Equals(password))
         {
-            throw new Exception("Password incorrect");
+            throw new Exception("Password incorrect" + " (ノಠ益ಠ)ノ彡┻━┻");
         }
 
         return await Task.FromResult(existingUser);
@@ -55,17 +56,17 @@ public class UserLogic : IUserLogic
         string email = UserToCreate.Email;
 
         if (userName.Length < 3)
-            throw new Exception("Username must be at least 3 characters!");
+            throw new Exception("Username must be at least 3 characters!" + " (ノಠ益ಠ)ノ彡┻━┻");
 
         if (userName.Length > 15)
-            throw new Exception("Username must be less than 16 characters!");
+            throw new Exception("Username must be less than 16 characters!" + " (ノಠ益ಠ)ノ彡┻━┻");
         if (password.Length < 8)
         {
-            throw new Exception("Password must be more than 8 characters!");
+            throw new Exception("Password must be more than 8 characters!" + " (ノಠ益ಠ)ノ彡┻━┻");
         }
         if (!email.Contains("@"))
         {
-            throw new Exception("This is not a valid email!");
+            throw new Exception("This is not a valid email!" + " (ノಠ益ಠ)ノ彡┻━┻");
         }
     }
 }
