@@ -16,12 +16,12 @@
                 <label>
                     <b>Username</b>
                 </label>
-                <input type="text" placeholder="Enter Username" @bind="userName" @bind:event="oninput">
+                <input type="text" placeholder="Enter Username" @bind="userName" @bind:event="oninput" @onkeydown="@Enter">
 
                 <label>
                     <b>Password</b>
                 </label>
-                <input type="password" placeholder="Enter Password" @bind="password" @bind:event="oninput">
+                <input type="password" placeholder="Enter Password" @bind="password" @bind:event="oninput" @onkeydown="@Enter">
                 <div class="button-container">
                     <button class="confirm" @onclick="LoginAsync" disabled="@(string.IsNullOrEmpty(userName) || string.IsNullOrEmpty(password))">Login</button><br/>
                     <span class="psw">New to 3vent4u? <a class="signup-link" href="/CreateCompany">Sign up</a></span>
@@ -63,4 +63,14 @@
             errorLabel = $"Error: {e.Message}";
         }
     }
+
+    private void Enter(KeyboardEventArgs e)
+    {
+        if (e.Code == "Enter" || e.Code == "NumpadEnter")
+        {
+            LoginAsync();
+        }
+    }
+    
+    
 }

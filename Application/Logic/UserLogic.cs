@@ -36,7 +36,7 @@ public class UserLogic : IUserLogic
         User? existingUser = await UserDao.GetByUsernameAsync(username);
             
         //QUICKFIX
-        if (existingUser.Username.Length != 0)
+        if (existingUser.Username.Length == 0)
         {
             throw new Exception("Username not found");
         }
