@@ -1,7 +1,6 @@
 ﻿using System.Net.Http.Json;
 using System.Text.Json;
 using HttpClients.ClientInterfaces;
-using Shared;
 using Shared.Dtos;
 using Shared.Models;
 
@@ -37,5 +36,21 @@ public class EventHttpClient : IEventService
             PropertyNameCaseInsensitive = true
         })!;
         return @event;
+    }
+
+    public async Task<ICollection<Event>> GetEvents()
+    {
+        HttpResponseMessage response = await Client.GetAsync("/Event");
+        string result = await response.Content.ReadAsStringAsync();
+        if (!response.IsSuccessStatusCode)
+        {
+            throw new Exception(result);
+        }
+
+        ICollection<Event> events = JsonSerializer.Deserialize<ICollection<Event>>(result, new JsonSerializerOptions
+        {
+            PropertyNameCaseInsensitive = true
+        })!;
+        return events;
     }
 }

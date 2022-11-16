@@ -30,4 +30,11 @@ public class EventDao : IEventDao
 
         return @event;
     }
+
+    public async Task<List<Event>> GetAsync()
+    {
+        List<Event> events = await Service.GetAsync();
+
+        return events;
+    }
 }

@@ -1,4 +1,5 @@
-﻿using Grpc.Net.Client;
+﻿using System.Collections;
+using Grpc.Net.Client;
 using GrpcService1;
 using Shared.Dtos;
 using Shared.Models;
@@ -100,4 +101,15 @@ public class GrpcFactory
         return userToReturn;
     }
 
+
+    public static List<Event> fromListEventMessageToList(ListEventMessage listToMap)
+    {
+        List<Event> listToReturn = new List<Event>();
+        foreach (EventMessage eventToMap in listToMap.Events)
+        {
+            listToReturn.Add(fromMessageToEvent(eventToMap));
+        }
+
+        return listToReturn;
+    }
 }

@@ -32,4 +32,23 @@ public class EventController : ControllerBase
             Console.WriteLine(e);
             return StatusCode(500, e.Message);
         }
-    }}
+    }
+
+
+    [HttpGet]
+
+    public async Task<ActionResult<List<Event>>> GetAsync()
+    {
+        try
+        {
+            List<Event> events = await EventLogic.GetAsync();
+            return events;
+        }
+        
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return StatusCode(500, e.Message);
+        }
+    }
+}

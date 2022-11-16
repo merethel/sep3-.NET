@@ -1,8 +1,5 @@
-﻿using Grpc.Core;
-using Grpc.Net.Client;
-using GrpcClient.ClientInterfaces;
+﻿using GrpcClient.ClientInterfaces;
 using GrpcService1;
-using Microsoft.Extensions.Logging;
 using Shared.Dtos;
 using Shared.Models;
 
@@ -24,6 +21,15 @@ public class EventService : IEventClient
         var client = GrpcFactory.getEventClient();
         EventMessage replyMessage = await client.getByIdAsync(new IntRequest() {Int = id});
         Event eventToReturn = GrpcFactory.fromMessageToEvent(replyMessage);
+        return eventToReturn;
+    }
+
+    public async Task<List<Event>> GetAsync()
+    {
+        var client = GrpcFactory.getEventClient();
+        ListEventMessage reply = await client.getAllEventsAsync(new IntRequest(){Int = 1});
+        List<Event> eventToReturn = GrpcFactory.fromListEventMessageToList(reply);
+        
         return eventToReturn;
     }
 }

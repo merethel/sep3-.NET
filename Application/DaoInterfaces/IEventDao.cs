@@ -9,5 +9,5 @@ public interface IEventDao
     Task<Event?> CreateAsync(EventCreationDto eventToCreate);
     Task<Event?> GetByIdAsync(int id);
     
-    
+    Task<List<Event>> GetAsync();
 }

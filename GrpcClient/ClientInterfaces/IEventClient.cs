@@ -7,4 +7,6 @@ public interface IEventClient
 {
     Task<Event?> CreateAsync(EventCreationDto eventDto);
     Task<Event?> GetByIdAsync(int id);
+    
+    Task<List<Event>> GetAsync();
 }

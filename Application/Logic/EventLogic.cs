@@ -60,4 +60,9 @@ public class EventLogic : IEventLogic
         if (date.Year > 2100)
             throw new Exception("You are probably gonna be dead by then dont you think?");
     }
+    
+    public Task<List<Event>> GetAsync()
+    {
+        return EventDao.GetAsync();
+    }
 }

@@ -1,0 +1,64 @@
+﻿@page "/Events"
+@using global::Shared.Models
+@using HttpClients.ClientInterfaces
+@inject IEventService EventHttpClient
+<h3>Events</h3>
+
+@if (events == null)
+{
+    <p>Loading...</p>
+}
+else if (!events.Any())
+{
+    <p>No Events available</p>
+}
+else
+{
+    
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Event ID</th>
+            <th>Owner ID</th>
+            <th>Title</th>
+            <th>Location</th>
+            <th>Date and time</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (Event item in events)
+        {
+            <tr>
+                <td>@item.Id</td>
+                <td>@item.Owner.Username</td>
+                <td>@item.Title</td>
+                <td>@item.Location</td>
+                <td>@item.DateTime</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}
+@if (!string.IsNullOrEmpty(msg))
+{
+    <label style="color: red">@msg</label>
+}
+
+
+@code {
+    private ICollection<Event>? events;
+    private string msg = "";
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            events = await EventHttpClient.GetEvents();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            msg = e.Message;
+        }
+    }
+}

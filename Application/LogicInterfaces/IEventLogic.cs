@@ -7,5 +7,6 @@ namespace Application.LogicInterfaces;
 public interface IEventLogic
 {
     Task<Event> CreateAsync(EventCreationDto eventToCreate);
+    Task<List<Event>> GetAsync();
 
 }
