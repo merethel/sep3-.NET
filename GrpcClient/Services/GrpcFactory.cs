@@ -43,6 +43,12 @@ public class GrpcFactory
 
     public static Event fromMessageToEvent(EventMessage eventToMap)
     {
+        List<User> Attendees = new List<User>();
+        foreach (UserMessage attendee in eventToMap.Attendees)
+        {
+            Attendees.Add(fromMessageToUser(attendee));
+        }
+        
         Event eventToReturn = new Event
         {
             Id = eventToMap.Id,
@@ -50,7 +56,8 @@ public class GrpcFactory
             Description = eventToMap.Description,
             Location = eventToMap.Location,
             Title = eventToMap.Title,
-            Owner = fromMessageToUser(eventToMap.User)
+            Owner = fromMessageToUser(eventToMap.User),
+            Attendees = Attendees
         };
             
         return eventToReturn;

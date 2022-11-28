@@ -36,7 +36,6 @@ public class EventController : ControllerBase
 
 
     [HttpGet]
-
     public async Task<ActionResult<List<Event>>> GetAsync()
     {
         try
@@ -48,6 +47,20 @@ public class EventController : ControllerBase
         catch (Exception e)
         {
             Console.WriteLine(e);
+            return StatusCode(500, e.Message);
+        }
+    }
+    
+    [HttpPatch]
+    public async Task<ActionResult> RegisterAttendeeAsync(int userId, int eventId)
+    {
+        try
+        {
+            EventLogic.RegisterAttendeeAsync(userId, eventId);
+            return Ok();
+        }
+        catch (Exception e)
+        {
             return StatusCode(500, e.Message);
         }
     }

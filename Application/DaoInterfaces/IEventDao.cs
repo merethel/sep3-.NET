@@ -10,4 +10,6 @@ public interface IEventDao
     Task<Event?> GetByIdAsync(int id);
     
     Task<List<Event>> GetAsync();
+    
+    void RegisterAttendeeAsync(int userId, int eventId);
 }

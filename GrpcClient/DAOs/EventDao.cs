@@ -37,4 +37,9 @@ public class EventDao : IEventDao
 
         return events;
     }
+
+    public async void RegisterAttendeeAsync(int userId, int eventId)
+    {
+        Service.RegisterAttendee(userId,eventId);
+    }
 }

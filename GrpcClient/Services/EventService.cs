@@ -32,4 +32,14 @@ public class EventService : IEventClient
         
         return eventToReturn;
     }
+
+    public void RegisterAttendee(int userId, int eventId)
+    {
+        var client = GrpcFactory.getEventClient();
+        client.addAttendeeToEventAttendeeListAsync(new AddAttendeeRequest
+        {
+            UserId = userId,
+            EventId = eventId
+        });
+    }
 }

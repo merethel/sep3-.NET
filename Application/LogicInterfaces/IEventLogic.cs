@@ -8,5 +8,5 @@ public interface IEventLogic
 {
     Task<Event> CreateAsync(EventCreationDto eventToCreate);
     Task<List<Event>> GetAsync();
-
+    void RegisterAttendeeAsync(int userId, int eventId);
 }

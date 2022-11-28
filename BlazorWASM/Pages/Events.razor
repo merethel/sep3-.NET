@@ -1,25 +1,11 @@
 ﻿@page "/Events"
 @using global::Shared.Models
 @using HttpClients.ClientInterfaces
-@inject IEventService EventHttpClient
-
+@using HttpClients.Implementations
+@inject IEventService EventService
+@inject IUserService UserService
 
 <h3 style="text-align: center">Events</h3>
-
-@*
-<style>
-   .card {
-   border: 5px solid #c4dea4;
-   background-color: #f6f6db;
-   }
-   
-   #Description {
-   height: 100px;
-   width: 100%;
-   }  
-</style>
-*@
-
 
 @if (events == null)
 {
@@ -59,6 +45,15 @@ else
                 <div id="Description">
                     @item.Description
                 </div>
+                
+                <AuthorizeView>
+                <div class="button-container">
+                    <button class="confirm"
+                            @onclick="async ()=>RegisterAttendee(await UserService.getUserId(JwtAuthService.Username),item.Id)">
+                        Tilmeld begivenhed
+                    </button>
+                </div>
+                </AuthorizeView>
             </div>
             </div>
         <br/>
@@ -80,12 +75,16 @@ else
     {
         try
         {
-            events = await EventHttpClient.GetEvents();
+            events = await EventService.GetEvents();
         }
         catch (Exception e)
         {
             Console.WriteLine(e);
             msg = e.Message;
         }
+    }
+    
+    private async Task RegisterAttendee(int userId, int eventId){
+        EventService.RegisterAttendeeAsync(userId, eventId);
     }
 }

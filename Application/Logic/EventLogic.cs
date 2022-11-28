@@ -65,4 +65,9 @@ public class EventLogic : IEventLogic
     {
         return EventDao.GetAsync();
     }
+
+    public async void RegisterAttendeeAsync(int userId, int eventId)
+    {
+        EventDao.RegisterAttendeeAsync(userId,eventId);
+    }
 }

@@ -12,6 +12,8 @@ service EventService {
   rpc getById (IntRequest) returns (EventMessage);
   //'intrequest' is quickfix
   rpc getAllEvents (IntRequest) returns (ListEventMessage);
+
+  rpc addAttendeeToEventAttendeeList (AddAttendeeRequest) returns (IntRequest);
 }
 
 service UserService {
@@ -29,12 +31,13 @@ message EventMessage {
   string description = 4;
   string location = 5;
   DateTimeMessage dateTime = 6;
+  repeated UserMessage attendees = 7;
 }
 
 // Request for list of eventmessages
 message ListEventMessage {
- repeated EventMessage events = 1;
- }
+  repeated EventMessage events = 1;
+}
 
 
 // The response message containing the greetings.
@@ -77,4 +80,7 @@ message DateTimeMessage {
   int32 min = 5;
 }
 
-
+message AddAttendeeRequest{
+  int32 userId = 1;
+  int32 eventId = 2;
+}

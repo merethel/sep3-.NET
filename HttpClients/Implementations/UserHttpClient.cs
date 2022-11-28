@@ -31,4 +31,20 @@ public class UserHttpClient : IUserService
         })!;
         return user;
     }
+
+    public async Task<int> getUserId(string username)
+    {
+        HttpResponseMessage response = await Client.GetAsync("/user?username="+username);
+        string result = await response.Content.ReadAsStringAsync();
+        if (!response.IsSuccessStatusCode)
+        {
+            throw new Exception(result);
+        }
+
+        User user = JsonSerializer.Deserialize<User>(result, new JsonSerializerOptions
+        {
+            PropertyNameCaseInsensitive = true
+        })!;
+        return user.Id;
+    }
 }

@@ -10,14 +10,16 @@ public class Event
     public string Location { get; set; }
     public DateTime DateTime { get; set; }
     
-    public Event(int id, User owner, string title, string description, string location, DateTime dateTime)
+    public List<User> Attendees { get; set; }
+
+    public Event(User owner, string title, string description, string location, DateTime dateTime, List<User> attendees)
     {
         Owner = owner;
         Title = title;
         Description = description;
         Location = location;
         DateTime = dateTime;
-        Id = id;
+        Attendees = attendees;
     }
 
     public Event()

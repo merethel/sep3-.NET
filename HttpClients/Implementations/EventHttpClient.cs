@@ -53,4 +53,23 @@ public class EventHttpClient : IEventService
         })!;
         return events;
     }
+
+    public async void RegisterAttendeeAsync(int userId, int eventId)
+    {
+        string? jwt = JwtAuthService.Jwt;
+
+        RegisterAttendeeDto dto = new RegisterAttendeeDto(userId, eventId);
+        
+        HttpRequestMessage requestMessage = new HttpRequestMessage(HttpMethod.Patch, "/Event");
+        requestMessage.Headers.Add("Authorization", "Bearer " + jwt);
+        requestMessage.Content = JsonContent.Create(dto);
+        
+        HttpResponseMessage response = await Client.SendAsync(requestMessage);
+        
+        string result = await response.Content.ReadAsStringAsync();
+        if (!response.IsSuccessStatusCode)
+        {
+            throw new Exception(result);
+        }
+    }
 }
