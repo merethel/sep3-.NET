@@ -24,7 +24,7 @@
                 <input type="password" placeholder="Enter Password" @bind="password" @bind:event="oninput" @onkeydown="@Enter">
                 <div class="button-container">
                     <button class="confirm" @onclick="LoginAsync" disabled="@(string.IsNullOrEmpty(userName) || string.IsNullOrEmpty(password))">Login</button><br/>
-                    <span class="psw">New to 3vent4u? <a class="signup-link" href="/CreateCompany">Sign up</a></span>
+                    <span class="psw">New to 3vent4u? <a class="signup-link" href="/CreateUser">Sign up</a></span>
                 </div><br/>
 
                 @if (!string.IsNullOrEmpty(errorLabel))

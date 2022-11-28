@@ -2,7 +2,24 @@
 @using global::Shared.Models
 @using HttpClients.ClientInterfaces
 @inject IEventService EventHttpClient
-<h3>Events</h3>
+
+
+<h3 style="text-align: center">Events</h3>
+
+@*
+<style>
+   .card {
+   border: 5px solid #c4dea4;
+   background-color: #f6f6db;
+   }
+   
+   #Description {
+   height: 100px;
+   width: 100%;
+   }  
+</style>
+*@
+
 
 @if (events == null)
 {
@@ -14,30 +31,40 @@ else if (!events.Any())
 }
 else
 {
-    
-    <table class="table">
-        <thead>
-        <tr>
-            <th>Event ID</th>
-            <th>Owner ID</th>
-            <th>Title</th>
-            <th>Location</th>
-            <th>Date and time</th>
-        </tr>
-        </thead>
-        <tbody>
-        @foreach (Event item in events)
-        {
-            <tr>
-                <td>@item.Id</td>
-                <td>@item.Owner.Username</td>
-                <td>@item.Title</td>
-                <td>@item.Location</td>
-                <td>@item.DateTime</td>
-            </tr>
-        }
-        </tbody>
-    </table>
+    @foreach (Event item in events)
+    {
+        <div class="card">
+            <div class="boxes">
+                <b>Title:</b>
+                    <label>@item.Title</label>
+            </div>
+             
+        <div class="boxes">
+            <b>Owner:</b>
+            <label>@item.Owner.Username</label>
+        </div>
+        
+            <div class="boxes">
+                <b>Location:</b>
+                <label>@item.Location</label>
+            </div>
+
+            <div class="boxes">
+                <b>Date and time:</b>
+                <label>@item.DateTime</label>
+            </div>
+                
+            <div class="boxes">
+                <b>Description:</b>
+                <div id="Description">
+                    @item.Description
+                </div>
+            </div>
+            </div>
+        <br/>
+                                
+    }
+
 }
 @if (!string.IsNullOrEmpty(msg))
 {

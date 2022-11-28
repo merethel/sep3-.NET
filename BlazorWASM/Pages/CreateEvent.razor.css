@@ -4,7 +4,8 @@
 }
 
 .card {
-    border: 3px solid #f1f1f1;
+    border: 5px solid #c4dea4;
+    background-color: #f6f6db;
     margin: 20px;
     padding: 20px;
 }
@@ -28,7 +29,7 @@ input.full-width {
 }
 
 button {
-    background-color: #242526;
+    background-color: #0c2204;
     color: white;
     padding: 14px 20px;
     margin: 8px 0;
@@ -40,11 +41,11 @@ button:hover {
     opacity: 0.8;
 }
 
+
 button:disabled,
 button[disabled]{
     border: 1px solid #999999;
-    background-color: #cccccc;
-    color: #666666;
+    background-color: #6D9775;
     opacity: 1;
 
 }
