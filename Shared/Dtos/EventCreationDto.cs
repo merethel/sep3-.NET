@@ -17,4 +17,8 @@ public class EventCreationDto
         Location = location;
         DateTime = dateTime;
     }
+
+    public EventCreationDto()
+    {
+    }
 }
