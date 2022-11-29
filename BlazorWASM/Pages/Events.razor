@@ -50,7 +50,7 @@ else
                 <AuthorizeView>
                     <div class="button-container">
                         <button class="confirm"
-                                @onclick="@(() => RegisterAttendee(item.Id))"  disabled="@(()=>Disabled(item.Id))">
+                                @onclick="@(() => RegisterAttendee(item.Id))"  disabled="@Disabled(item.Id)">
                             Tilmeld begivenhed
                         </button>
                     </div>
@@ -73,11 +73,14 @@ else
 @code {
     private ICollection<Event>? events;
     private string msg = "";
-
+    private int userId;
+    private bool shouldbedisabled;
+    
     protected override async Task OnInitializedAsync()
     {
         try
         {
+            userId = await UserService.getUserId(JwtAuthService.Username);
             events = await EventService.GetEvents();
         }
         catch (Exception e)
@@ -94,16 +97,18 @@ else
         await EventService.RegisterAttendeeAsync(userId, eventId);
         msg = "Tilmeldt!";
     }
-
-
-    private async Task<bool> Disabled(int eventId)
+    
+    // Jeg har fixet at knapperne bliver disabled/enabled alt efter om du er tilmeldt eller ikke.
+    
+    //2 ting som ikke virker men nu er kl 23:51 og jeg er træt...
+    //Der står med grøn skrift "Tilmeldt!" på alle eventsne når man trykker på en tilmend knap.
+    //Den opdatere ikke i realtime, så når du har trykket tilmeld disabler den først knappen når du har reloadet siden, det skal også kigges på.
+    
+    private bool Disabled(int eventId)
     {
-
-        ICollection<Event> list = await EventService.GetEvents();
         Event eventToReturn = null;
-        var userId = await UserService.getUserId(JwtAuthService.Username);
 
-        foreach (Event e in list)
+        foreach (Event e in events)
         {
             if (e.Id == eventId)
             {
@@ -113,11 +118,14 @@ else
 
         foreach (User u in eventToReturn.Attendees)
         {
-            if (u.Id == userId)
-            {
+            if (userId == u.Id)
                 return true;
-            }
         }
+        return false;
+    }
+
+    private bool itsnotdisabled()
+    {
         return false;
     }
 }

@@ -10,7 +10,8 @@ namespace HttpClients.Implementations;
 public class UserHttpClient : IUserService
 {
     private readonly HttpClient Client;
-
+    public static int? userId { get; private set; } = 0;
+    
     public UserHttpClient(HttpClient client)
     {
         Client = client;
@@ -45,6 +46,7 @@ public class UserHttpClient : IUserService
         {
             PropertyNameCaseInsensitive = true
         })!;
+        userId = user.Id;
         return user.Id;
     }
 }

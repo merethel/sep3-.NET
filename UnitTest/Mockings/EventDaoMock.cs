@@ -46,4 +46,9 @@ public class EventDaoMock : IEventDao
 
         return Task.FromResult(events);
     }
+
+    public Task<Event?> RegisterAttendeeAsync(int userId, int eventId)
+    {
+        throw new NotImplementedException();
+    }
 }
