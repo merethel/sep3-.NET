@@ -11,5 +11,5 @@ public interface IEventDao
     
     Task<List<Event>> GetAsync();
     
-    void RegisterAttendeeAsync(int userId, int eventId);
+    Task<Event?> RegisterAttendeeAsync(int userId, int eventId);
 }

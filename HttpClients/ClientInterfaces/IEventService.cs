@@ -7,5 +7,5 @@ public interface IEventService
 {
     Task<Event> CreateAsync(EventCreationDto dto);
     Task<ICollection<Event>> GetEvents();
-    void RegisterAttendeeAsync(int userId, int eventId);
+    Task<Event> RegisterAttendeeAsync(int userId, int eventId);
 }

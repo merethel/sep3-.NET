@@ -33,13 +33,18 @@ public class EventService : IEventClient
         return eventToReturn;
     }
 
-    public void RegisterAttendee(int userId, int eventId)
+    public async Task<Event> RegisterAttendeeAsync(int userId, int eventId)
     {
         var client = GrpcFactory.getEventClient();
-        client.addAttendeeToEventAttendeeListAsync(new AddAttendeeRequest
+        
+        Console.WriteLine(userId + "-----" + eventId);
+
+        EventMessage replyMessage = await client.addAttendeeToEventAttendeeListAsync(new AddAttendeeRequest()
         {
             UserId = userId,
             EventId = eventId
         });
+        Event eventToReturn = GrpcFactory.fromMessageToEvent(replyMessage);
+        return eventToReturn;
     }
 }

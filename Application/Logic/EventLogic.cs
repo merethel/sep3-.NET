@@ -66,8 +66,9 @@ public class EventLogic : IEventLogic
         return EventDao.GetAsync();
     }
 
-    public async void RegisterAttendeeAsync(int userId, int eventId)
+    public async Task<Event> RegisterAttendeeAsync(int userId, int eventId)
     {
-        EventDao.RegisterAttendeeAsync(userId,eventId);
+        Event eventToReturn = await EventDao.RegisterAttendeeAsync(userId,eventId);
+        return eventToReturn;
     }
 }

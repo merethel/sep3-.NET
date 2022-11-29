@@ -10,5 +10,5 @@ public interface IEventClient
     
     Task<List<Event>> GetAsync();
 
-    void RegisterAttendee(int userId, int eventId);
+    Task<Event> RegisterAttendeeAsync(int userId, int eventId);
 }

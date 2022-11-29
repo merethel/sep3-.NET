@@ -54,22 +54,30 @@ public class EventHttpClient : IEventService
         return events;
     }
 
-    public async void RegisterAttendeeAsync(int userId, int eventId)
+    public async Task<Event> RegisterAttendeeAsync(int userId, int eventId)
     {
         string? jwt = JwtAuthService.Jwt;
 
         RegisterAttendeeDto dto = new RegisterAttendeeDto(userId, eventId);
-        
         HttpRequestMessage requestMessage = new HttpRequestMessage(HttpMethod.Patch, "/Event");
+        
+        //Dette bliver sendte til http endpoint
         requestMessage.Headers.Add("Authorization", "Bearer " + jwt);
         requestMessage.Content = JsonContent.Create(dto);
-        
-        HttpResponseMessage response = await Client.SendAsync(requestMessage);
+        HttpResponseMessage response = await Client.SendAsync(requestMessage); //den her response (allerede her) giver server error fejl 500
+        //
         
         string result = await response.Content.ReadAsStringAsync();
+
         if (!response.IsSuccessStatusCode)
         {
             throw new Exception(result);
         }
+        
+        Event eventToReturn = JsonSerializer.Deserialize<Event>(result, new JsonSerializerOptions
+        {
+            PropertyNameCaseInsensitive = true
+        })!;
+        return eventToReturn;
     }
 }

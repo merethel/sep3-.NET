@@ -2,6 +2,7 @@
 @using global::Shared.Models
 @using HttpClients.ClientInterfaces
 @using HttpClients.Implementations
+@using System.Diagnostics.Tracing
 @inject IEventService EventService
 @inject IUserService UserService
 
@@ -47,12 +48,18 @@ else
                 </div>
                 
                 <AuthorizeView>
-                <div class="button-container">
-                    <button class="confirm"
-                            @onclick="async ()=>RegisterAttendee(await UserService.getUserId(JwtAuthService.Username),item.Id)">
-                        Tilmeld begivenhed
-                    </button>
-                </div>
+                    <div class="button-container">
+                        <button class="confirm"
+                                @onclick="@(() => RegisterAttendee(item.Id))"  disabled="@(()=>Disabled(item.Id))">
+                            Tilmeld begivenhed
+                        </button>
+                    </div>
+                    <div>
+                        @if (!string.IsNullOrEmpty(msg))
+                        {
+                            <label style="color: green">@msg</label>
+                        }
+                    </div>
                 </AuthorizeView>
             </div>
             </div>
@@ -60,10 +67,6 @@ else
                                 
     }
 
-}
-@if (!string.IsNullOrEmpty(msg))
-{
-    <label style="color: red">@msg</label>
 }
 
 
@@ -82,9 +85,39 @@ else
             Console.WriteLine(e);
             msg = e.Message;
         }
+        
     }
-    
-    private async Task RegisterAttendee(int userId, int eventId){
-        EventService.RegisterAttendeeAsync(userId, eventId);
+
+    private async Task RegisterAttendee(int eventId)
+    {
+        var userId = await UserService.getUserId(JwtAuthService.Username);
+        await EventService.RegisterAttendeeAsync(userId, eventId);
+        msg = "Tilmeldt!";
+    }
+
+
+    private async Task<bool> Disabled(int eventId)
+    {
+
+        ICollection<Event> list = await EventService.GetEvents();
+        Event eventToReturn = null;
+        var userId = await UserService.getUserId(JwtAuthService.Username);
+
+        foreach (Event e in list)
+        {
+            if (e.Id == eventId)
+            {
+                eventToReturn = e;
+            }
+        }
+
+        foreach (User u in eventToReturn.Attendees)
+        {
+            if (u.Id == userId)
+            {
+                return true;
+            }
+        }
+        return false;
     }
 }

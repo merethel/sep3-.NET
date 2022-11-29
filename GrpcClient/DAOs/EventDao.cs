@@ -38,8 +38,10 @@ public class EventDao : IEventDao
         return events;
     }
 
-    public async void RegisterAttendeeAsync(int userId, int eventId)
+    public async Task<Event?> RegisterAttendeeAsync(int userId, int eventId)
     {
-        Service.RegisterAttendee(userId,eventId);
+        Event eventToReturn = await Service.RegisterAttendeeAsync(userId,eventId);
+
+        return eventToReturn;
     }
 }

@@ -52,12 +52,12 @@ public class EventController : ControllerBase
     }
     
     [HttpPatch]
-    public async Task<ActionResult> RegisterAttendeeAsync(int userId, int eventId)
+    public async Task<ActionResult<Event>> RegisterAttendeeAsync(RegisterAttendeeDto dto)
     {
         try
         {
-            EventLogic.RegisterAttendeeAsync(userId, eventId);
-            return Ok();
+            Event eventToReturn = await EventLogic.RegisterAttendeeAsync(dto.UserId, dto.EventId);
+            return eventToReturn;
         }
         catch (Exception e)
         {
