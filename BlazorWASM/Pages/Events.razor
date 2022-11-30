@@ -51,14 +51,8 @@ else
                     <div class="button-container">
                         <button class="confirm"
                                 @onclick="@(() => RegisterAttendee(item.Id))"  disabled="@Disabled(item.Id)">
-                            Tilmeld begivenhed
+                            @GetButtonText(item.Id)
                         </button>
-                    </div>
-                    <div>
-                        @if (!string.IsNullOrEmpty(msg))
-                        {
-                            <label style="color: green">@msg</label>
-                        }
                     </div>
                 </AuthorizeView>
             </div>
@@ -91,11 +85,13 @@ else
         
     }
 
+    //knappen disables når du trykker men med et delay, og i dette delay kan du trykke på knappen flere gange hvis du er hurtig.
     private async Task RegisterAttendee(int eventId)
     {
         var userId = await UserService.getUserId(JwtAuthService.Username);
         await EventService.RegisterAttendeeAsync(userId, eventId);
         msg = "Tilmeldt!";
+        events = await EventService.GetEvents();
     }
     
     // Jeg har fixet at knapperne bliver disabled/enabled alt efter om du er tilmeldt eller ikke.
@@ -124,8 +120,15 @@ else
         return false;
     }
 
-    private bool itsnotdisabled()
+    private string GetButtonText(int eventId)
     {
-        return false;
+        if (Disabled(eventId))
+        {
+            return "Tilmeldt";
+        }
+        else
+        {
+            return "Tilmeld Begivenhed";
+        }
     }
 }

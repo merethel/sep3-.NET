@@ -14,9 +14,12 @@ public class EventDaoMock : IEventDao
     {
         User user = new User();
         user.Username = "username";
-        return Task.FromResult(new Event(1, user, eventToCreate.Title, eventToCreate.Description,
-            eventToCreate.Location, eventToCreate.DateTime))!; 
-        
+        Event eventToReturn = new Event(user, eventToCreate.Title, eventToCreate.Description,
+            eventToCreate.Location, eventToCreate.DateTime, new List<User>())
+        {
+            Id = 1
+        };
+        return Task.FromResult<Event?>(eventToReturn);
     }
 
     public Task<Event?> GetByIdAsync(int id)
@@ -24,9 +27,11 @@ public class EventDaoMock : IEventDao
         User user = new User();
         user.Username = "username";
 
-        Event @event = new Event(id, user, "Title", "Description",
-            "Location", DateTime.Now);
-
+        Event @event = new Event(user, "Title", "Description",
+            "Location", DateTime.Now, new List<User>())
+        {
+            Id = 1
+        };
         return Task.FromResult(@event)!; 
     }
 
@@ -35,14 +40,22 @@ public class EventDaoMock : IEventDao
         User user = new User();
         user.Username = "username";
 
-        Event event1 = new Event(1, user, "Title", "Description",
-            "Location", DateTime.Now.AddMonths(1));
-        Event event2 = new Event(2, user, "Title", "Description",
-            "Location", DateTime.Now.AddMonths(2));
+        Event event1 = new Event(user, "Title", "Description",
+            "Location", DateTime.Now.AddMonths(1), new List<User>())
+        {
+            Id = 1
+        };
+        Event event2 = new Event(user, "Title", "Description",
+            "Location", DateTime.Now.AddMonths(2), new List<User>())
+        {
+            Id = 1
+        };
 
-        List<Event> events = new List<Event>();
-        events.Add(event1);
-        events.Add(event2);
+        List<Event> events = new List<Event>
+        {
+            event1,
+            event2
+        };
 
         return Task.FromResult(events);
     }
