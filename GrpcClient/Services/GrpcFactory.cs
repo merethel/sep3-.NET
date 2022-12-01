@@ -103,7 +103,8 @@ public class GrpcFactory
         {
             Username = userToMap.Username,
             Password = userToMap.Password,
-            Email = userToMap.Email
+            Email = userToMap.Email,
+            Role = userToMap.Role
         };
         return userToReturn;
     }

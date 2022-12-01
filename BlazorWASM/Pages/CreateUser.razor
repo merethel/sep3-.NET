@@ -23,7 +23,13 @@
             <b>Email</b>
         </label><br/>
         <input type="text" placeholder="Enter Email" @bind="Email" @bind:event="oninput"/><br/>
-
+        
+        <label>
+            <b>Role</b>
+        </label><br/>
+        <input type="text" placeholder="Enter Role" @bind="Role" @bind:event="oninput"/><br/>
+        
+        
         <input type="checkbox" @bind="checkbox" @bind:event="oninput"/> <span class="checkboxmsg">Do you agree to sell us your soul and your first born child?</span><br/>
         @if (!string.IsNullOrEmpty(ResultMsg))
         {
@@ -45,9 +51,11 @@
     private string Username = "";
     private string Password = "";
     private string Email = "";
+    private string Role = "";
     private string ResultMsg = "";
     private string Color = "";
     private bool checkbox = false;
+    
 
     private async Task Create()
     {
@@ -55,7 +63,7 @@
 
         try
         {
-            await UserService.Create(new UserCreationDto(Username, Password, Email));
+            await UserService.Create(new UserCreationDto(Username, Password, Email, Role));
             Username = "";
             Password = "";
             Email = "";
