@@ -91,7 +91,7 @@ public class GrpcFactory
             Username = user.Username,
             Password = user.Password,
             Email = user.Email,
-            SecurityLevel = user.SecurityLevel,
+            Role = user.Role,
             Id = user.Id
         };
         return userToReturn;

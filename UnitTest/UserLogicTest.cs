@@ -1,5 +1,6 @@
 ﻿using Application.Logic;
 using NUnit.Framework;
+using Shared.Dtos;
 using Shared.Models;
 
 namespace UnitTest.EventLogicTest;
@@ -22,17 +23,33 @@ public class UserLogicTest
     public void CreateUser()
     {
         //Arrange
+        UserCreationDto user = new UserCreationDto
+        {
+            Email = "mail@via.dk",
+            Username = "username",
+            Password = "password",
+        };
+        
+        //Act
+        userLogic.CreateAsync(user);
+        //Assert
+        Assert.Pass();
+    }
+    [Test]
+    public void GetByUsername()
+    {
+        //Arrange
         User user = new User
         {
             Email = "mail@via.dk",
             Username = "username",
             Password = "password",
-            SecurityLevel = 1
+            Role = "User"
         };
         
         //Act
-        
+        User userReply = userLogic.getUser(user.Username).Result;
         //Assert
-        Assert.Pass();
+        Assert.AreEqual(user.Username, userReply.Username);
     }
 }
