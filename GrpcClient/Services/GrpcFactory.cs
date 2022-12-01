@@ -36,7 +36,9 @@ public class GrpcFactory
                 Year = eventToMap.DateTime.Year,
                 Hour = eventToMap.DateTime.Hour,
                 Min = eventToMap.DateTime.Minute
-            }
+            },
+            Category = eventToMap.Category,
+            Area = eventToMap.Area
         };
         return eventToReturn;
     }

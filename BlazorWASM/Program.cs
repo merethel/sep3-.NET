@@ -6,6 +6,7 @@ using HttpClients.ClientInterfaces;
 using HttpClients.Implementations;
 using Microsoft.AspNetCore.Components.Authorization;
 using Shared.Authorization;
+using Syncfusion.Blazor;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
@@ -20,6 +21,7 @@ builder.Services.AddScoped<IUserService, UserHttpClient>();
 builder.Services.AddScoped<IAuthService, JwtAuthService>();
 builder.Services.AddScoped<IEventService, EventHttpClient>();
 builder.Services.AddScoped<AuthenticationStateProvider, CustomAuthProvider>();
+builder.Services.AddSyncfusionBlazor();
 
 AuthorizationPolicies.AddPolicies(builder.Services);
 

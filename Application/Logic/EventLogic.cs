@@ -35,7 +35,9 @@ public class EventLogic : IEventLogic
         string description = eventToCreate.Description;
         string location = eventToCreate.Location;
         DateTime date = eventToCreate.DateTime;
-        DateTime today = DateTime.Today; 
+        DateTime today = DateTime.Today;
+        string category = eventToCreate.Category;
+        string area = eventToCreate.Area;
 
         if (title.Length < 3)
             throw new Exception("Title must be at least 3 characters!");
@@ -59,6 +61,23 @@ public class EventLogic : IEventLogic
 
         if (date.Year > 2100)
             throw new Exception("You are probably gonna be dead by then dont you think?");
+        
+
+        if (description.Length <= 0)
+        {
+            throw new Exception("Description cannot be empty");
+        }
+        
+        if (category.Length == 0)
+        {
+            throw new Exception("You must choose a category");
+        }
+
+        
+        if (area.Length == 0)
+        {
+            throw new Exception("You must choose an area for your event");
+        }
     }
     
     public Task<List<Event>> GetAsync()

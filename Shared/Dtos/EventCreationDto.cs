@@ -8,6 +8,9 @@ public class EventCreationDto
     
     public string Location { get; set; }
     public DateTime DateTime { get; set; }
+    public string Category { get; set; }
+    public string Area { get; set; }
+    
     
     public EventCreationDto(string username, string title, string description, string location,DateTime dateTime)
     {

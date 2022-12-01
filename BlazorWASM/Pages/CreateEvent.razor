@@ -3,9 +3,13 @@
 @using Microsoft.AspNetCore.Components
 @using global::Shared.Dtos
 @using HttpClients.Implementations
+@using Syncfusion.Blazor
+@using Syncfusion.Blazor.DropDowns
 @inject IEventService EventService
 
+<link href="css/Login.css" rel="stylesheet"/>
 <h3 style="text-align: center">Create Your Event</h3>
+
 
 <div class="card">
     <div>
@@ -20,12 +24,12 @@
         </label><br/>
         <input class="full-width" type="text" @bind="Description" @bind:event="oninput"/>
     </div>
-        <div>
-            <label>
-                <b>Location</b>
-            </label><br/>
-            <input class="full-width" type="text" @bind="location" @bind:event="oninput"/>
-        </div>
+    <div>
+        <label>
+            <b>Location</b>
+        </label><br/>
+        <input class="full-width" type="text" @bind="location" @bind:event="oninput"/>
+    </div>
     <div>
         <label>
             <b>Date</b>
@@ -41,6 +45,33 @@
         <input class="smallinput" type="text" @bind="hour" @bind:event="oninput"/><b style="font-size: large"> :</b>
         <input class="smallinput" type="text" @bind="min" @bind:event="oninput"/>
     </div>
+    
+    <EditForm Model="@category">
+        <div>
+            <label>
+                <b>Category</b>
+            </label><br/>
+            <InputSelect id="category" @bind-Value="category">
+                <option value="Motion">Motion</option>
+                <option value="Spil">Spil</option>
+                <option value="Klima">Klima</option>
+            </InputSelect>
+
+        </div>
+    </EditForm>
+        <EditForm Model="@area">
+    <div>
+        <label>
+            <b>Area</b>
+        </label><br/>
+        <InputSelect id="area" @bind-Value="area">
+            <option value="Sjælland">Sjælland</option>
+            <option value="Fyn">Fyn</option>
+            <option value="Jylland">Jylland</option>
+        </InputSelect>
+    </div>
+    </EditForm>
+    
     <div>
         @if (!string.IsNullOrEmpty(ResultMsg))
         {
@@ -48,9 +79,10 @@
         }
     </div>
     <div class="button-container">
-        <button @onclick="Create" disabled="@(string.IsNullOrEmpty(Title) || string.IsNullOrEmpty(Description) || string.IsNullOrEmpty(year) || string.IsNullOrEmpty(month) || string.IsNullOrEmpty(day) || string.IsNullOrEmpty(hour) || string.IsNullOrEmpty(min))">Create Event</button>
+        <button class="confirm-button" @onclick="Create" disabled="@(string.IsNullOrEmpty(Title) || string.IsNullOrEmpty(Description) || string.IsNullOrEmpty(year) || string.IsNullOrEmpty(month) || string.IsNullOrEmpty(day) || string.IsNullOrEmpty(hour) || string.IsNullOrEmpty(min))">Create Event</button>
     </div>
 </div>
+
 
 @code {
     private string Title = "";
@@ -68,7 +100,8 @@
     private string Color = "";
     private string? username = "";
     private string location = "";
-
+    private string category = "";
+    private string area = "";
 
     private async Task Create()
     {
@@ -84,6 +117,9 @@
                 Int32.Parse(min),
                 0);
         }
+        
+        
+        
         catch (Exception e)
         {
             Color = "red";
@@ -103,6 +139,8 @@
             day = "";
             hour = "";
             min = "";
+            category = "";
+            area = "";
 
             DateTime = DateTime.MaxValue;
 
@@ -115,6 +153,18 @@
             ResultMsg = e.Message;
             Color = "red";
         }
+    }
+
+    private Task bindArea(string area)
+    {
+        this.area = area;
+        return Task.FromResult(area);
+    }
+    
+    private Task bindCategory(string category)
+    {
+        this.category = category;
+        return Task.FromResult(category);
     }
 
 }
