@@ -46,31 +46,13 @@
         <input class="smallinput" type="text" @bind="min" @bind:event="oninput"/>
     </div>
     
-    <EditForm Model="@category">
-        <div>
-            <label>
-                <b>Category</b>
-            </label><br/>
-            <InputSelect id="category" @bind-Value="category">
-                <option value="Motion">Motion</option>
-                <option value="Spil">Spil</option>
-                <option value="Klima">Klima</option>
-            </InputSelect>
-
-        </div>
-    </EditForm>
-        <EditForm Model="@area">
-    <div>
-        <label>
-            <b>Area</b>
-        </label><br/>
-        <InputSelect id="area" @bind-Value="area">
-            <option value="Sjælland">Sjælland</option>
-            <option value="Fyn">Fyn</option>
-            <option value="Jylland">Jylland</option>
-        </InputSelect>
-    </div>
-    </EditForm>
+    <select class="form-control" @bind="@category">
+      
+        @foreach (var category in categories)
+        {
+            <option value="@country.Code"> @country.Name </option>
+        }
+    </select>
     
     <div>
         @if (!string.IsNullOrEmpty(ResultMsg))
@@ -103,6 +85,13 @@
     private string category = "";
     private string area = "";
 
+    List<string> categories = new List<string>()
+    {
+        "Sjælland",
+        "Jylland",
+        "Fyn"
+    };
+    
     private async Task Create()
     {
         ResultMsg = "";

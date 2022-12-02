@@ -93,7 +93,7 @@ public class GrpcFactory
             Username = user.Username,
             Password = user.Password,
             Email = user.Email,
-            SecurityLevel = user.SecurityLevel,
+            Role = user.Role,
             Id = user.Id
         };
         return userToReturn;
@@ -105,7 +105,8 @@ public class GrpcFactory
         {
             Username = userToMap.Username,
             Password = userToMap.Password,
-            Email = userToMap.Email
+            Email = userToMap.Email,
+            Role = userToMap.Role
         };
         return userToReturn;
     }

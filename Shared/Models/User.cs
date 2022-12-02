@@ -6,21 +6,21 @@ public class User
     public string Username { get; set; }
     public string Password { get; set; }
     public string Email { get; set; }
-    public int SecurityLevel { get; set; }
+    public string Role { get; set; }
 
-    public User(string username, string password, string email, int securityLevel)
+    public User(string username, string password, string email, string role)
     {
         Username = username;
         Password = password;
         Email = email;
-        SecurityLevel = securityLevel;
+        Role = role;
     }
-    public User(int id, string username, string password, string email, int securityLevel)
+    public User(int id, string username, string password, string email, string role)
     {
         Username = username;
         Password = password;
         Email = email;
-        SecurityLevel = securityLevel;
+        Role = role;
         Id = id;
     }
 

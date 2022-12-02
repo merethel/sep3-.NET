@@ -3,8 +3,10 @@
 @using HttpClients.ClientInterfaces
 @using HttpClients.Implementations
 @using System.Diagnostics.Tracing
+@using System.Security.Claims
 @inject IEventService EventService
 @inject IUserService UserService
+@inject IAuthService AuthService
 
 <h3 style="text-align: center">Events</h3>
 
@@ -74,7 +76,16 @@ else
     {
         try
         {
-            userId = await UserService.getUserId(JwtAuthService.Username);
+            ClaimsPrincipal claimsPrincipal = await AuthService.GetAuthAsync();
+
+            foreach (var claim in claimsPrincipal.Claims)
+            {
+                if (claim.Type.Equals("UserId"))
+                {
+                    userId = Int32.Parse(claim.Value);
+                }
+            }
+            
             events = await EventService.GetEvents();
         }
         catch (Exception e)
@@ -88,7 +99,7 @@ else
     //knappen disables når du trykker men med et delay, og i dette delay kan du trykke på knappen flere gange hvis du er hurtig.
     private async Task RegisterAttendee(int eventId)
     {
-        var userId = await UserService.getUserId(JwtAuthService.Username);
+        var userId = this.userId;
         await EventService.RegisterAttendeeAsync(userId, eventId);
         msg = "Tilmeldt!";
         events = await EventService.GetEvents();

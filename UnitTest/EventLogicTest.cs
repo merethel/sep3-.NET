@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Application.Logic;
 using NUnit.Framework;
 using Shared.Dtos;
@@ -31,7 +32,7 @@ public class EventLogicTest
             Email = "mail@via.dk",
             Username = "username",
             Password = "password",
-            SecurityLevel = 1
+            Role = "User"
         };
         EventCreationDto eventToCreate = new EventCreationDto
         {
@@ -54,14 +55,14 @@ public class EventLogicTest
     //ZOMBIES
     //Zero
     [Test]
-    public void CreateEventWithEmptyTitle()
+    public void CreateEventWithEmptyTitleThrowsException()
     {
         User user = new User
         {
             Email = "mail@via.dk",
             Username = "username",
             Password = "password",
-            SecurityLevel = 1
+            Role = "User"
         };
         //Arrange
         EventCreationDto eventToCreate = new EventCreationDto
@@ -75,7 +76,12 @@ public class EventLogicTest
          
         //Act
         //Assert
-        Assert.Throws<Exception>(() => eventLogic.CreateAsync(eventToCreate));
+
+
+        Assert.Throws<AggregateException>(() =>
+        {
+            var result = eventLogic.CreateAsync(eventToCreate).Result;
+        });
     }
         
 }
