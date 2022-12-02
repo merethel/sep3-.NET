@@ -10,15 +10,17 @@ public class EventCreationDto
     public DateTime DateTime { get; set; }
     public string Category { get; set; }
     public string Area { get; set; }
-    
-    
-    public EventCreationDto(string username, string title, string description, string location,DateTime dateTime)
+
+
+    public EventCreationDto(string username, string title, string description, string location, DateTime dateTime, string category, string area)
     {
         Username = username;
         Title = title;
         Description = description;
         Location = location;
         DateTime = dateTime;
+        Category = category;
+        Area = area;
     }
 
     public EventCreationDto()

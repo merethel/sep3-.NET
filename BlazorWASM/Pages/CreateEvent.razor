@@ -46,13 +46,20 @@
         <input class="smallinput" type="text" @bind="min" @bind:event="oninput"/>
     </div>
     
-    <select class="form-control" @bind="@category">
-      
-        @foreach (var category in categories)
+    <select class="form-control" @bind="@Category">
+        @foreach (var c in categories)
         {
-            <option value="@country.Code"> @country.Name </option>
+            <option value="@c"> @c </option>
         }
     </select>
+    
+        <select class="form-control" @bind="@Area">
+            @foreach (var a in areas)
+            {
+                <option value="@a"> @a </option>
+            }
+            </select>
+            
     
     <div>
         @if (!string.IsNullOrEmpty(ResultMsg))
@@ -85,17 +92,44 @@
     private string category = "";
     private string area = "";
 
+    string Category
+    {
+        get => category;
+        set {category = value;}
+    }
+
+    string Area
+    {
+        get => area;
+        set {area = value;}
+    }
+
+    
     List<string> categories = new List<string>()
+    {
+        "Motion",
+        "Klima",
+        "Spil"
+    };
+    
+    List<string> areas = new List<string>()
     {
         "Sjælland",
         "Jylland",
-        "Fyn"
+        "Fyn",
+        "Bornholm",
+        "Færøerne",
+        "Grønland"
     };
+    
     
     private async Task Create()
     {
         ResultMsg = "";
 
+        Console.WriteLine(area);
+        Console.WriteLine(category);
+        
         try
         {
             DateTime = new DateTime(
@@ -119,7 +153,7 @@
         try
         {
             username = JwtAuthService.Username;
-            await EventService.CreateAsync(new EventCreationDto(username, Title, Description, location, DateTime));
+            await EventService.CreateAsync(new EventCreationDto(username, Title, Description, location, DateTime, category, area));
             Title = "";
             Description = "";
             location = "";
