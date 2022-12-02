@@ -59,20 +59,22 @@ public class GrpcFactory
             Location = eventToMap.Location,
             Title = eventToMap.Title,
             Owner = fromMessageToUser(eventToMap.User),
-            Attendees = Attendees
+            Attendees = Attendees,
+            Category = eventToMap.Category,
+            Area = eventToMap.Area
         };
             
         return eventToReturn;
     }
 
-    private static DateTime fromDateTimeMessageToDateTime(DateTimeMessage dateTime)
+    public static DateTime fromDateTimeMessageToDateTime(DateTimeMessage dateTime)
     {
         DateTime dateTimeToReturn = new DateTime(dateTime.Year, dateTime.Month, dateTime.Day, dateTime.Hour, dateTime.Min, 0);
 
         return dateTimeToReturn;
     }
 
-    private static DateTimeMessage fromDateTimeToDateTimeMessage(DateTime dateTime)
+    public static DateTimeMessage fromDateTimeToDateTimeMessage(DateTime dateTime)
     {
         DateTimeMessage dateTimeToReturn = new DateTimeMessage()
         {

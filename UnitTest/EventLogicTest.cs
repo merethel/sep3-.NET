@@ -83,5 +83,98 @@ public class EventLogicTest
             var result = eventLogic.CreateAsync(eventToCreate).Result;
         });
     }
-        
+      
+    [Test]
+    public void TitleWithMoreThan32CharThrowsException()
+    {
+        User user = new User
+        {
+            Email = "mail@via.dk",
+            Username = "username",
+            Password = "password",
+            Role = "User"
+        };
+        //Arrange
+        EventCreationDto eventToCreate = new EventCreationDto
+        {
+            Title = "012345678901234567890123456789012",
+            Description = "description",
+            Location = "location",
+            DateTime = DateTime.Now.AddMonths(2),
+            Username = user.Username
+        };
+         
+        //Act
+        //Assert
+
+
+        Assert.Throws<AggregateException>(() =>
+        {
+            var result = eventLogic.CreateAsync(eventToCreate).Result;
+        });
+    }
+    
+    [Test]
+    public void EmptyDescriptionThrowsException()
+    {
+        User user = new User
+        {
+            Email = "mail@via.dk",
+            Username = "username",
+            Password = "password",
+            Role = "User"
+        };
+        //Arrange
+        EventCreationDto eventToCreate = new EventCreationDto
+        {
+            Title = "title",
+            Description = "",
+            Location = "location",
+            DateTime = DateTime.Now.AddMonths(2),
+            Username = user.Username
+        };
+         
+        //Act
+        //Assert
+
+
+        Assert.Throws<AggregateException>(() =>
+        {
+            var result = eventLogic.CreateAsync(eventToCreate).Result;
+        });
+    }
+    
+    [Test]
+    public void EmptyLocationThrowsException()
+    {
+        User user = new User
+        {
+            Email = "mail@via.dk",
+            Username = "username",
+            Password = "password",
+            Role = "User"
+        };
+        //Arrange
+        EventCreationDto eventToCreate = new EventCreationDto
+        {
+            Title = "title",
+            Description = "description",
+            Location = "",
+            DateTime = DateTime.Now.AddMonths(2),
+            Username = user.Username
+        };
+         
+        //Act
+        //Assert
+
+
+        Assert.Throws<AggregateException>(() =>
+        {
+            var result = eventLogic.CreateAsync(eventToCreate).Result;
+        });
+    }
+
+
+    
+    
 }

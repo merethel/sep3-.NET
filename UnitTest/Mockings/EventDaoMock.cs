@@ -15,7 +15,7 @@ public class EventDaoMock : IEventDao
         User user = new User();
         user.Username = "username";
         Event eventToReturn = new Event(user, eventToCreate.Title, eventToCreate.Description,
-            eventToCreate.Location, eventToCreate.DateTime, new List<User>())
+            eventToCreate.Location, eventToCreate.DateTime,"category", "area", new List<User>())
         {
             Id = 1
         };
@@ -28,7 +28,7 @@ public class EventDaoMock : IEventDao
         user.Username = "username";
 
         Event @event = new Event(user, "Title", "Description",
-            "Location", DateTime.Now, new List<User>())
+            "Location", DateTime.Now,"category", "area", new List<User>())
         {
             Id = 1
         };
@@ -41,12 +41,12 @@ public class EventDaoMock : IEventDao
         user.Username = "username";
 
         Event event1 = new Event(user, "Title", "Description",
-            "Location", DateTime.Now.AddMonths(1), new List<User>())
+            "Location", DateTime.Now.AddMonths(1), "category", "area", new List<User>())
         {
             Id = 1
         };
         Event event2 = new Event(user, "Title", "Description",
-            "Location", DateTime.Now.AddMonths(2), new List<User>())
+            "Location", DateTime.Now.AddMonths(2), "category", "area",new List<User>())
         {
             Id = 1
         };
