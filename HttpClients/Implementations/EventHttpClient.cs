@@ -1,5 +1,6 @@
 ﻿using System.Net.Http.Json;
 using System.Text.Json;
+using GrpcService1;
 using HttpClients.ClientInterfaces;
 using Shared.Dtos;
 using Shared.Models;
@@ -42,9 +43,17 @@ public class EventHttpClient : IEventService
     {
         string? jwt = JwtAuthService.Jwt;
 
-        HttpRequestMessage requestMessage = new HttpRequestMessage(HttpMethod.Get, "/Event");
+        string queryString = "";
+        if (criteriaDto.OwnerId != null)
+            queryString += "?ownerId=" + criteriaDto.OwnerId;       
+        if (criteriaDto.Area != null)
+            queryString += "?area=" + criteriaDto.Area;        
+        if (criteriaDto.Category != null)
+            queryString += "?category=" + criteriaDto.Category;
+        
+        Console.WriteLine();
+        HttpRequestMessage requestMessage = new HttpRequestMessage(HttpMethod.Get, "/event" + queryString);
         requestMessage.Headers.Add("Authorization", "Bearer " + jwt);
-        requestMessage.Content = JsonContent.Create(criteriaDto);
         HttpResponseMessage response = await Client.SendAsync(requestMessage);
 
         string result = await response.Content.ReadAsStringAsync();
@@ -87,25 +96,26 @@ public class EventHttpClient : IEventService
         return eventToReturn;
     }
 
-    public Task<Event> CancelAsync(int userId, int eventId)
+    public async Task<Event> CancelAsync(int eventId)
     {
-        string? jwt = JwtAuthService.Jwt;
-
-        HttpRequestMessage requestMessage = new HttpRequestMessage(HttpMethod.Get, "/Event");
-        requestMessage.Headers.Add("Authorization", "Bearer " + jwt);
-        requestMessage.Content = JsonContent.Create(criteriaDto);
+        Console.WriteLine(eventId + "EventHttpClient");
+        HttpRequestMessage requestMessage = new HttpRequestMessage(HttpMethod.Delete, "/Event");
+        requestMessage.Content = JsonContent.Create(new IntRequest
+        {
+            Int = eventId
+        });
         HttpResponseMessage response = await Client.SendAsync(requestMessage);
-
         string result = await response.Content.ReadAsStringAsync();
+        
         if (!response.IsSuccessStatusCode)
         {
             throw new Exception(result);
         }
 
-        ICollection<Event> events = JsonSerializer.Deserialize<ICollection<Event>>(result, new JsonSerializerOptions
+        Event eventToReturn = JsonSerializer.Deserialize<Event>(result, new JsonSerializerOptions
         {
             PropertyNameCaseInsensitive = true
         })!;
-        return events;
+        return eventToReturn;
     }
 }

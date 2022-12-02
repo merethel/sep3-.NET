@@ -1,4 +1,5 @@
 ﻿using Application.LogicInterfaces;
+using GrpcService1;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Shared;
@@ -36,11 +37,11 @@ public class EventController : ControllerBase
 
 
     [HttpGet]
-    public async Task<ActionResult<List<Event>>> GetAsync(CriteriaDto dto)
+    public async Task<ActionResult<List<Event>>> GetAsync([FromQuery] int ownerId, [FromQuery] string? area, [FromQuery] string? category)
     {
         try
         {
-            List<Event> events = await EventLogic.GetAsync(dto);
+            List<Event> events = await EventLogic.GetAsync(new CriteriaDto(ownerId, category, area));
             return events;
         }
         
@@ -66,11 +67,12 @@ public class EventController : ControllerBase
     }
     
     [HttpDelete]
-    public async Task<ActionResult<Event>> CancelAsync(int eventId)
+    public async Task<ActionResult<Event>> CancelAsync(IntRequest eventId)
     {
         try
         {
-            Event @event = await EventLogic.CancelAsync(eventId);
+            Console.WriteLine(eventId);
+            Event @event = await EventLogic.CancelAsync(eventId.Int);
             return @event;
         }
         catch (Exception e)

@@ -128,12 +128,15 @@ public class GrpcFactory
     //CriteriaDTO
     public static CriteriaDtoMessage fromCriteriaDtoToMessage(CriteriaDto dto)
     {
-        CriteriaDtoMessage criteriaDtoMessage = new CriteriaDtoMessage
-        {
-            OwnerId = dto.OwnerId,
-            Area = dto.Area,
-            Category = dto.Category
-        };
+
+        CriteriaDtoMessage criteriaDtoMessage = new CriteriaDtoMessage();
+        if (dto.OwnerId != 0)
+            criteriaDtoMessage.OwnerId = dto.OwnerId;
+        if (dto.Area != null)
+            criteriaDtoMessage.Area = dto.Area;
+        if (dto.Category != null)
+            criteriaDtoMessage.Category = dto.Category;
+
         return criteriaDtoMessage;
     }
 }

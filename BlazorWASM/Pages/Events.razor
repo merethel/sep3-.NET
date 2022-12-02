@@ -4,6 +4,7 @@
 @using HttpClients.Implementations
 @using System.Diagnostics.Tracing
 @using System.Security.Claims
+@using global::Shared.Dtos
 @inject IEventService EventService
 @inject IUserService UserService
 @inject IAuthService AuthService
@@ -86,7 +87,7 @@ else
                 }
             }
             
-            events = await EventService.GetEvents();
+            events = await EventService.GetEvents(new CriteriaDto());
         }
         catch (Exception e)
         {
@@ -102,7 +103,7 @@ else
         var userId = this.userId;
         await EventService.RegisterAttendeeAsync(userId, eventId);
         msg = "Tilmeldt!";
-        events = await EventService.GetEvents();
+        events = await EventService.GetEvents(new CriteriaDto());
     }
     
     // Jeg har fixet at knapperne bliver disabled/enabled alt efter om du er tilmeldt eller ikke.

@@ -6,7 +6,7 @@ namespace HttpClients.ClientInterfaces;
 public interface IEventService
 {
     Task<Event> CreateAsync(EventCreationDto dto);
-    Task<ICollection<Event>> GetEvents();
+    Task<ICollection<Event>> GetEvents(CriteriaDto criteriaDto);
     Task<Event> RegisterAttendeeAsync(int userId, int eventId);
 
     Task<Event> CancelAsync(int eventId);

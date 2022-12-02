@@ -50,6 +50,7 @@ public class EventService : IEventClient
 
     public async Task<Event?> CancelAsync(int eventId)
     {
+        Console.WriteLine(eventId);
         var client = GrpcFactory.getEventClient();//stub
         EventMessage replyMessage = await client.cancelAsync(new IntRequest() {Int = eventId});
         Event eventToReturn = GrpcFactory.fromMessageToEvent(replyMessage);

@@ -77,7 +77,7 @@ else
     {
         try
         {
-            ClaimsPrincipal claimsPrincipal = await AuthService.GetAuthAsync();
+            /*ClaimsPrincipal claimsPrincipal = await AuthService.GetAuthAsync();
 
             foreach (var claim in claimsPrincipal.Claims)
             {
@@ -85,7 +85,9 @@ else
                 {
                     userId = Int32.Parse(claim.Value);
                 }
-            }
+            }*/
+            userId = await UserService.getUserId(JwtAuthService.Username);
+            Console.WriteLine(userId);
             
             events = await EventService.GetEvents(new CriteriaDto
             {
@@ -104,7 +106,8 @@ else
     private async Task CancelEvent(int eventId)
     {
         var userId = this.userId;
-        await EventService.CancelAsync(userId, eventId);
+        Console.WriteLine(eventId);
+        await EventService.CancelAsync(eventId);
         events = await EventService.GetEvents(new CriteriaDto()
         {
             OwnerId = userId
@@ -119,21 +122,6 @@ else
     
     private bool Disabled(int eventId)
     {
-        Event eventToReturn = null;
-
-        foreach (Event e in events)
-        {
-            if (e.Id == eventId)
-            {
-                eventToReturn = e;
-            }
-        }
-
-        foreach (User u in eventToReturn.Attendees)
-        {
-            if (userId == u.Id)
-                return true;
-        }
         return false;
     }
 
