@@ -90,4 +90,10 @@ public class EventLogic : IEventLogic
         Event eventToReturn = await EventDao.RegisterAttendeeAsync(userId,eventId);
         return eventToReturn;
     }
+
+    public async Task<Event> CancelAsync(int eventId)
+    {
+        Event eventToReturn = await EventDao.CancelAsync(eventId);
+        return eventToReturn;
+    }
 }

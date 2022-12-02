@@ -11,4 +11,7 @@ public interface IEventClient
     Task<List<Event>> GetAsync();
 
     Task<Event> RegisterAttendeeAsync(int userId, int eventId);
+    
+    Task<Event?> CancelAsync(int eventId);
+    
 }

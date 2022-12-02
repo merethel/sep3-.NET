@@ -47,4 +47,12 @@ public class EventService : IEventClient
         Event eventToReturn = GrpcFactory.fromMessageToEvent(replyMessage);
         return eventToReturn;
     }
+
+    public async Task<Event?> CancelAsync(int eventId)
+    {
+        var client = GrpcFactory.getEventClient();//stub
+        EventMessage replyMessage = await client.cancelAsync(new IntRequest() {Int = eventId});
+        Event eventToReturn = GrpcFactory.fromMessageToEvent(replyMessage);
+        return eventToReturn;
+    }
 }

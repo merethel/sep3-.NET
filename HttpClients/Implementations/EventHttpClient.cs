@@ -80,4 +80,10 @@ public class EventHttpClient : IEventService
         })!;
         return eventToReturn;
     }
+
+    public Task<Event> CancelAsync(int eventId)
+    {
+        throw new NotImplementedException();
+    }
+    
 }

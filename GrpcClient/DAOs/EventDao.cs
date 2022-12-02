@@ -44,4 +44,10 @@ public class EventDao : IEventDao
 
         return eventToReturn;
     }
+
+    public async Task<Event?> CancelAsync(int eventId)
+    {
+        Event eventToReturn = await Service.CancelAsync(eventId);
+        return eventToReturn;
+    }
 }
