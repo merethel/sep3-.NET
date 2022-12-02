@@ -35,7 +35,7 @@ public class EventDaoMock : IEventDao
         return Task.FromResult(@event)!; 
     }
 
-    public Task<List<Event>> GetAsync()
+    public Task<List<Event>> GetAsync(CriteriaDto criteriaDto)
     {
         User user = new User();
         user.Username = "username";

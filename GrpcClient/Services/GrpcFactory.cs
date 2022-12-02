@@ -124,4 +124,16 @@ public class GrpcFactory
 
         return listToReturn;
     }
+    
+    //CriteriaDTO
+    public static CriteriaDtoMessage fromCriteriaDtoToMessage(CriteriaDto dto)
+    {
+        CriteriaDtoMessage criteriaDtoMessage = new CriteriaDtoMessage
+        {
+            OwnerId = dto.OwnerId,
+            Area = dto.Area,
+            Category = dto.Category
+        };
+        return criteriaDtoMessage;
+    }
 }

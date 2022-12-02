@@ -1,0 +1,151 @@
+﻿@page "/MyEvents"
+@using global::Shared.Models
+@using HttpClients.ClientInterfaces
+@using HttpClients.Implementations
+@using System.Diagnostics.Tracing
+@using System.Security.Claims
+@using global::Shared.Dtos
+@inject IEventService EventService
+@inject IUserService UserService
+@inject IAuthService AuthService
+
+<h3 style="text-align: center">My Events</h3>
+
+@if (events == null)
+{
+    <p>Loading...</p>
+}
+else if (!events.Any())
+{
+    <p>No Events available</p>
+}
+else
+{
+    @foreach (Event item in events)
+    {
+        <div class="card">
+            <div class="boxes">
+                <b>Title:</b>
+                    <label>@item.Title</label>
+            </div>
+             
+        <div class="boxes">
+            <b>Owner:</b>
+            <label>@item.Owner.Username</label>
+        </div>
+        
+            <div class="boxes">
+                <b>Location:</b>
+                <label>@item.Location</label>
+            </div>
+
+            <div class="boxes">
+                <b>Date and time:</b>
+                <label>@item.DateTime</label>
+            </div>
+                
+            <div class="boxes">
+                <b>Description:</b>
+                <div id="Description">
+                    @item.Description
+                </div>
+                
+                <AuthorizeView>
+                    <div class="button-container">
+                        <button class="confirm"
+                                @onclick="@(() => CancelEvent(item.Id))"  disabled="@Disabled(item.Id)">
+                            @GetButtonText(item.Id)
+                        </button>
+                    </div>
+                </AuthorizeView>
+            </div>
+            </div>
+        <br/>
+                                
+    }
+
+}
+
+
+@code {
+    private ICollection<Event>? events;
+    private string msg = "";
+    private int userId;
+    private bool shouldbedisabled;
+    
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            ClaimsPrincipal claimsPrincipal = await AuthService.GetAuthAsync();
+
+            foreach (var claim in claimsPrincipal.Claims)
+            {
+                if (claim.Type.Equals("UserId"))
+                {
+                    userId = Int32.Parse(claim.Value);
+                }
+            }
+            
+            events = await EventService.GetEvents(new CriteriaDto
+            {
+                OwnerId = userId
+            });
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            msg = e.Message;
+        }
+        
+    }
+
+    //knappen disables når du trykker men med et delay, og i dette delay kan du trykke på knappen flere gange hvis du er hurtig.
+    private async Task CancelEvent(int eventId)
+    {
+        var userId = this.userId;
+        await EventService.CancelAsync(userId, eventId);
+        events = await EventService.GetEvents(new CriteriaDto()
+        {
+            OwnerId = userId
+        });
+    }
+    
+    // Jeg har fixet at knapperne bliver disabled/enabled alt efter om du er tilmeldt eller ikke.
+    
+    //2 ting som ikke virker men nu er kl 23:51 og jeg er træt...
+    //Der står med grøn skrift "Tilmeldt!" på alle eventsne når man trykker på en tilmend knap.
+    //Den opdatere ikke i realtime, så når du har trykket tilmeld disabler den først knappen når du har reloadet siden, det skal også kigges på.
+    
+    private bool Disabled(int eventId)
+    {
+        Event eventToReturn = null;
+
+        foreach (Event e in events)
+        {
+            if (e.Id == eventId)
+            {
+                eventToReturn = e;
+            }
+        }
+
+        foreach (User u in eventToReturn.Attendees)
+        {
+            if (userId == u.Id)
+                return true;
+        }
+        return false;
+    }
+
+    private string GetButtonText(int eventId)
+    {
+        if (Disabled(eventId))
+        {
+            return "Aflyst";
+        }
+        else
+        {
+            return "Aflys Begivenhed";
+        }
+    }
+}

@@ -228,8 +228,30 @@ public class GrpcFactoryTest
         List<Event> list = GrpcFactory.fromListEventMessageToList(listMessage);
         //Assert
         Assert.That(list.Count == listMessage.Events.Count);
-        
     }
+    
+    [Test]
+    public void TestFromCriteriaDtoToMessage()
+    {
+        //Arrange
+        CriteriaDto criteriaDto = new CriteriaDto
+        {
+            OwnerId = 1,
+            Area = "Area",
+            Category = "Category"
+        };
+        //Act
+        CriteriaDtoMessage criteriaDtoMessage = GrpcFactory.fromCriteriaDtoToMessage(criteriaDto);
+        //Assert
+        Assert.Multiple(() =>
+            {
+                Assert.That(criteriaDto.Area.Equals(criteriaDtoMessage.Area));
+                Assert.That(criteriaDto.Category.Equals(criteriaDtoMessage.Category));
+                Assert.That(criteriaDto.OwnerId.Equals(criteriaDtoMessage.OwnerId));
+            }
+            );
+        }
+    
     
     
     

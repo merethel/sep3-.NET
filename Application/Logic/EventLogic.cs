@@ -80,9 +80,9 @@ public class EventLogic : IEventLogic
         }
     }
     
-    public Task<List<Event>> GetAsync()
+    public Task<List<Event>> GetAsync(CriteriaDto criteriaDto)
     {
-        return EventDao.GetAsync();
+        return EventDao.GetAsync(criteriaDto);
     }
 
     public async Task<Event> RegisterAttendeeAsync(int userId, int eventId)

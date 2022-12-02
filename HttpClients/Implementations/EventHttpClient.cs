@@ -38,9 +38,15 @@ public class EventHttpClient : IEventService
         return @event;
     }
 
-    public async Task<ICollection<Event>> GetEvents()
+    public async Task<ICollection<Event>> GetEvents(CriteriaDto criteriaDto)
     {
-        HttpResponseMessage response = await Client.GetAsync("/Event");
+        string? jwt = JwtAuthService.Jwt;
+
+        HttpRequestMessage requestMessage = new HttpRequestMessage(HttpMethod.Get, "/Event");
+        requestMessage.Headers.Add("Authorization", "Bearer " + jwt);
+        requestMessage.Content = JsonContent.Create(criteriaDto);
+        HttpResponseMessage response = await Client.SendAsync(requestMessage);
+
         string result = await response.Content.ReadAsStringAsync();
         if (!response.IsSuccessStatusCode)
         {
@@ -79,5 +85,27 @@ public class EventHttpClient : IEventService
             PropertyNameCaseInsensitive = true
         })!;
         return eventToReturn;
+    }
+
+    public Task<Event> CancelAsync(int userId, int eventId)
+    {
+        string? jwt = JwtAuthService.Jwt;
+
+        HttpRequestMessage requestMessage = new HttpRequestMessage(HttpMethod.Get, "/Event");
+        requestMessage.Headers.Add("Authorization", "Bearer " + jwt);
+        requestMessage.Content = JsonContent.Create(criteriaDto);
+        HttpResponseMessage response = await Client.SendAsync(requestMessage);
+
+        string result = await response.Content.ReadAsStringAsync();
+        if (!response.IsSuccessStatusCode)
+        {
+            throw new Exception(result);
+        }
+
+        ICollection<Event> events = JsonSerializer.Deserialize<ICollection<Event>>(result, new JsonSerializerOptions
+        {
+            PropertyNameCaseInsensitive = true
+        })!;
+        return events;
     }
 }

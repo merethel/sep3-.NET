@@ -31,9 +31,9 @@ public class EventDao : IEventDao
         return @event;
     }
 
-    public async Task<List<Event>> GetAsync()
+    public async Task<List<Event>> GetAsync(CriteriaDto criteriaDto)
     {
-        List<Event> events = await Service.GetAsync();
+        List<Event> events = await Service.GetAsync(criteriaDto);
 
         return events;
     }

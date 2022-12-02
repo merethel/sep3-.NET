@@ -24,10 +24,10 @@ public class EventService : IEventClient
         return eventToReturn;
     }
 
-    public async Task<List<Event>> GetAsync()
+    public async Task<List<Event>> GetAsync(CriteriaDto criteriaDto)
     {
         var client = GrpcFactory.getEventClient();
-        ListEventMessage reply = await client.getAllEventsAsync(new IntRequest(){Int = 1});
+        ListEventMessage reply = await client.getAllEventsAsync(GrpcFactory.fromCriteriaDtoToMessage(criteriaDto));
         List<Event> eventToReturn = GrpcFactory.fromListEventMessageToList(reply);
         
         return eventToReturn;

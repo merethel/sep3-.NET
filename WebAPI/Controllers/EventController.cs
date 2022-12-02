@@ -36,11 +36,11 @@ public class EventController : ControllerBase
 
 
     [HttpGet]
-    public async Task<ActionResult<List<Event>>> GetAsync()
+    public async Task<ActionResult<List<Event>>> GetAsync(CriteriaDto dto)
     {
         try
         {
-            List<Event> events = await EventLogic.GetAsync();
+            List<Event> events = await EventLogic.GetAsync(dto);
             return events;
         }
         
