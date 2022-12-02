@@ -46,20 +46,23 @@
         <input class="smallinput" type="text" @bind="min" @bind:event="oninput"/>
     </div>
     
-    <select class="form-control" @bind="@Category">
+    <div>
+    <select class="form-control" @bind="@Category" style="width: 200px; float: left" >
+        <option disabled selected value> -- Vælg en kategori -- </option>
         @foreach (var c in categories)
         {
             <option value="@c"> @c </option>
         }
     </select>
     
-        <select class="form-control" @bind="@Area">
+        <select class="form-control" @bind="@Area" style="width: 200px; float: ">
+            <option disabled selected value> -- Vælg et område -- </option>
             @foreach (var a in areas)
             {
                 <option value="@a"> @a </option>
             }
-            </select>
-            
+        </select>
+        </div>
     
     <div>
         @if (!string.IsNullOrEmpty(ResultMsg))

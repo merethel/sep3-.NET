@@ -27,7 +27,13 @@
         <label>
             <b>Role</b>
         </label><br/>
-        <input type="text" placeholder="Enter Role" @bind="Role" @bind:event="oninput"/><br/>
+                <select class="form-control" @bind="@Role" style="width: 200px; ">
+                    <option disabled selected value> -- Vælg en rolle -- </option>
+                    @foreach (var r in roles)
+                    {
+                        <option value="@r"> @r </option>
+                    }
+                </select>
         
         
         <input type="checkbox" @bind="checkbox" @bind:event="oninput"/> <span class="checkboxmsg">Do you agree to sell us your soul and your first born child?</span><br/>
@@ -55,6 +61,12 @@
     private string ResultMsg = "";
     private string Color = "";
     private bool checkbox = false;
+    List<string> roles = new List<string>()
+    {
+        "User",
+        "Company",
+        "Owner"
+    };
     
 
     private async Task Create()
