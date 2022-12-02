@@ -64,4 +64,20 @@ public class EventController : ControllerBase
             return StatusCode(500, e.Message);
         }
     }
+    
+    [HttpDelete]
+    public async Task<ActionResult<Event>> CancelAsync(int eventId)
+    {
+        try
+        {
+            Event @event = await EventLogic.CancelAsync(eventId);
+            return @event;
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return StatusCode(500, e.Message);
+        }
+    }
+    
 }

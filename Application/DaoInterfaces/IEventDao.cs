@@ -12,4 +12,7 @@ public interface IEventDao
     Task<List<Event>> GetAsync(CriteriaDto criteriaDto);
     
     Task<Event?> RegisterAttendeeAsync(int userId, int eventId);
+
+    public Task<Event?> CancelAsync(int eventId);
+
 }
