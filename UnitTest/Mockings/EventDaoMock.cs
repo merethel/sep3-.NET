@@ -64,4 +64,9 @@ public class EventDaoMock : IEventDao
     {
         throw new NotImplementedException();
     }
+
+    public Task<Event?> CancelAsync(int eventId)
+    {
+        throw new NotImplementedException();
+    }
 }

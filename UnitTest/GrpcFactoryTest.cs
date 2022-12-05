@@ -83,13 +83,22 @@ public class GrpcFactoryTest
     [Test]
     public void GetUserClientReturnsUserServiceClient()
     {
-        Assert.True(GrpcFactory.getUserClient() is UserService.UserServiceClient);
+        //Arrange
+        //Act
+        var userServiceClient = GrpcFactory.getUserClient();
+
+        //Assert
+        Assert.True(userServiceClient is UserService.UserServiceClient);
     }
     
     [Test]
     public void GetEventClientReturnsEventServiceClient()
     {
-        Assert.True(GrpcFactory.getEventClient() is EventService.EventServiceClient);
+        //Arrange
+        //Act
+        var eventServiceClient = GrpcFactory.getEventClient();
+        //Assert
+        Assert.True(eventServiceClient is EventService.EventServiceClient);
     }
     [Test]
     public void TestFromEventCreationDtoToMessage()
@@ -251,11 +260,4 @@ public class GrpcFactoryTest
             }
             );
         }
-    
-    
-    
-    
-    
-    
-    
 }

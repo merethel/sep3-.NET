@@ -172,6 +172,9 @@ public class EventLogicTest
         {
             var result = eventLogic.CreateAsync(eventToCreate).Result;
         });
+        
+        
+        
     }
 
 

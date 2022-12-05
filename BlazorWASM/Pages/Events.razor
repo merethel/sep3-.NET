@@ -21,6 +21,7 @@ else if (!events.Any())
 }
 else
 {
+
     @foreach (Event item in events)
     {
         <div class="card">
@@ -73,6 +74,7 @@ else
     private int userId;
     private bool shouldbedisabled;
     
+    
     protected override async Task OnInitializedAsync()
     {
         try
@@ -86,7 +88,7 @@ else
                     userId = Int32.Parse(claim.Value);
                 }
             }
-            
+
             events = await EventService.GetEvents(new CriteriaDto());
         }
         catch (Exception e)
