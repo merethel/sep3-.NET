@@ -16,7 +16,7 @@ public class EventLogicTest
     {
         eventLogic = new EventLogic(new EventClientMock(), new UserClientMock());
     }
-//GitTest
+
     [SetUp]
     public void Setup()
     {
