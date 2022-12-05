@@ -13,7 +13,7 @@ public class UserLogicTest
 
     public UserLogicTest()
     {
-        userLogic = new UserLogic(new UserDaoMock());
+        userLogic = new UserLogic(new UserClientMock());
     }
 
     [SetUp]

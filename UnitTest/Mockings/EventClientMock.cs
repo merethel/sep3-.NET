@@ -1,14 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
-using Application.DaoInterfaces;
+using GrpcClient.ClientInterfaces;
 using Shared.Dtos;
 using Shared.Models;
 
 namespace UnitTest.EventLogicTest;
 
-public class EventDaoMock : IEventDao
+public class EventClientMock : IEventClient
 {
     public Task<Event?> CreateAsync(EventCreationDto eventToCreate)
     {

@@ -13,7 +13,7 @@ public class EventLogicTest
 
     public EventLogicTest()
     {
-        eventLogic = new EventLogic(new EventDaoMock(), new UserDaoMock());
+        eventLogic = new EventLogic(new EventClientMock(), new UserClientMock());
     }
 
     [SetUp]

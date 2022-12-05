@@ -1,6 +1,6 @@
 ﻿
-using Application.DaoInterfaces;
 using Application.LogicInterfaces;
+using GrpcClient.ClientInterfaces;
 using Shared;
 using Shared.Dtos;
 using Shared.Models;
@@ -9,16 +9,16 @@ namespace Application.Logic;
 
 public class UserLogic : IUserLogic
 {
-    private readonly IUserDao UserDao;
+    private readonly IUserClient UserClient;
 
-    public UserLogic(IUserDao userDao)
+    public UserLogic(IUserClient userClient)
     {
-        UserDao = userDao;
+        UserClient = userClient;
     }
 
     public async Task<User> CreateAsync(UserCreationDto dto)
     {
-        User? existing = await UserDao.GetByUsernameAsync(dto.Username);
+        User? existing = await UserClient.GetByUsernameAsync(dto.Username);
         
         //QUICKFIX
         if (existing.Username.Length != 0) 
@@ -26,14 +26,14 @@ public class UserLogic : IUserLogic
 
         ValidateData(dto);
         
-        User created = await UserDao.CreateAsync(dto);
+        User created = await UserClient.CreateAsync(dto);
         
         return created;
     }
 
     public async Task<User> ValidateUser(string username, string password)
     {
-        User? existingUser = await UserDao.GetByUsernameAsync(username);
+        User? existingUser = await UserClient.GetByUsernameAsync(username);
             
         //QUICKFIX
         if (existingUser.Username.Length == 0)
@@ -51,7 +51,7 @@ public class UserLogic : IUserLogic
 
     public async Task<User> getUser(string username)
     {
-        User user = await UserDao.GetByUsernameAsync(username);
+        User user = await UserClient.GetByUsernameAsync(username);
         return user;
     }
 

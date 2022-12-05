@@ -1,5 +1,5 @@
-﻿using Application.DaoInterfaces;
-using Application.LogicInterfaces;
+﻿using Application.LogicInterfaces;
+using GrpcClient.ClientInterfaces;
 using Shared;
 using Shared.Dtos;
 using Shared.Models;
@@ -8,23 +8,23 @@ namespace Application.Logic;
 
 public class EventLogic : IEventLogic
 {
-    private readonly IEventDao EventDao;
-    private readonly IUserDao UserDao;
+    private readonly IEventClient EventClient;
+    private readonly IUserClient UserClient;
 
-    public EventLogic(IEventDao eventDao, IUserDao userDao)
+    public EventLogic(IEventClient eventClient, IUserClient userClient)
     {
-        EventDao = eventDao;
-        UserDao = userDao;
+        EventClient = eventClient;
+        UserClient = userClient;
     }
     public async Task<Event> CreateAsync(EventCreationDto dto)
     {
-        User? owner = await UserDao.GetByUsernameAsync(dto.Username);
+        User? owner = await UserClient.GetByUsernameAsync(dto.Username);
         if (owner == null)
             throw new Exception($"The User with this username: {dto.Username} does not exist");
         
         ValidateData(dto);
         
-        Event created = await EventDao.CreateAsync(dto);
+        Event created = await EventClient.CreateAsync(dto);
         
         return created;
     }
@@ -82,18 +82,18 @@ public class EventLogic : IEventLogic
     
     public Task<List<Event>> GetAsync(CriteriaDto criteriaDto)
     {
-        return EventDao.GetAsync(criteriaDto);
+        return EventClient.GetAsync(criteriaDto);
     }
 
     public async Task<Event> RegisterAttendeeAsync(int userId, int eventId)
     {
-        Event eventToReturn = await EventDao.RegisterAttendeeAsync(userId,eventId);
+        Event eventToReturn = await EventClient.RegisterAttendeeAsync(userId,eventId);
         return eventToReturn;
     }
 
     public async Task<Event> CancelAsync(int eventId)
     {
-        Event eventToReturn = await EventDao.CancelAsync(eventId);
-        return eventToReturn;
+        Event eventToReturn = await EventClient.CancelAsync(eventId);
+        return eventToReturn!;
     }
 }

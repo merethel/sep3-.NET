@@ -1,9 +1,7 @@
 using System.Text;
-using Application.DaoInterfaces;
 using Application.LogicInterfaces;
 using Application.Logic;
 using GrpcClient.ClientInterfaces;
-using GrpcClient.DAOs;
 using GrpcClient.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
@@ -19,9 +17,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 
-builder.Services.AddScoped<IUserDao, UserDao>();
 builder.Services.AddScoped<IUserLogic, UserLogic>();
-builder.Services.AddScoped<IEventDao, EventDao>();
 builder.Services.AddScoped<IEventLogic, EventLogic>();
 builder.Services.AddScoped<IUserClient, UserService>();
 builder.Services.AddScoped<IEventClient, EventService>();

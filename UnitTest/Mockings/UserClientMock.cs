@@ -1,11 +1,11 @@
 ﻿using System.Threading.Tasks;
-using Application.DaoInterfaces;
+using GrpcClient.ClientInterfaces;
 using Shared.Dtos;
 using Shared.Models;
 
 namespace UnitTest.EventLogicTest;
 
-public class UserDaoMock : IUserDao
+public class UserClientMock : IUserClient
 {
     public Task<User> CreateAsync(UserCreationDto user)
     {
