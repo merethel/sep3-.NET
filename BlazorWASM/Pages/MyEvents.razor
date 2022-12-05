@@ -83,8 +83,6 @@ else
                 }
             }*/
             _userId = await UserService.GetUserId(JwtAuthService.Username!);
-            Console.WriteLine(_userId);
-            
             _events = await EventService.GetEvents(new CriteriaDto
             {
                 OwnerId = _userId
@@ -102,7 +100,6 @@ else
     private async Task CancelEvent(int eventId)
     {
         var userId = this._userId;
-        Console.WriteLine(eventId);
         await EventService.CancelAsync(eventId);
         _events = await EventService.GetEvents(new CriteriaDto()
         {

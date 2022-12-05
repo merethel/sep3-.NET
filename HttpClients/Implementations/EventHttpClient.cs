@@ -51,7 +51,6 @@ public class EventHttpClient : IEventService
         if (criteriaDto.Category != null)
             queryString += "?category=" + criteriaDto.Category;
         
-        Console.WriteLine();
         HttpRequestMessage requestMessage = new HttpRequestMessage(HttpMethod.Get, "/event" + queryString);
         requestMessage.Headers.Add("Authorization", "Bearer " + jwt);
         HttpResponseMessage response = await Client.SendAsync(requestMessage);
@@ -98,7 +97,6 @@ public class EventHttpClient : IEventService
 
     public async Task<Event> CancelAsync(int eventId)
     {
-        Console.WriteLine(eventId + "EventHttpClient");
         HttpRequestMessage requestMessage = new HttpRequestMessage(HttpMethod.Delete, "/Event");
         requestMessage.Content = JsonContent.Create(new IntRequest
         {

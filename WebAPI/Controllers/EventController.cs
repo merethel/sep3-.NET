@@ -71,7 +71,6 @@ public class EventController : ControllerBase
     {
         try
         {
-            Console.WriteLine(eventId);
             Event @event = await EventLogic.CancelAsync(eventId.Int);
             return @event;
         }

@@ -37,8 +37,6 @@ public class EventService : IEventClient
     public async Task<Event> RegisterAttendeeAsync(int userId, int eventId)
     {
         var client = GrpcFactory.GetEventClient();
-        
-        Console.WriteLine(userId + "-----" + eventId);
 
         EventMessage replyMessage = await client.addAttendeeToEventAttendeeListAsync(new AddAttendeeRequest()
         {
@@ -51,7 +49,6 @@ public class EventService : IEventClient
 
     public async Task<Event?> CancelAsync(int eventId)
     {
-        Console.WriteLine(eventId);
         var client = GrpcFactory.GetEventClient();//stub
         EventMessage replyMessage = await client.cancelAsync(new IntRequest() {Int = eventId});
         Event eventToReturn = GrpcFactory.FromMessageToEvent(replyMessage);
