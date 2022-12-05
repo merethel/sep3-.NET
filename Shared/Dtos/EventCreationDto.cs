@@ -2,14 +2,14 @@
 
 public class EventCreationDto
 {
-    public string Username { get; set; }
-    public string Title { get; set; }
-    public string Description { get; set; }
-    
-    public string Location { get; set; }
+    public string Username { get; set; } = null!;
+    public string Title { get; set; } = null!;
+    public string Description { get; set; } = null!;
+
+    public string Location { get; set; } = null!;
     public DateTime DateTime { get; set; }
-    public string Category { get; set; }
-    public string Area { get; set; }
+    public string Category { get; set; } = null!;
+    public string Area { get; set; } = null!;
 
 
     public EventCreationDto(string username, string title, string description, string location, DateTime dateTime, string category, string area)

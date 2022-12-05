@@ -84,7 +84,7 @@ else
                     userId = Int32.Parse(claim.Value);
                 }
             }*/
-            userId = await UserService.getUserId(JwtAuthService.Username);
+            userId = await UserService.GetUserId(JwtAuthService.Username);
             Console.WriteLine(userId);
             
             events = await EventService.GetEvents(new CriteriaDto

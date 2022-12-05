@@ -2,11 +2,11 @@
 
 public class CriteriaDto
 {
-    public int OwnerId { get; set; }
+    public int OwnerId { get; init; }
 
-    public string? Category { get; set; }
+    public string? Category { get; init; }
     
-    public string? Area { get; set; }
+    public string? Area { get; init; }
     
     public CriteriaDto(int ownerId, string? category, string? area)
     {

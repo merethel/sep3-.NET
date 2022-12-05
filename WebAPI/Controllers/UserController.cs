@@ -38,7 +38,7 @@ public class UserController : ControllerBase
     {
         try
         {
-            User user = await UserLogic.getUser(username);
+            User user = await UserLogic.GetUser(username);
             return user;
         }
         

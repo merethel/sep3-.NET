@@ -8,20 +8,20 @@ namespace GrpcClient.Services;
 
 public class GrpcFactory
 {
-    public static GrpcService1.EventService.EventServiceClient getEventClient()
+    public static GrpcService1.EventService.EventServiceClient GetEventClient()
     {
         GrpcChannel channel = GrpcChannel.ForAddress("http://localhost:9090");
         var client = new GrpcService1.EventService.EventServiceClient(channel);
         return client;
     }
-    public static GrpcService1.UserService.UserServiceClient getUserClient()
+    public static GrpcService1.UserService.UserServiceClient GetUserClient()
     {
         GrpcChannel channel = GrpcChannel.ForAddress("http://localhost:9090");
         var client = new GrpcService1.UserService.UserServiceClient(channel);
         return client;
     }
     
-    public static EventCreationDtoMessage fromEventCreationDtoToMessage(EventCreationDto eventToMap)
+    public static EventCreationDtoMessage FromEventCreationDtoToMessage(EventCreationDto eventToMap)
     {
         EventCreationDtoMessage eventToReturn = new EventCreationDtoMessage
         {
@@ -43,23 +43,23 @@ public class GrpcFactory
         return eventToReturn;
     }
 
-    public static Event fromMessageToEvent(EventMessage eventToMap)
+    public static Event FromMessageToEvent(EventMessage eventToMap)
     {
-        List<User> Attendees = new List<User>();
+        List<User> attendees = new List<User>();
         foreach (UserMessage attendee in eventToMap.Attendees)
         {
-            Attendees.Add(fromMessageToUser(attendee));
+            attendees.Add(FromMessageToUser(attendee));
         }
         
         Event eventToReturn = new Event
         {
             Id = eventToMap.Id,
-            DateTime = fromDateTimeMessageToDateTime(eventToMap.DateTime),
+            DateTime = FromDateTimeMessageToDateTime(eventToMap.DateTime),
             Description = eventToMap.Description,
             Location = eventToMap.Location,
             Title = eventToMap.Title,
-            Owner = fromMessageToUser(eventToMap.User),
-            Attendees = Attendees,
+            Owner = FromMessageToUser(eventToMap.User),
+            Attendees = attendees,
             Category = eventToMap.Category,
             Area = eventToMap.Area
         };
@@ -67,14 +67,14 @@ public class GrpcFactory
         return eventToReturn;
     }
 
-    public static DateTime fromDateTimeMessageToDateTime(DateTimeMessage dateTime)
+    public static DateTime FromDateTimeMessageToDateTime(DateTimeMessage dateTime)
     {
         DateTime dateTimeToReturn = new DateTime(dateTime.Year, dateTime.Month, dateTime.Day, dateTime.Hour, dateTime.Min, 0);
 
         return dateTimeToReturn;
     }
 
-    public static DateTimeMessage fromDateTimeToDateTimeMessage(DateTime dateTime)
+    public static DateTimeMessage FromDateTimeToDateTimeMessage(DateTime dateTime)
     {
         DateTimeMessage dateTimeToReturn = new DateTimeMessage()
         {
@@ -88,7 +88,7 @@ public class GrpcFactory
         return dateTimeToReturn;
     }
 
-    public static User fromMessageToUser(UserMessage user)
+    public static User FromMessageToUser(UserMessage user)
     {
         User userToReturn = new User
         {
@@ -101,7 +101,7 @@ public class GrpcFactory
         return userToReturn;
     }
 
-    public static UserCreationDtoMessage fromUserCreationDtoToMessage(UserCreationDto userToMap)
+    public static UserCreationDtoMessage FromUserCreationDtoToMessage(UserCreationDto userToMap)
     {
         UserCreationDtoMessage userToReturn = new UserCreationDtoMessage
         {
@@ -114,19 +114,19 @@ public class GrpcFactory
     }
 
 
-    public static List<Event> fromListEventMessageToList(ListEventMessage listToMap)
+    public static List<Event> FromListEventMessageToList(ListEventMessage listToMap)
     {
         List<Event> listToReturn = new List<Event>();
         foreach (EventMessage eventToMap in listToMap.Events)
         {
-            listToReturn.Add(fromMessageToEvent(eventToMap));
+            listToReturn.Add(FromMessageToEvent(eventToMap));
         }
 
         return listToReturn;
     }
     
     //CriteriaDTO
-    public static CriteriaDtoMessage fromCriteriaDtoToMessage(CriteriaDto dto)
+    public static CriteriaDtoMessage FromCriteriaDtoToMessage(CriteriaDto dto)
     {
 
         CriteriaDtoMessage criteriaDtoMessage = new CriteriaDtoMessage();

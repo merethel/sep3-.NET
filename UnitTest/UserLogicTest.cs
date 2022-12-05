@@ -94,7 +94,7 @@ public class UserLogicTest
         };
         
         //Act
-        User userReply = userLogic.getUser(user.Username).Result;
+        User userReply = userLogic.GetUser(user.Username).Result;
         //Assert
         Assert.AreEqual(user.Username, userReply.Username);
     }

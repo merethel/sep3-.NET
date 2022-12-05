@@ -2,8 +2,8 @@
 
 public class RegisterAttendeeDto
 {
-    public int UserId { get; set; }
-    public int EventId { get; set; }
+    public int UserId { get;}
+    public int EventId { get;}
 
     public RegisterAttendeeDto(int userId, int eventId)
     {

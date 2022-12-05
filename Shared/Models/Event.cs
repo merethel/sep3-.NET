@@ -3,16 +3,16 @@
 public class Event
 {
     public int Id { get; set; }
-    public User Owner { get; set; }
-    public string Title { get; set; }
-    public string Description { get; set; }
-    
-    public string Location { get; set; }
+    public User Owner { get; set; } = null!;
+    public string Title { get; set; } = null!;
+    public string Description { get; set; } = null!;
+
+    public string Location { get; set; } = null!;
     public DateTime DateTime { get; set; }
     
-    public string Category { get; set; }
-    public string Area { get; set; }
-    public List<User> Attendees { get; set; }
+    public string Category { get; set; } = null!;
+    public string Area { get; set; } = null!;
+    public List<User> Attendees { get; set; } = null!;
 
     public Event(User owner, string title, string description, string location, DateTime dateTime, string category, string area, List<User> attendees)
     {

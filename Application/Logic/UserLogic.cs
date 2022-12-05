@@ -1,7 +1,6 @@
 ﻿
 using Application.LogicInterfaces;
 using GrpcClient.ClientInterfaces;
-using Shared;
 using Shared.Dtos;
 using Shared.Models;
 
@@ -9,34 +8,37 @@ namespace Application.Logic;
 
 public class UserLogic : IUserLogic
 {
-    private readonly IUserClient UserClient;
+    private readonly IUserClient _userClient;
 
     public UserLogic(IUserClient userClient)
     {
-        UserClient = userClient;
+        _userClient = userClient;
     }
 
     public async Task<User> CreateAsync(UserCreationDto dto)
     {
-        User? existing = await UserClient.GetByUsernameAsync(dto.Username);
-        
+        User? existing = await _userClient.GetByUsernameAsync(dto.Username);
+
         //QUICKFIX
-        if (existing.Username.Length != 0) 
+        if (existing != null && existing.Username.Length != 0)
             throw new Exception("Username already taken!" + " (ノಠ益ಠ)ノ彡┻━┻");
 
         ValidateData(dto);
-        
-        User created = await UserClient.CreateAsync(dto);
-        
+
+        User created = (await _userClient.CreateAsync(dto))!;
+
         return created;
     }
 
     public async Task<User> ValidateUser(string username, string password)
     {
-        User? existingUser = await UserClient.GetByUsernameAsync(username);
-            
+        User? existingUser = await _userClient.GetByUsernameAsync(username);
+
         //QUICKFIX
-        if (existingUser.Username.Length == 0)
+
+
+        if (existingUser!.Username.Length == 0 || existingUser is null)
+
         {
             throw new Exception("Username not found");
         }
@@ -49,17 +51,17 @@ public class UserLogic : IUserLogic
         return await Task.FromResult(existingUser);
     }
 
-    public async Task<User> getUser(string username)
+    public async Task<User> GetUser(string username)
     {
-        User user = await UserClient.GetByUsernameAsync(username);
+        User user = (await _userClient.GetByUsernameAsync(username))!;
         return user;
     }
 
-    private static void ValidateData(UserCreationDto UserToCreate)
+    private static void ValidateData(UserCreationDto userToCreate)
     {
-        string userName = UserToCreate.Username;
-        string password = UserToCreate.Password;
-        string email = UserToCreate.Email;
+        string userName = userToCreate.Username;
+        string password = userToCreate.Password;
+        string email = userToCreate.Email;
 
         if (userName.Length < 3)
             throw new Exception("Username must be at least 3 characters!" + " (ノಠ益ಠ)ノ彡┻━┻");

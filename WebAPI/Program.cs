@@ -1,6 +1,7 @@
 using System.Text;
 using Application.LogicInterfaces;
 using Application.Logic;
+using GrpcClient.ClientImplementations;
 using GrpcClient.ClientInterfaces;
 using GrpcClient.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;

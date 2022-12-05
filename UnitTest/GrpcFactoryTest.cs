@@ -85,7 +85,7 @@ public class GrpcFactoryTest
     {
         //Arrange
         //Act
-        var userServiceClient = GrpcFactory.getUserClient();
+        var userServiceClient = GrpcFactory.GetUserClient();
 
         //Assert
         Assert.True(userServiceClient is UserService.UserServiceClient);
@@ -96,7 +96,7 @@ public class GrpcFactoryTest
     {
         //Arrange
         //Act
-        var eventServiceClient = GrpcFactory.getEventClient();
+        var eventServiceClient = GrpcFactory.GetEventClient();
         //Assert
         Assert.True(eventServiceClient is EventService.EventServiceClient);
     }
@@ -106,7 +106,7 @@ public class GrpcFactoryTest
         //Arrange
         EventCreationDto dto = TestEventCreationDto;
         //Act
-        EventCreationDtoMessage dtoMessage = GrpcFactory.fromEventCreationDtoToMessage(dto);
+        EventCreationDtoMessage dtoMessage = GrpcFactory.FromEventCreationDtoToMessage(dto);
         //Assert
         Assert.Multiple(() =>
             {
@@ -129,7 +129,7 @@ public class GrpcFactoryTest
         //Arrange
         EventMessage @event = TestEventMessage;
         //Act
-        Event eventMessage = GrpcFactory.fromMessageToEvent(@event);
+        Event eventMessage = GrpcFactory.FromMessageToEvent(@event);
         //Assert
         Assert.Multiple(() =>
             {
@@ -151,7 +151,7 @@ public class GrpcFactoryTest
         //Arrange
         DateTime dateTime = new DateTime(2000,12,1,12,0,0);
         //Act
-        DateTimeMessage dateTimeMessage = GrpcFactory.fromDateTimeToDateTimeMessage(dateTime);
+        DateTimeMessage dateTimeMessage = GrpcFactory.FromDateTimeToDateTimeMessage(dateTime);
         //Assert
         Assert.Multiple(() =>
             {
@@ -177,7 +177,7 @@ public class GrpcFactoryTest
             Min = 0
         };
         //Act
-        DateTime dateTime = GrpcFactory.fromDateTimeMessageToDateTime(dateTimeMessage);
+        DateTime dateTime = GrpcFactory.FromDateTimeMessageToDateTime(dateTimeMessage);
         //Assert
         Assert.Multiple(() =>
             {
@@ -196,7 +196,7 @@ public class GrpcFactoryTest
         //Arrange
         UserMessage userMessage = TestUserMessage;
         //Act
-        User user = GrpcFactory.fromMessageToUser(userMessage);
+        User user = GrpcFactory.FromMessageToUser(userMessage);
         //Assert
         Assert.Multiple(() =>
             {
@@ -215,7 +215,7 @@ public class GrpcFactoryTest
         //Arrange
         UserCreationDto dto = testUserCreationDto;
         //Act
-        UserCreationDtoMessage dtoMessage = GrpcFactory.fromUserCreationDtoToMessage(dto);
+        UserCreationDtoMessage dtoMessage = GrpcFactory.FromUserCreationDtoToMessage(dto);
         //Assert
         Assert.Multiple(() =>
             {
@@ -234,7 +234,7 @@ public class GrpcFactoryTest
         //Arrange
         ListEventMessage listMessage = TestListEventMessage;
         //Act
-        List<Event> list = GrpcFactory.fromListEventMessageToList(listMessage);
+        List<Event> list = GrpcFactory.FromListEventMessageToList(listMessage);
         //Assert
         Assert.That(list.Count == listMessage.Events.Count);
     }
@@ -250,7 +250,7 @@ public class GrpcFactoryTest
             Category = "Category"
         };
         //Act
-        CriteriaDtoMessage criteriaDtoMessage = GrpcFactory.fromCriteriaDtoToMessage(criteriaDto);
+        CriteriaDtoMessage criteriaDtoMessage = GrpcFactory.FromCriteriaDtoToMessage(criteriaDto);
         //Assert
         Assert.Multiple(() =>
             {

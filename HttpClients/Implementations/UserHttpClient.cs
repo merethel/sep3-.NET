@@ -33,7 +33,7 @@ public class UserHttpClient : IUserService
         return user;
     }
 
-    public async Task<int> getUserId(string username)
+    public async Task<int> GetUserId(string username)
     {
         HttpResponseMessage response = await Client.GetAsync("/user?username="+username);
         string result = await response.Content.ReadAsStringAsync();
