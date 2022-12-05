@@ -12,4 +12,7 @@ public class UserCreationDto
         Password = password;
         Email = email;
     }
+    
+    public UserCreationDto()
+    {}
 }

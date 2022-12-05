@@ -92,6 +92,7 @@ else
         await EventService.RegisterAttendeeAsync(userId, eventId);
         msg = "Tilmeldt!";
         events = await EventService.GetEvents();
+        StateHasChanged();
     }
     
     // Jeg har fixet at knapperne bliver disabled/enabled alt efter om du er tilmeldt eller ikke.
