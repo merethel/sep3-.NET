@@ -1,9 +1,9 @@
 ﻿using System;
-using System.Threading.Tasks;
 using Application.Logic;
 using NUnit.Framework;
 using Shared.Dtos;
 using Shared.Models;
+using UnitTest.Mockings;
 
 namespace UnitTest.EventLogicTest;
 

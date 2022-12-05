@@ -1,19 +1,20 @@
 ﻿using System;
-using System.Security.AccessControl;
 using Application.Logic;
 using NUnit.Framework;
 using Shared.Dtos;
 using Shared.Models;
+using UnitTest.EventLogicTest;
+using UnitTest.Mockings;
 
-namespace UnitTest.EventLogicTest;
+namespace UnitTest;
 
 public class UserLogicTest
 {
-    private UserLogic userLogic;
+    private UserLogic _userLogic;
 
     public UserLogicTest()
     {
-        userLogic = new UserLogic(new UserClientMock());
+        _userLogic = new UserLogic(new UserClientMock());
     }
 
     [SetUp]
@@ -34,7 +35,7 @@ public class UserLogicTest
         };
         
         //Act
-        userLogic.CreateAsync(user);
+        _userLogic.CreateAsync(user);
         //Assert
         Assert.Pass();
     }
@@ -52,11 +53,11 @@ public class UserLogicTest
         };
         
         //Act
-        userLogic.CreateAsync(user);
+        _userLogic.CreateAsync(user);
         //Assert
         Assert.Throws<AggregateException>(() =>
         {
-            var result = userLogic.CreateAsync(user).Result;
+            var result = _userLogic.CreateAsync(user).Result;
         });
     }
     
@@ -73,11 +74,11 @@ public class UserLogicTest
         };
         
         //Act
-        userLogic.CreateAsync(user);
+        _userLogic.CreateAsync(user);
         //Assert
         Assert.Throws<AggregateException>(() =>
         {
-            var result = userLogic.CreateAsync(user).Result;
+            var result = _userLogic.CreateAsync(user).Result;
         });
     }
     
@@ -94,7 +95,7 @@ public class UserLogicTest
         };
         
         //Act
-        User userReply = userLogic.GetUser(user.Username).Result;
+        User userReply = _userLogic.GetUser(user.Username).Result;
         //Assert
         Assert.AreEqual(user.Username, userReply.Username);
     }
@@ -112,11 +113,11 @@ public class UserLogicTest
         };
         
         //Act
-        userLogic.CreateAsync(user);
+        _userLogic.CreateAsync(user);
         //Assert
         Assert.Throws<AggregateException>(() =>
         {
-            var result = userLogic.CreateAsync(user).Result;
+            var result = _userLogic.CreateAsync(user).Result;
         });
     }
     
@@ -133,11 +134,11 @@ public class UserLogicTest
         };
         
         //Act
-        userLogic.CreateAsync(user);
+        _userLogic.CreateAsync(user);
         //Assert
         Assert.Throws<AggregateException>(() =>
         {
-            var result = userLogic.CreateAsync(user).Result;
+            var result = _userLogic.CreateAsync(user).Result;
         });
     }
     
@@ -151,7 +152,7 @@ public class UserLogicTest
         //Arrange
         //Act
         //Assert
-        Assert.AreEqual("username", userLogic.ValidateUser("username", "password").Result.Username);
+        Assert.AreEqual("username", _userLogic.ValidateUser("username", "password").Result.Username);
     }
     
     [Test]
@@ -162,7 +163,7 @@ public class UserLogicTest
         //Assert
         Assert.Throws<AggregateException>(() =>
         {
-            var result = userLogic.ValidateUser("username", "wrongpassword").Result;
+            var result = _userLogic.ValidateUser("username", "wrongpassword").Result;
         });
     }
     
