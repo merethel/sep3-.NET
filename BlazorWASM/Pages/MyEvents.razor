@@ -5,45 +5,44 @@
 @using global::Shared.Dtos
 @inject IEventService EventService
 @inject IUserService UserService
-@inject IAuthService AuthService
 
-<h3 style="text-align: center">My Events</h3>
+<h3 style="text-align: center"><b>Mine begivenheder</b></h3>
 
-@if (events == null)
+@if (_events == null)
 {
-    <p>Loading...</p>
+    <p>Indlæser...</p>
 }
-else if (!events.Any())
+else if (!_events.Any())
 {
-    <p>No Events available</p>
+    <p>Ingen begivenheder at finde</p>
 }
 else
 {
-    @foreach (Event item in events)
+    @foreach (Event item in _events)
     {
         <div class="card">
             <div class="boxes">
-                <b>Title:</b>
+                <b>Titel:</b>
                     <label>@item.Title</label>
             </div>
              
         <div class="boxes">
-            <b>Owner:</b>
+            <b>Ejer:</b>
             <label>@item.Owner.Username</label>
         </div>
         
             <div class="boxes">
-                <b>Location:</b>
+                <b>Lokation:</b>
                 <label>@item.Location</label>
             </div>
 
             <div class="boxes">
-                <b>Date and time:</b>
+                <b>Dato og tid:</b>
                 <label>@item.DateTime</label>
             </div>
                 
             <div class="boxes">
-                <b>Description:</b>
+                <b>Beskrivelse:</b>
                 <div id="Description">
                     @item.Description
                 </div>
@@ -51,8 +50,8 @@ else
                 <AuthorizeView>
                     <div class="button-container">
                         <button class="confirm"
-                                @onclick="@(() => CancelEvent(item.Id))"  disabled="@Disabled(item.Id)">
-                            @GetButtonText(item.Id)
+                                @onclick="@(() => CancelEvent(item.Id))">
+                            Aflys begivenhed
                         </button>
                     </div>
                 </AuthorizeView>
@@ -66,11 +65,10 @@ else
 
 
 @code {
-    private ICollection<Event>? events;
-    private string msg = "";
-    private int userId;
-    private bool shouldbedisabled;
-    
+    private ICollection<Event>? _events;
+    private int _userId;
+    private string? _msg;
+
     protected override async Task OnInitializedAsync()
     {
         try
@@ -84,18 +82,18 @@ else
                     userId = Int32.Parse(claim.Value);
                 }
             }*/
-            userId = await UserService.GetUserId(JwtAuthService.Username);
-            Console.WriteLine(userId);
+            _userId = await UserService.GetUserId(JwtAuthService.Username!);
+            Console.WriteLine(_userId);
             
-            events = await EventService.GetEvents(new CriteriaDto
+            _events = await EventService.GetEvents(new CriteriaDto
             {
-                OwnerId = userId
+                OwnerId = _userId
             });
         }
         catch (Exception e)
         {
             Console.WriteLine(e);
-            msg = e.Message;
+            _msg = e.Message;
         }
         
     }
@@ -103,10 +101,10 @@ else
     //knappen disables når du trykker men med et delay, og i dette delay kan du trykke på knappen flere gange hvis du er hurtig.
     private async Task CancelEvent(int eventId)
     {
-        var userId = this.userId;
+        var userId = this._userId;
         Console.WriteLine(eventId);
         await EventService.CancelAsync(eventId);
-        events = await EventService.GetEvents(new CriteriaDto()
+        _events = await EventService.GetEvents(new CriteriaDto()
         {
             OwnerId = userId
         });
@@ -118,20 +116,4 @@ else
     //Der står med grøn skrift "Tilmeldt!" på alle eventsne når man trykker på en tilmend knap.
     //Den opdatere ikke i realtime, så når du har trykket tilmeld disabler den først knappen når du har reloadet siden, det skal også kigges på.
     
-    private bool Disabled(int eventId)
-    {
-        return false;
-    }
-
-    private string GetButtonText(int eventId)
-    {
-        if (Disabled(eventId))
-        {
-            return "Aflyst";
-        }
-        else
-        {
-            return "Aflys Begivenhed";
-        }
-    }
 }

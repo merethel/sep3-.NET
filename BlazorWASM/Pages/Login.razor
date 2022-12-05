@@ -1,8 +1,6 @@
 ﻿@page "/Login"
 @using HttpClients.ClientInterfaces
-@inject IAuthService authService
-@inject NavigationManager navMgr
-
+@inject IAuthService AuthService
 
 <link rel="stylesheet" href="css/Login.css">
 
@@ -14,24 +12,24 @@
             </div>
             <div class="container">
                 <label>
-                    <b>Username</b>
+                    <b>Brugernavn</b>
                 </label>
-                <input type="text" placeholder="Enter Username" @bind="userName" @bind:event="oninput" @onkeydown="@Enter">
+                <input type="text" placeholder="Enter Username" @bind="_userName" @bind:event="oninput" @onkeydown="@Enter">
 
                 <label>
-                    <b>Password</b>
+                    <b>Kodeord</b>
                 </label>
-                <input type="password" placeholder="Enter Password" @bind="password" @bind:event="oninput" @onkeydown="@Enter">
+                <input type="password" placeholder="Enter Password" @bind="_password" @bind:event="oninput" @onkeydown="@Enter">
                 <div class="button-container">
-                    <button class="confirm" @onclick="LoginAsync" disabled="@(string.IsNullOrEmpty(userName) || string.IsNullOrEmpty(password))">Login</button><br/>
-                    <span class="psw">New to 3vent4u? <a class="signup-link" href="/CreateUser">Sign up</a></span>
+                    <button class="confirm" @onclick="LoginAsync" disabled="@(string.IsNullOrEmpty(_userName) || string.IsNullOrEmpty(_password))">Login</button><br/>
+                    <span class="psw">Ny på 3vent4u? <a class="signup-link" href="/CreateUser">Opret konto</a></span>
                 </div><br/>
 
-                @if (!string.IsNullOrEmpty(errorLabel))
+                @if (!string.IsNullOrEmpty(_errorLabel))
                 {
                     <div class="field">
                         <label style="color: red">
-                            @errorLabel
+                            @_errorLabel
                         </label>
                     </div>
                 }
@@ -40,35 +38,35 @@
     </NotAuthorized>
     <Authorized>
         <div class="card">
-            <h3>Hello, @context.User.Identity.Name</h3>
+            <h3>Velkommen, @context.User.Identity!.Name</h3>
         </div>
     </Authorized>
 </AuthorizeView>
 
 @code {
-    private string userName;
-    private string password;
-    private string errorLabel;
+    private string _userName = "";
+    private string _password = "";
+    private string _errorLabel = "";
 
     private async Task LoginAsync()
     {
-        errorLabel = "";
+        _errorLabel = "";
         try
         {
-            await authService.LoginAsync(userName, password);
+            await AuthService.LoginAsync(_userName, _password);
         }
         catch (Exception e)
         {
             Console.WriteLine(e);
-            errorLabel = $"Error: {e.Message}";
+            _errorLabel = $"Error: {e.Message}";
         }
     }
 
-    private void Enter(KeyboardEventArgs e)
+    private async Task Enter(KeyboardEventArgs e)
     {
         if (e.Code == "Enter" || e.Code == "NumpadEnter")
         {
-            LoginAsync();
+            await LoginAsync();
         }
     }
     

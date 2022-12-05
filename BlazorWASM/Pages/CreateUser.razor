@@ -5,63 +5,63 @@
 
 <link href="css/Login.css" rel="stylesheet"/>
 
-<h3 style="text-align: center">Create Account</h3>
+<h3 style="text-align: center">Opret konto</h3>
 
 <div class="form">
     <div class="container">
         <label>
-            <b>Username</b>
+            <b>Brugernavn</b>
         </label><br/>
-        <input type="text" placeholder="Enter Username" @bind="Username" @bind:event="oninput"/><br/>
+        <input type="text" placeholder="Enter Username" @bind="_username" @bind:event="oninput"/><br/>
 
         <label>
-            <b>Password</b>
+            <b>Kodeord</b>
         </label><br/>
-        <input type="password" placeholder="Enter Password" @bind="Password" @bind:event="oninput"/><br/>
+        <input type="password" placeholder="Enter Password" @bind="_password" @bind:event="oninput"/><br/>
 
         <label>
             <b>Email</b>
         </label><br/>
-        <input type="text" placeholder="Enter Email" @bind="Email" @bind:event="oninput"/><br/>
+        <input type="text" placeholder="Enter Email" @bind="_email" @bind:event="oninput"/><br/>
         
         <label>
-            <b>Role</b>
+            <b>Rolle</b>
         </label><br/>
-                <select class="form-control" @bind="@Role" style="width: 200px; ">
+                <select class="form-control" @bind="@_role" style="width: 200px; ">
                     <option disabled selected value> -- Vælg en rolle -- </option>
-                    @foreach (var r in roles)
+                    @foreach (var r in _roles)
                     {
                         <option value="@r"> @r </option>
                     }
                 </select>
         
         
-        <input type="checkbox" @bind="checkbox" @bind:event="oninput"/> <span class="checkboxmsg">Do you agree to sell us your soul and your first born child?</span><br/>
-        @if (!string.IsNullOrEmpty(ResultMsg))
+        <input type="checkbox" @bind="_checkbox" @bind:event="oninput"/> <span class="checkboxmsg">Do you agree to sell us your soul and your first born child?</span><br/>
+        @if (!string.IsNullOrEmpty(_resultMsg))
         {
-            <label style="color: @Color">@ResultMsg</label>
+            <label style="color: @_color">@_resultMsg</label>
         }
 
     </div>
     <div class="button-container">
         <button class="confirm"
-            disabled="@(string.IsNullOrEmpty(Username) || string.IsNullOrEmpty(Password) || string.IsNullOrEmpty(Email) || !checkbox)"
+            disabled="@(string.IsNullOrEmpty(_username) || string.IsNullOrEmpty(_password) || string.IsNullOrEmpty(_email) || !_checkbox)"
             @onclick="Create">
-            Create
+            Opret
         </button>
     </div>
 </div>
 
 
 @code {
-    private string Username = "";
-    private string Password = "";
-    private string Email = "";
-    private string Role = "";
-    private string ResultMsg = "";
-    private string Color = "";
-    private bool checkbox = false;
-    List<string> roles = new List<string>()
+    private string _username = "";
+    private string _password = "";
+    private string _email = "";
+    private string _role = "";
+    private string _resultMsg = "";
+    private string _color = "";
+    private bool _checkbox = false;
+    List<string> _roles = new List<string>()
     {
         "User",
         "Company",
@@ -71,22 +71,22 @@
 
     private async Task Create()
     {
-        ResultMsg = "";
+        _resultMsg = "";
 
         try
         {
-            await UserService.Create(new UserCreationDto(Username, Password, Email, Role));
-            Username = "";
-            Password = "";
-            Email = "";
-            ResultMsg = "User created!";
-            Color = "green";
+            await UserService.Create(new UserCreationDto(_username, _password, _email, _role));
+            _username = "";
+            _password = "";
+            _email = "";
+            _resultMsg = "User created!";
+            _color = "green";
         }
         catch (Exception e)
         {
             Console.WriteLine(e);
-            ResultMsg = e.Message;
-            Color = "red";
+            _resultMsg = e.Message;
+            _color = "red";
         }
     }
 

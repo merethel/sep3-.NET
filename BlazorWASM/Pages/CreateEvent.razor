@@ -3,53 +3,52 @@
 @using Microsoft.AspNetCore.Components
 @using global::Shared.Dtos
 @using HttpClients.Implementations
-@using Syncfusion.Blazor
-@using Syncfusion.Blazor.DropDowns
+
 @inject IEventService EventService
 
 <link href="css/Login.css" rel="stylesheet"/>
-<h3 style="text-align: center">Create Your Event</h3>
+<b><h3 style="text-align: center">Opret din begivenhed</h3></b>
 
 
 <div class="card">
     <div>
         <label>
-            <b>Title</b>
+            <b>Titel</b>
         </label><br/>
-        <input class="full-width" type="text" @bind="Title" @bind:event="oninput"/>
+        <input class="full-width" type="text" @bind="_title" @bind:event="oninput"/>
     </div>
     <div>
         <label>
-            <b>Description</b>
+            <b>Beskrivelse</b>
         </label><br/>
-        <input class="full-width" type="text" @bind="Description" @bind:event="oninput"/>
+        <input class="full-width" type="text" @bind="_description" @bind:event="oninput"/>
     </div>
     <div>
         <label>
-            <b>Location</b>
+            <b>Lokation</b>
         </label><br/>
-        <input class="full-width" type="text" @bind="location" @bind:event="oninput"/>
+        <input class="full-width" type="text" @bind="_location" @bind:event="oninput"/>
     </div>
     <div>
         <label>
-            <b>Date</b>
+            <b>Dato</b>
         </label><br/>
-        <a style="font-size: small">Day</a> <input class="smallinput" type="text" @bind="day" @bind:event="oninput"/>
-        <a style="font-size: small">Month</a> <input class="smallinput" type="text" @bind="month" @bind:event="oninput"/>
-        <a style="font-size: small">Year</a> <input style="width: 60px" class="smallinput" type="text" @bind="year" @bind:event="oninput"/>
+        <a style="font-size: small">Day</a> <input class="smallinput" type="text" @bind="_day" @bind:event="oninput"/>
+        <a style="font-size: small">Måned</a> <input class="smallinput" type="text" @bind="_month" @bind:event="oninput"/>
+        <a style="font-size: small">År</a> <input style="width: 60px" class="smallinput" type="text" @bind="_year" @bind:event="oninput"/>
     </div>
     <div>
         <label>
-            <b>Time</b>
+            <b>Tid</b>
         </label><br/>
-        <input class="smallinput" type="text" @bind="hour" @bind:event="oninput"/><b style="font-size: large"> :</b>
-        <input class="smallinput" type="text" @bind="min" @bind:event="oninput"/>
+        <input class="smallinput" type="text" @bind="_hour" @bind:event="oninput"/><b style="font-size: large"> :</b>
+        <input class="smallinput" type="text" @bind="_min" @bind:event="oninput"/>
     </div>
     
     <div>
     <select class="form-control" @bind="@Category" style="width: 200px; float: left" >
         <option disabled selected value> -- Vælg en kategori -- </option>
-        @foreach (var c in categories)
+        @foreach (var c in _categories)
         {
             <option value="@c"> @c </option>
         }
@@ -65,50 +64,50 @@
         </div>
     
     <div>
-        @if (!string.IsNullOrEmpty(ResultMsg))
+        @if (!string.IsNullOrEmpty(_resultMsg))
         {
-            <label style="color: @Color">@ResultMsg</label>
+            <label style="color: @_color">@_resultMsg</label>
         }
     </div>
     <div class="button-container">
-        <button class="confirm-button" @onclick="Create" disabled="@(string.IsNullOrEmpty(Title) || string.IsNullOrEmpty(Description) || string.IsNullOrEmpty(year) || string.IsNullOrEmpty(month) || string.IsNullOrEmpty(day) || string.IsNullOrEmpty(hour) || string.IsNullOrEmpty(min))">Create Event</button>
+        <button class="confirm-button" @onclick="Create" disabled="@(string.IsNullOrEmpty(_title) || string.IsNullOrEmpty(_description) || string.IsNullOrEmpty(_year) || string.IsNullOrEmpty(_month) || string.IsNullOrEmpty(_day) || string.IsNullOrEmpty(_hour) || string.IsNullOrEmpty(_min))">Opret</button>
     </div>
 </div>
 
 
 @code {
-    private string Title = "";
-    private string Description = "";
+    private string _title = "";
+    private string _description = "";
 
-    private string year = "";
-    private string month = "";
-    private string day = "";
+    private string _year = "";
+    private string _month = "";
+    private string _day = "";
 
-    private string hour = "";
-    private string min = "";
+    private string _hour = "";
+    private string _min = "";
 
-    private DateTime DateTime;
-    private string ResultMsg = "";
-    private string Color = "";
-    private string? username = "";
-    private string location = "";
-    private string category = "";
-    private string area = "";
+    private DateTime _dateTime;
+    private string _resultMsg = "";
+    private string _color = "";
+    private string? _username = "";
+    private string _location = "";
+    private string _category = "";
+    private string _area = "";
 
     string Category
     {
-        get => category;
-        set {category = value;}
+        get => _category;
+        set {_category = value;}
     }
 
     string Area
     {
-        get => area;
-        set {area = value;}
+        get => _area;
+        set {_area = value;}
     }
 
     
-    List<string> categories = new List<string>()
+    List<string> _categories = new List<string>()
     {
         "Motion",
         "Klima",
@@ -128,19 +127,19 @@
     
     private async Task Create()
     {
-        ResultMsg = "";
+        _resultMsg = "";
 
-        Console.WriteLine(area);
-        Console.WriteLine(category);
+        Console.WriteLine(_area);
+        Console.WriteLine(_category);
         
         try
         {
-            DateTime = new DateTime(
-                Int32.Parse(year),
-                Int32.Parse(month),
-                Int32.Parse(day),
-                Int32.Parse(hour),
-                Int32.Parse(min),
+            _dateTime = new DateTime(
+                Int32.Parse(_year),
+                Int32.Parse(_month),
+                Int32.Parse(_day),
+                Int32.Parse(_hour),
+                Int32.Parse(_min),
                 0);
         }
         
@@ -148,49 +147,36 @@
         
         catch (Exception e)
         {
-            Color = "red";
-            ResultMsg = "Invalid date or time";
+            _color = "red";
+            _resultMsg = "Invalid date or time";
             return;
         }
 
         try
         {
-            username = JwtAuthService.Username;
-            await EventService.CreateAsync(new EventCreationDto(username, Title, Description, location, DateTime, category, area));
-            Title = "";
-            Description = "";
-            location = "";
-            year = "";
-            month = "";
-            day = "";
-            hour = "";
-            min = "";
-            category = "";
-            area = "";
+            _username = JwtAuthService.Username;
+            await EventService.CreateAsync(new EventCreationDto(_username!, _title, _description, _location, _dateTime, _category, _area));
+            _title = "";
+            _description = "";
+            _location = "";
+            _year = "";
+            _month = "";
+            _day = "";
+            _hour = "";
+            _min = "";
+            _category = "";
+            _area = "";
 
-            DateTime = DateTime.MaxValue;
+            _dateTime = DateTime.MaxValue;
 
-            ResultMsg = "Event created!";
-            Color = "green";
+            _resultMsg = "Event created!";
+            _color = "green";
         }
         catch (Exception e)
         {
             Console.WriteLine(e);
-            ResultMsg = e.Message;
-            Color = "red";
+            _resultMsg = e.Message;
+            _color = "red";
         }
     }
-
-    private Task bindArea(string area)
-    {
-        this.area = area;
-        return Task.FromResult(area);
-    }
-    
-    private Task bindCategory(string category)
-    {
-        this.category = category;
-        return Task.FromResult(category);
-    }
-
 }
