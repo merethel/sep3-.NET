@@ -9,6 +9,14 @@
     &lt;TestId&gt;NUnit3x::5BC2D6C7-81E3-4366-A286-4B1822FAFF5C::net6.0::UnitTest.EventLogicTest.EventLogicTest.TestThatAttendeeListCanHaveMultipleAttendees&lt;/TestId&gt;&#xD;
     &lt;TestId&gt;NUnit3x::5BC2D6C7-81E3-4366-A286-4B1822FAFF5C::net6.0::UnitTest.EventLogicTest.EventLogicTest.CreateEvent&lt;/TestId&gt;&#xD;
     &lt;TestId&gt;NUnit3x::D6F78DE8-BB27-4E1A-A6B9-5A73DAED3B3A::net6.0::IntegrationTest.EventHttpClientIntegrationTest.TestRegisterAttendee&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::5BC2D6C7-81E3-4366-A286-4B1822FAFF5C::net6.0::UnitTest.EventLogicTest.EventLogicTest.CreateEventWithEmptyTitleThrowsException&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::5BC2D6C7-81E3-4366-A286-4B1822FAFF5C::net6.0::UnitTest.EventLogicTest.EventLogicTest.TitleWithMoreThan32CharThrowsException&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::5BC2D6C7-81E3-4366-A286-4B1822FAFF5C::net6.0::UnitTest.EventLogicTest.EventLogicTest.EmptyDescriptionThrowsException&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::5BC2D6C7-81E3-4366-A286-4B1822FAFF5C::net6.0::UnitTest.EventLogicTest.EventLogicTest.EmptyLocationThrowsException&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::D6F78DE8-BB27-4E1A-A6B9-5A73DAED3B3A::net6.0::IntegrationTest.EventHttpClientIntegrationTest.TestCreateEvent&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::D6F78DE8-BB27-4E1A-A6B9-5A73DAED3B3A::net6.0::IntegrationTest.UserHttpClientIntegrationTest.TestCreateUser&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::D6F78DE8-BB27-4E1A-A6B9-5A73DAED3B3A::net6.0::IntegrationTest.JwtAuthHttpClientIntegrationTest.TestCreateEvent&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::D6F78DE8-BB27-4E1A-A6B9-5A73DAED3B3A::net6.0::IntegrationTest.JwtAuthHttpClientIntegrationTest.TestLogin&lt;/TestId&gt;&#xD;
   &lt;/TestAncestor&gt;&#xD;
 &lt;/SessionState&gt;</s:String>
 </wpf:ResourceDictionary>

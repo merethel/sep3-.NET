@@ -29,9 +29,10 @@ public class UserHttpClientIntegrationTest
         //Arrange
         UserCreationDto dto = new UserCreationDto()
         {
-            Username = "testUser1",
+            Username = "testUser2",
             Email = "email@gmail.com",
-            Password = "password"
+            Password = "password",
+            Role = "User"
         };
         //Act
         User user = _userHttpClient.Create(dto).Result;

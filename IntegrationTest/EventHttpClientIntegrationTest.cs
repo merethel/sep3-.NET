@@ -35,7 +35,9 @@ public class EventHttpClientIntegrationTest
             Title = "title",
             Description = "description",
             Location = "location",
-            DateTime = DateTime.Now.AddMonths(2)
+            DateTime = DateTime.Now.AddMonths(2),
+            Category = "category",
+            Area = "area"
         };
         //Act
         var result = _eventHttpClient.CreateAsync(dto).Result;
