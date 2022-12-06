@@ -49,7 +49,7 @@ public class EventHttpClientIntegrationTest
         //Arrange
         
         //Act
-        var result = _eventHttpClient.GetEvents().Result;
+        var result = _eventHttpClient.GetEvents(new CriteriaDto()).Result;
 
         //Assert
         Assert.IsInstanceOf<List<Event>>(result);

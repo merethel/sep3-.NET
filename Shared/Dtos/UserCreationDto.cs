@@ -17,9 +17,5 @@ public class UserCreationDto
     }
 
     public UserCreationDto()
-    {
-    }
-    
-    public UserCreationDto()
     {}
 }

@@ -39,24 +39,4 @@ public class UserHttpClientIntegrationTest
         //Assert
         Assert.AreEqual(dto.Username, user.Username);
     }
-    
-    [Test]
-    public void TestGetUserId()
-    {
-        //Arrange
-        UserCreationDto dto = new UserCreationDto()
-        {
-            Username = "testUser2",
-            Email = "email@gmail.com",
-            Password = "password"
-        };
-        //Act
-        User user = _userHttpClient.Create(dto).Result;
-        
-        
-        int id = _userHttpClient.getUserId(user.Username).Result;
-
-        //Assert
-        Assert.AreEqual(user.Id, id);
-    }
 }
