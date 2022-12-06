@@ -5,7 +5,7 @@ using GrpcClient.ClientInterfaces;
 using Shared.Dtos;
 using Shared.Models;
 
-namespace UnitTest.EventLogicTest;
+namespace UnitTest.Mockings;
 
 public class EventClientMock : IEventClient
 {
