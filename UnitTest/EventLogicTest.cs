@@ -26,7 +26,6 @@ public class EventLogicTest
     public void CreateEvent()
     {
         //Arrange
-
         User user = new User
         {
             Email = "mail@via.dk",
@@ -40,14 +39,28 @@ public class EventLogicTest
             Description = "description",
             Location = "location",
             DateTime = DateTime.Now.AddMonths(2),
-            Username = user.Username
+            Username = user.Username,
+            Area = "area",
+            Category = "category"
         };
          
         //Act
-        eventLogic.CreateAsync(eventToCreate);
+        Event eventToReturn = eventLogic.CreateAsync(eventToCreate).Result;
+        
         
         //Assert
-        Assert.Pass();
+        Assert.Multiple(() =>
+        {
+            Assert.That(eventToReturn.Area.Equals(eventToCreate.Area));
+            Assert.That(eventToReturn.Category.Equals(eventToCreate.Category));
+            Assert.That(eventToReturn.DateTime.Day == eventToCreate.DateTime.Day);
+            Assert.That(eventToReturn.Description.Equals(eventToCreate.Description));
+            Assert.That(eventToReturn.Location.Equals(eventToCreate.Location));
+            Assert.That(eventToReturn.Title.Equals(eventToCreate.Title));
+            Assert.That(eventToReturn.Area.Equals(eventToCreate.Area));
+            Assert.That(eventToReturn.Owner.Username.Equals(eventToCreate.Username));
+
+        });
     }
     
     //---------- Title must be 3 characters
@@ -71,7 +84,9 @@ public class EventLogicTest
             Description = "description",
             Location = "location",
             DateTime = DateTime.Now.AddMonths(2),
-            Username = user.Username
+            Username = user.Username,
+            Category = "category",
+            Area = "area"
         };
          
         //Act
@@ -101,13 +116,14 @@ public class EventLogicTest
             Description = "description",
             Location = "location",
             DateTime = DateTime.Now.AddMonths(2),
-            Username = user.Username
+            Username = user.Username,
+            Category = "category",
+            Area = "area"
         };
          
         //Act
+        
         //Assert
-
-
         Assert.Throws<AggregateException>(() =>
         {
             var result = eventLogic.CreateAsync(eventToCreate).Result;
@@ -131,13 +147,14 @@ public class EventLogicTest
             Description = "",
             Location = "location",
             DateTime = DateTime.Now.AddMonths(2),
-            Username = user.Username
+            Username = user.Username,
+            Category = "category",
+            Area = "area"
         };
          
         //Act
+        
         //Assert
-
-
         Assert.Throws<AggregateException>(() =>
         {
             var result = eventLogic.CreateAsync(eventToCreate).Result;
@@ -161,13 +178,14 @@ public class EventLogicTest
             Description = "description",
             Location = "",
             DateTime = DateTime.Now.AddMonths(2),
-            Username = user.Username
+            Username = user.Username,
+            Category = "category",
+            Area = "area"
         };
          
         //Act
+        
         //Assert
-
-
         Assert.Throws<AggregateException>(() =>
         {
             var result = eventLogic.CreateAsync(eventToCreate).Result;

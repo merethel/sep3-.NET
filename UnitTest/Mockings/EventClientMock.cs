@@ -14,7 +14,7 @@ public class EventClientMock : IEventClient
         User user = new User();
         user.Username = "username";
         Event eventToReturn = new Event(user, eventToCreate.Title, eventToCreate.Description,
-            eventToCreate.Location, eventToCreate.DateTime,"category", "area", new List<User>())
+            eventToCreate.Location, eventToCreate.DateTime,eventToCreate.Category, eventToCreate.Area, new List<User>())
         {
             Id = 1
         };
