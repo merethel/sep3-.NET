@@ -61,13 +61,19 @@ public class EventHttpClientIntegrationTest
     public void TestRegisterAttendee()
     {
         //Arrange
-        
+
         //Act
-        var result = _eventHttpClient.RegisterAttendeeAsync(1, 1).Result;
+        var result = _eventHttpClient.RegisterAttendeeAsync(21, 19).Result;
+        User userToCreate = null;
+        foreach (var user in result.Attendees)
+        {
+            if (user.Id == 21)
+            {
+                userToCreate = user;
+            }
+        }
 
         //Assert
-        Assert.IsInstanceOf<Event>(result);
+        Assert.True(result.Attendees.Contains(userToCreate));
     }
-    
-
 }

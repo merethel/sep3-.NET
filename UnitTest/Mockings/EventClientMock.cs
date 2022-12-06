@@ -62,29 +62,7 @@ public class EventClientMock : IEventClient
     //Disse metoder sender bare data videre, og behøver derfor ikke testes
     public Task<Event> RegisterAttendeeAsync(int userId, int eventId)
     {
-        User user = new User();
-        user.Username = "username";
-        user.Id = 1;
-
-        User user1 = new User();
-        user1.Id = 2;
-        
-        User user2 = new User();
-        user2.Id = 3;
-
-        List<User> users = new List<User>
-        {
-            user1,
-            user2
-        };
-        
-        Event @event = new Event(user, "Title", "Description",
-            "Location", DateTime.Now,"category", "area", users)
-        {
-            Id = 1
-        };
-        
-        return Task.FromResult(@event);
+        throw new NotImplementedException();
     }
 
     public Task<Event?> CancelAsync(int eventId)
