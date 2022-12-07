@@ -7,4 +7,5 @@ public interface IUserGrpcClient
 {
     Task<User?> CreateAsync(UserCreationDto userDto);
     Task<User?> GetByUsernameAsync(string username);
+    Task<User?> DeleteUserAsync(int userId);
 }

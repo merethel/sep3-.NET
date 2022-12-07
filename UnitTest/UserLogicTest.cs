@@ -166,5 +166,5 @@ public class UserLogicTest
             var result = _userLogic.ValidateUser("username", "wrongpassword").Result;
         });
     }
-    
+
 }
