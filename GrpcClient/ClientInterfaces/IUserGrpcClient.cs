@@ -8,4 +8,5 @@ public interface IUserClient
     Task<User?> CreateAsync(UserCreationDto userDto);
     Task<User?> GetByIdAsync(int id);
     Task<User?> GetByUsernameAsync(string username);
+    Task<User?> DeleteUserAsync(int userId);
 }

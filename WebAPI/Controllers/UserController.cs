@@ -1,4 +1,5 @@
 ﻿using Application.LogicInterfaces;
+using GrpcService1;
 using Shared.Dtos;
 using Microsoft.AspNetCore.Mvc;
 using Shared.Models;
@@ -42,6 +43,21 @@ public class UserController : ControllerBase
             return user;
         }
         
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return StatusCode(500, e.Message);
+        }
+    }
+
+    [HttpDelete]
+    public async Task<ActionResult<User>> DeleteUser(IntRequest userId)
+    {
+        try
+        {
+            User user = await UserLogic.DeleteUser(userId.Int);
+            return user;
+        }
         catch (Exception e)
         {
             Console.WriteLine(e);

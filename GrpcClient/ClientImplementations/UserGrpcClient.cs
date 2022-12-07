@@ -32,4 +32,12 @@ public class UserService : IUserClient
         User userToReturn = GrpcFactory.FromMessageToUser(replyMessage);
         return userToReturn;
     }
+
+    public async Task<User?> DeleteUserAsync(int userId)
+    {
+        var client = GrpcFactory.GetUserClient();
+        UserMessage replyMessage = await client.deleteUserAsync(new IntRequest() { Int = userId });
+        User userToReturn = GrpcFactory.FromMessageToUser(replyMessage);
+        return userToReturn;
+    }
 }
