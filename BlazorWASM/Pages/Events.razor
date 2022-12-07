@@ -8,6 +8,28 @@
 
 <h3 style="text-align: center">Begivenheder</h3>
 
+<div>
+    <select class="form-control" @bind="@Category" style="width: 200px; float: left" >
+        <option disabled selected value> -- Vælg en kategori -- </option>
+        @foreach (var c in _categories)
+        {
+            <option value="@c"> @c </option>
+        }
+    </select>
+    
+    <select class="form-control" @bind="@Area" style="width: 200px; float: left">
+        <option disabled selected value> -- Vælg et område -- </option>
+        @foreach (var a in _areas)
+        {
+            <option value="@a"> @a </option>
+        }
+    </select>    
+    <div class="button-container">
+        <button class="confirm-button" @onclick="Filter">Filtrer</button>
+    </div>
+</div>
+
+
 @if (_events == null)
 {
     <p>Indlæser...</p>
@@ -16,8 +38,10 @@ else if (!_events.Any())
 {
     <p>Ingen begivenheder at finde</p>
 }
+
 else
 {
+    <div>
 
     @foreach (Event item in _events)
     {
@@ -71,6 +95,7 @@ else
         <br/>
                                 
     }
+    </div>
 
 }
 
@@ -79,6 +104,37 @@ else
     private ICollection<Event>? _events;
     private string _msg = "";
     private int _userId;
+    private string _category = null;
+    private string _area = null;
+
+    string Category
+    {
+        get => _category;
+        set {_category = value;}
+    }
+
+    string Area
+    {
+        get => _area;
+        set {_area = value;}
+    }
+    
+    List<string> _categories = new List<string>()
+    {
+        "Motion",
+        "Klima",
+        "Spil"
+    };
+    
+    List<string> _areas = new List<string>()
+    {
+        "Sjælland",
+        "Jylland",
+        "Fyn",
+        "Bornholm",
+        "Færøerne",
+        "Grønland"
+    };
 
 
     protected override async Task OnInitializedAsync()
@@ -152,4 +208,17 @@ else
         }
     }
 
+    private async Task Filter()
+    {
+
+        if (_category != null || _area != null)
+        {
+            _events = await EventService.GetEvents(new CriteriaDto(0,_category,_area));
+        }
+        
+        else
+        {
+            throw new Exception("Intet filter valgt");
+        }
+    }
 }

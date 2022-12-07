@@ -43,18 +43,49 @@ public class EventHttpClient : IEventService
     {
         string? jwt = JwtAuthService.Jwt;
 
+        bool firstIsSet = false;
         string queryString = "";
-        if (criteriaDto.OwnerId != null)
-            queryString += "?ownerId=" + criteriaDto.OwnerId;       
+        if (criteriaDto.OwnerId != 0)
+        {
+            if (firstIsSet)
+            {
+                queryString += "&ownerId=" + criteriaDto.OwnerId;
+            }
+            else
+            {
+                queryString += "?ownerId=" + criteriaDto.OwnerId;
+                firstIsSet = true;
+            }
+        }
+    
+            
         if (criteriaDto.Area != null)
-            queryString += "?area=" + criteriaDto.Area;        
+            if (firstIsSet)
+            {
+                queryString += "&area=" + criteriaDto.Area;
+            }
+            else
+            {
+                queryString += "?area=" + criteriaDto.Area;
+                firstIsSet = true;
+            }   
         if (criteriaDto.Category != null)
-            queryString += "?category=" + criteriaDto.Category;
+            if (firstIsSet)
+            {
+                queryString += "&category=" + criteriaDto.Category;
+            }
+            else
+            {
+                queryString += "?category=" + criteriaDto.Category;
+                firstIsSet = true;
+            }
+        Console.WriteLine("QUERYSTRING ===========" + queryString);
         
         HttpRequestMessage requestMessage = new HttpRequestMessage(HttpMethod.Get, "/event" + queryString);
         requestMessage.Headers.Add("Authorization", "Bearer " + jwt);
         HttpResponseMessage response = await Client.SendAsync(requestMessage);
-
+        
+        
         string result = await response.Content.ReadAsStringAsync();
         if (!response.IsSuccessStatusCode)
         {
@@ -116,4 +147,5 @@ public class EventHttpClient : IEventService
         })!;
         return eventToReturn;
     }
+    
 }

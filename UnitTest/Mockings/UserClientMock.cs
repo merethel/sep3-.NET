@@ -5,7 +5,7 @@ using Shared.Models;
 
 namespace UnitTest.Mockings;
 
-public class UserClientMock : IUserClient
+public class UserGrpcClientMock : IUserGrpcClient
 {
     public Task<User> CreateAsync(UserCreationDto user)
     {

@@ -6,7 +6,7 @@ using Shared.Models;
 
 namespace GrpcClient.ClientImplementations;
 
-public class EventService : IEventClient
+public class EventGrpcService : IEventGrpcClient
 {
     public async Task<Event?> CreateAsync(EventCreationDto eventDto)
     {
@@ -14,14 +14,6 @@ public class EventService : IEventClient
 
         EventMessage reply = await client.createAsync(GrpcFactory.FromEventCreationDtoToMessage(eventDto));
         Event eventToReturn = GrpcFactory.FromMessageToEvent(reply);
-        return eventToReturn;
-    }
-
-    public async Task<Event?> GetByIdAsync(int id)
-    {
-        var client = GrpcFactory.GetEventClient();
-        EventMessage replyMessage = await client.getByIdAsync(new IntRequest() {Int = id});
-        Event eventToReturn = GrpcFactory.FromMessageToEvent(replyMessage);
         return eventToReturn;
     }
 

@@ -3,11 +3,10 @@ using Shared.Models;
 
 namespace GrpcClient.ClientInterfaces;
 
-public interface IEventClient
+public interface IEventGrpcClient
 {
     Task<Event?> CreateAsync(EventCreationDto eventDto);
-    Task<Event?> GetByIdAsync(int id);
-    
+
     Task<List<Event>> GetAsync(CriteriaDto criteriaDto);
 
     Task<Event> RegisterAttendeeAsync(int userId, int eventId);

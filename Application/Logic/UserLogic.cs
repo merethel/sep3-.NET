@@ -8,16 +8,16 @@ namespace Application.Logic;
 
 public class UserLogic : IUserLogic
 {
-    private readonly IUserClient _userClient;
+    private readonly IUserGrpcClient _userGrpcClient;
 
-    public UserLogic(IUserClient userClient)
+    public UserLogic(IUserGrpcClient userGrpcClient)
     {
-        _userClient = userClient;
+        _userGrpcClient = userGrpcClient;
     }
 
     public async Task<User> CreateAsync(UserCreationDto dto)
     {
-        User? existing = await _userClient.GetByUsernameAsync(dto.Username);
+        User? existing = await _userGrpcClient.GetByUsernameAsync(dto.Username);
 
         //QUICKFIX
         if (existing != null && existing.Username.Length != 0)
@@ -25,14 +25,14 @@ public class UserLogic : IUserLogic
 
         ValidateData(dto);
 
-        User created = (await _userClient.CreateAsync(dto))!;
+        User created = (await _userGrpcClient.CreateAsync(dto))!;
 
         return created;
     }
 
     public async Task<User> ValidateUser(string username, string password)
     {
-        User? existingUser = await _userClient.GetByUsernameAsync(username);
+        User? existingUser = await _userGrpcClient.GetByUsernameAsync(username);
 
         //QUICKFIX
 
@@ -53,7 +53,7 @@ public class UserLogic : IUserLogic
 
     public async Task<User> GetUser(string username)
     {
-        User user = (await _userClient.GetByUsernameAsync(username))!;
+        User user = (await _userGrpcClient.GetByUsernameAsync(username))!;
         return user;
     }
 

@@ -7,23 +7,23 @@ namespace Application.Logic;
 
 public class EventLogic : IEventLogic
 {
-    private readonly IEventClient _eventClient;
-    private readonly IUserClient _userClient;
+    private readonly IEventGrpcClient _eventGrpcClient;
+    private readonly IUserGrpcClient _userGrpcClient;
 
-    public EventLogic(IEventClient eventClient, IUserClient userClient)
+    public EventLogic(IEventGrpcClient eventGrpcClient, IUserGrpcClient userGrpcClient)
     {
-        _eventClient = eventClient;
-        _userClient = userClient;
+        _eventGrpcClient = eventGrpcClient;
+        _userGrpcClient = userGrpcClient;
     }
     public async Task<Event> CreateAsync(EventCreationDto dto)
     {
-        User? owner = await _userClient.GetByUsernameAsync(dto.Username);
+        User? owner = await _userGrpcClient.GetByUsernameAsync(dto.Username);
         if (owner == null)
             throw new Exception($"The User with this username: {dto.Username} does not exist");
         
         ValidateData(dto);
         
-        Event created = (await _eventClient.CreateAsync(dto))!;
+        Event created = (await _eventGrpcClient.CreateAsync(dto))!;
         
         return created;
     }
@@ -81,18 +81,18 @@ public class EventLogic : IEventLogic
     
     public Task<List<Event>> GetAsync(CriteriaDto criteriaDto)
     {
-        return _eventClient.GetAsync(criteriaDto);
+        return _eventGrpcClient.GetAsync(criteriaDto);
     }
 
     public async Task<Event> RegisterAttendeeAsync(int userId, int eventId)
     {
-        Event eventToReturn = await _eventClient.RegisterAttendeeAsync(userId,eventId);
+        Event eventToReturn = await _eventGrpcClient.RegisterAttendeeAsync(userId,eventId);
         return eventToReturn;
     }
 
     public async Task<Event> CancelAsync(int eventId)
     {
-        Event eventToReturn = (await _eventClient.CancelAsync(eventId))!;
+        Event eventToReturn = (await _eventGrpcClient.CancelAsync(eventId))!;
         return eventToReturn;
     }
 }

@@ -41,6 +41,7 @@ public class EventController : ControllerBase
     {
         try
         {
+            Console.WriteLine(category + " ---------" + area);
             List<Event> events = await EventLogic.GetAsync(new CriteriaDto(ownerId, category, area));
             return events;
         }

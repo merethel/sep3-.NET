@@ -3,9 +3,8 @@ using Shared.Models;
 
 namespace GrpcClient.ClientInterfaces;
 
-public interface IUserClient
+public interface IUserGrpcClient
 {
     Task<User?> CreateAsync(UserCreationDto userDto);
-    Task<User?> GetByIdAsync(int id);
     Task<User?> GetByUsernameAsync(string username);
 }

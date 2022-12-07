@@ -13,7 +13,7 @@ public class EventLogicTest
 
     public EventLogicTest()
     {
-        eventLogic = new EventLogic(new EventClientMock(), new UserClientMock());
+        eventLogic = new EventLogic(new EventGrpcClientMock(), new UserGrpcClientMock());
     }
 
     [SetUp]

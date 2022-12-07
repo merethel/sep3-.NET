@@ -14,7 +14,7 @@ public class UserLogicTest
 
     public UserLogicTest()
     {
-        _userLogic = new UserLogic(new UserClientMock());
+        _userLogic = new UserLogic(new UserGrpcClientMock());
     }
 
     [SetUp]

@@ -20,8 +20,8 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<IUserLogic, UserLogic>();
 builder.Services.AddScoped<IEventLogic, EventLogic>();
-builder.Services.AddScoped<IUserClient, UserService>();
-builder.Services.AddScoped<IEventClient, EventService>();
+builder.Services.AddScoped<IUserGrpcClient, UserGrpcService>();
+builder.Services.AddScoped<IEventGrpcClient, EventGrpcService>();
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
 {

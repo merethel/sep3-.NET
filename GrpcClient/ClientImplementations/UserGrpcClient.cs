@@ -6,7 +6,7 @@ using Shared.Models;
 
 namespace GrpcClient.ClientImplementations;
 
-public class UserService : IUserClient
+public class UserGrpcService : IUserGrpcClient
 {
     public async Task<User?> CreateAsync(UserCreationDto userDto)
     {
