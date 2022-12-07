@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using System.Net.Http;
 using HttpClients.Implementations;
 using NUnit.Framework;
@@ -46,7 +47,7 @@ public class EventHttpClientIntegrationTest
         Assert.AreEqual(result.Title, dto.Title);
     }
     [Test]
-    public void TestGetAllEvents()
+    public void TestGetAllEventsWithNoCriteria()
     {
         //Arrange
         
@@ -77,5 +78,50 @@ public class EventHttpClientIntegrationTest
 
         //Assert
         Assert.True(result.Attendees.Contains(userToCreate));
+    }
+    
+    [Test]
+    public void TestGetAllEventsWithAreaCriteria()
+    {
+        //Arrange
+
+        //Act
+        var result = _eventHttpClient.GetEvents(new CriteriaDto(0, null, "Jylland")).Result;
+        
+        //Assert
+        foreach (var e in result)
+        {
+            Assert.True(e.Area.Equals("Jylland"));
+        }
+    }
+    
+    [Test]
+    public void TestGetAllEventsWithCategoryCriteria()
+    {
+        //Arrange
+
+        //Act
+        var result = _eventHttpClient.GetEvents(new CriteriaDto(0, "Klima", null)).Result;
+        
+        //Assert
+        foreach (var e in result)
+        {
+            Assert.True(e.Category.Equals("Klima"));
+        }
+    }
+    
+    [Test]
+    public void TestGetAllEventsWithMultipleCriteria()
+    {
+        //Arrange
+
+        //Act
+        var result = _eventHttpClient.GetEvents(new CriteriaDto(0, "Klima", "Jylland")).Result;
+        
+        //Assert
+        foreach (var e in result)
+        {
+            Assert.True(e.Area.Equals("Jylland") && e.Category.Equals("Klima"));
+        }
     }
 }
