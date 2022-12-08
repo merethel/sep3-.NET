@@ -20,6 +20,11 @@ public class UserGrpcClientMock : IUserGrpcClient
         userToCreate.Id = 1;
         return Task.FromResult(userToCreate)!;    }
 
+    public Task<User?> DeleteUserAsync(int userId)
+    {
+        throw new System.NotImplementedException();
+    }
+
     public Task<User?> GetByIdAsync(int id)
     {
         User userToCreate = new User("username", "password", "email@email.dk", "User");
