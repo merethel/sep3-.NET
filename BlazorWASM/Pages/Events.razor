@@ -6,6 +6,8 @@
 @inject IEventService EventService
 @inject IAuthService AuthService
 
+
+
 <h3 style="text-align: center">Begivenheder</h3>
 
 <div>
@@ -17,6 +19,7 @@
         }
     </select>
     
+    
     <select class="form-control" @bind="@Area" style="width: 200px; float: left">
         <option disabled selected value> -- Vælg et område -- </option>
         @foreach (var a in _areas)
@@ -24,10 +27,11 @@
             <option value="@a"> @a </option>
         }
     </select>    
-    <div class="button-container">
+    <div class="button-container" style="padding: 5px">
         <button class="confirm-button" @onclick="Filter">Filtrer</button>
     </div>
 </div>
+<br/>
 
 
 @if (_events == null)
@@ -48,17 +52,22 @@ else
         <div class="card">
             <div class="boxes">
                 <b>Titel:</b>
-                    <label>@item.Title</label>
+                <label>@item.Title</label>
             </div>
-             
-        <div class="boxes">
+            
+            <div class="boxes">
+                <b>Kategori</b>
+                <label>@item.Category</label>
+            </div>
+            
+            <div class="boxes">
             <b>Ejer:</b>
             <label>@item.Owner.Username</label>
         </div>
         
             <div class="boxes">
-                <b>Lokation:</b>
-                <label>@item.Location</label>
+                <b>Område og lokation:</b>
+                <label>@item.Area, @item.Location</label>
             </div>
 
             <div class="boxes">
@@ -71,21 +80,12 @@ else
                 <div id="Description">
                     @item.Description
                 </div>
-                
-                <div class="boxes">
-                    <b>Område:</b>
-                    <label>@item.Area</label>
-                </div>
-                <div class="boxes">
-                    <b>Kategori</b>
-                    <label>@item.Category</label>
-                </div>
-                
-                
-                <AuthorizeView>
+
+                _
+                <AuthorizeView Policy="User">
                     <div class="button-container">
                         <button class="confirm"
-                                @onclick="@(() => RegisterAttendee(item.Id))"  disabled="@Disabled(item.Id)">
+                                @onclick="@(() => RegisterAttendee(item.Id))" disabled="@Disabled(item.Id)">
                             @GetButtonText(item.Id)
                         </button>
                     </div>
@@ -106,6 +106,7 @@ else
     private int _userId;
     private string _category = null;
     private string _area = null;
+    
 
     string Category
     {
@@ -136,6 +137,8 @@ else
         "Grønland"
     };
 
+    private string _role;
+
 
     protected override async Task OnInitializedAsync()
     {
@@ -150,7 +153,7 @@ else
                     _userId = Int32.Parse(claim.Value);
                 }
             }
-
+            
             _events = await EventService.GetEvents(new CriteriaDto());
         }
         catch (Exception e)

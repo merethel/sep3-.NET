@@ -1,5 +1,5 @@
 ﻿using GrpcClient.ClientInterfaces;
-using GrpcClient.Services;
+using GrpcClient.sServices;
 using GrpcService1;
 using Shared.Dtos;
 using Shared.Models;
