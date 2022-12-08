@@ -13,6 +13,7 @@
 <div>
     <select class="form-control" @bind="@Category" style="width: 200px; float: left" >
         <option disabled selected value> -- Vælg en kategori -- </option>
+        <option value="">Vælg alle kategorier</option>
         @foreach (var c in _categories)
         {
             <option value="@c"> @c </option>
@@ -22,6 +23,7 @@
     
     <select class="form-control" @bind="@Area" style="width: 200px; float: left">
         <option disabled selected value> -- Vælg et område -- </option>
+        <option value="">Vælg alle områder</option>
         @foreach (var a in _areas)
         {
             <option value="@a"> @a </option>
@@ -167,10 +169,16 @@ else
     //knappen disables når du trykker men med et delay, og i dette delay kan du trykke på knappen flere gange hvis du er hurtig.
     private async Task RegisterAttendee(int eventId)
     {
-        var userId = this._userId;
-        await EventService.RegisterAttendeeAsync(userId, eventId);
+        var userId = _userId;
+        Event eventRegisteredTo = await EventService.RegisterAttendeeAsync(userId, eventId);
         _msg = "Tilmeldt!";
-        _events = await EventService.GetEvents(new CriteriaDto());
+        foreach (Event e in _events)
+        {
+            if (e.Id == eventId)
+            {
+                e.Attendees = eventRegisteredTo.Attendees;
+            }
+        }
     }
 
     // Jeg har fixet at knapperne bliver disabled/enabled alt efter om du er tilmeldt eller ikke.
@@ -217,11 +225,6 @@ else
         if (_category != null || _area != null)
         {
             _events = await EventService.GetEvents(new CriteriaDto(0,_category,_area));
-        }
-        
-        else
-        {
-            throw new Exception("Intet filter valgt");
         }
     }
 }

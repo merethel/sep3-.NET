@@ -1,5 +1,6 @@
 ﻿using System.Net.Http.Json;
 using System.Text.Json;
+using GrpcService1;
 using HttpClients.ClientInterfaces;
 using Shared;
 using Shared.Dtos;
@@ -48,5 +49,27 @@ public class UserHttpClient : IUserService
         })!;
         userId = user.Id;
         return user.Id;
+    }
+
+    public async Task<User> DeleteUser(int userId)
+    {
+        HttpRequestMessage requestMessage = new HttpRequestMessage(HttpMethod.Delete, "/user");
+        requestMessage.Content = JsonContent.Create(new IntRequest
+        {
+            Int = userId
+        });
+        HttpResponseMessage response = await Client.SendAsync(requestMessage);
+        string result = await response.Content.ReadAsStringAsync();
+        
+        if (!response.IsSuccessStatusCode)
+        {
+            throw new Exception(result);
+        }
+        User userToReturn = JsonSerializer.Deserialize<User>(result, new JsonSerializerOptions
+        {
+            PropertyNameCaseInsensitive = true
+        })!;
+        return userToReturn;
+        
     }
 }

@@ -1,6 +1,7 @@
 ﻿
 using Application.LogicInterfaces;
 using GrpcClient.ClientInterfaces;
+using GrpcClient.Services;
 using Shared.Dtos;
 using Shared.Models;
 
@@ -57,6 +58,7 @@ public class UserLogic : IUserLogic
         return user;
     }
 
+   
     private static void ValidateData(UserCreationDto userToCreate)
     {
         string userName = userToCreate.Username;
@@ -77,4 +79,12 @@ public class UserLogic : IUserLogic
             throw new Exception("This is not a valid email!" + " (ノಠ益ಠ)ノ彡┻━┻");
         }
     }
+
+    public async Task<User> DeleteUser(int userId)
+    {
+        User userToReturn = await _userClient.DeleteUserAsync(userId)!;
+        return userToReturn;
+    }
+
+
 }
