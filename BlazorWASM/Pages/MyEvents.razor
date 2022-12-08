@@ -23,17 +23,22 @@ else
         <div class="card">
             <div class="boxes">
                 <b>Titel:</b>
-                    <label>@item.Title</label>
+                <label>@item.Title</label>
             </div>
-             
-        <div class="boxes">
+            
+            <div class="boxes">
+                <b>Kategori</b>
+                <label>@item.Category</label>
+            </div>
+            
+            <div class="boxes">
             <b>Ejer:</b>
             <label>@item.Owner.Username</label>
         </div>
         
             <div class="boxes">
-                <b>Lokation:</b>
-                <label>@item.Location</label>
+                <b>Område og Lokation:</b>
+                <label>@item.Area, @item.Location</label>
             </div>
 
             <div class="boxes">

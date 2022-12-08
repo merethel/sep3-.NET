@@ -1,7 +1,6 @@
 ﻿
 using Application.LogicInterfaces;
 using GrpcClient.ClientInterfaces;
-using GrpcClient.Services;
 using Shared.Dtos;
 using Shared.Models;
 
