@@ -82,7 +82,7 @@ public class UserLogic : IUserLogic
 
     public async Task<User> DeleteUser(int userId)
     {
-        User userToReturn = await _userClient.DeleteUserAsync(userId)!;
+        User userToReturn = await _userGrpcClient.DeleteUserAsync(userId)!;
         return userToReturn;
     }
 
