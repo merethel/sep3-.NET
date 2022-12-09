@@ -11,7 +11,6 @@ public interface IEventService
 
     Task<Event> CancelAsync(int eventId);
 
-    Task GetCancelledEvents(int userId);
+    Task<ICollection<Event>> GetCancelledEvents(int userId);
 
-    void AddListener(Action<List<Event>> action);
 }

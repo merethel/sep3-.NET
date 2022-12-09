@@ -13,6 +13,8 @@ public class Event
     public string Category { get; set; } = null!;
     public string Area { get; set; } = null!;
     public List<User> Attendees { get; set; } = null!;
+    
+    public bool IsCancelled { get; set; }
 
     public Event(User owner, string title, string description, string location, DateTime dateTime, string category, string area, List<User> attendees)
     {
@@ -24,6 +26,7 @@ public class Event
         Category = category;
         Area = area;
         Attendees = attendees;
+        IsCancelled = false;
     }
 
     public Event()

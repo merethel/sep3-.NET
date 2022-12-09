@@ -8,9 +8,6 @@
 
 <h3 style="text-align: center">Aflyste Begivenheder hvor du har været tilmeldt</h3>
 
-<button onclick="@StartSearch">Start</button>
-
-
 @if (_cancelledEvents == null)
 {
     <p>Indlæser...</p>
@@ -82,25 +79,16 @@ else
             }
 
             
+            while (_userId != 0)
+            {
+                _cancelledEvents = await EventService.GetCancelledEvents(_userId);
+                await Task.Delay(2000);
+            }
+            
         }
         catch (Exception e)
         {
             Console.WriteLine(e);
         }
-    }
-
-
-    public void OnChange(List<Event> events)
-    {
-        Console.WriteLine("cancelledEvents updated");
-        _cancelledEvents = events;
-    }
-
-    public void StartSearch()
-    {
-        EventService.AddListener(OnChange);
-
-        Console.WriteLine("I started GetCancelledEvents");
-        EventService.GetCancelledEvents(_userId);
     }
 }

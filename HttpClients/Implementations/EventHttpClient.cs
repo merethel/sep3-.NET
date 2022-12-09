@@ -147,5 +147,26 @@ public class EventHttpClient : IEventService
         })!;
         return eventToReturn;
     }
-    
+
+    public async Task<ICollection<Event>> GetCancelledEvents(int userId)
+    {
+        HttpRequestMessage requestMessage = new HttpRequestMessage(HttpMethod.Get, $"/Event/Cancelled/{userId}");
+        
+        //Dette bliver sendte til http endpoint
+        HttpResponseMessage response = await Client.SendAsync(requestMessage);
+        //
+        
+        string result = await response.Content.ReadAsStringAsync();
+
+        if (!response.IsSuccessStatusCode)
+        {
+            throw new Exception(result);
+        }
+        
+        List<Event> eventToReturn = JsonSerializer.Deserialize<List<Event>>(result, new JsonSerializerOptions
+        {
+            PropertyNameCaseInsensitive = true
+        })!;
+        return eventToReturn;
+    }
 }
