@@ -46,4 +46,11 @@ public class EventGrpcService : IEventGrpcClient
         Event eventToReturn = GrpcFactory.FromMessageToEvent(replyMessage);
         return eventToReturn;
     }
+
+    public async Task<List<Event>> getCancelledEvents(int userId)
+    {
+        var client = GrpcFactory.GetEventClient();//stub
+        ListEventMessage replyMessage = await client.getCancelledEventsAsync(new IntRequest() {Int = userId});
+        List<Event> eventToReturn = GrpcFactory.FromListEventMessageToList(replyMessage);
+        return eventToReturn;    }
 }
