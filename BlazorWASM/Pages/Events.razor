@@ -18,20 +18,19 @@ else if (!_events.Any())
 }
 else
 {
-
     @foreach (Event item in _events)
     {
         <div class="card">
             <div class="boxes">
                 <b>Titel:</b>
-                    <label>@item.Title</label>
+                <label>@item.Title</label>
             </div>
-             
-        <div class="boxes">
-            <b>Ejer:</b>
-            <label>@item.Owner.Username</label>
-        </div>
-        
+
+            <div class="boxes">
+                <b>Ejer:</b>
+                <label>@item.Owner.Username</label>
+            </div>
+
             <div class="boxes">
                 <b>Lokation:</b>
                 <label>@item.Location</label>
@@ -41,13 +40,13 @@ else
                 <b>Dato og tid:</b>
                 <label>@item.DateTime</label>
             </div>
-                
+
             <div class="boxes">
                 <b>Beskrivelse:</b>
                 <div id="Description">
                     @item.Description
                 </div>
-                
+
                 <div class="boxes">
                     <b>Område:</b>
                     <label>@item.Area</label>
@@ -56,28 +55,25 @@ else
                     <b>Kategori</b>
                     <label>@item.Category</label>
                 </div>
-                
-                
+
+
                 <AuthorizeView>
                     <div class="button-container">
                         <button class="confirm"
-                                @onclick="@(() => RegisterAttendee(item.Id))"  disabled="@Disabled(item.Id)">
+                                @onclick="@(() => RegisterAttendee(item.Id))" disabled="@Disabled(item.Id)">
                             @GetButtonText(item.Id)
                         </button>
                     </div>
                 </AuthorizeView>
             </div>
-            </div>
+        </div>
         <br/>
-                                
     }
-
 }
 
 
 @code {
     private ICollection<Event>? _events;
-    private string _msg = "";
     private int _userId;
 
 
@@ -102,7 +98,6 @@ else
             Console.WriteLine(e);
             _msg = e.Message;
         }
-
     }
 
     //knappen disables når du trykker men med et delay, og i dette delay kan du trykke på knappen flere gange hvis du er hurtig.

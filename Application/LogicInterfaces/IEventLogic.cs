@@ -10,4 +10,5 @@ public interface IEventLogic
     Task<Event> RegisterAttendeeAsync(int userId, int eventId);
 
     Task<Event> CancelAsync(int eventId);
+    Task<List<Event>> GetCancelledEventsAsync(int userId);
 }

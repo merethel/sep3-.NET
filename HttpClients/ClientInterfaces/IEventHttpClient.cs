@@ -10,4 +10,8 @@ public interface IEventService
     Task<Event> RegisterAttendeeAsync(int userId, int eventId);
 
     Task<Event> CancelAsync(int eventId);
+
+    Task GetCancelledEvents(int userId);
+
+    void AddListener(Action<List<Event>> action);
 }

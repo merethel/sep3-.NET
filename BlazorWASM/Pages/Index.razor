@@ -1,6 +1,106 @@
 ﻿@page "/"
+@using System.Security.Claims
+@using global::Shared.Dtos
+@using global::Shared.Models
+@using HttpClients.ClientInterfaces
+@inject IAuthService AuthService
+@inject IEventService EventService
 
-<h3 style="text-align: center">Kommer snart....</h3>
+<h3 style="text-align: center">Aflyste Begivenheder hvor du har været tilmeldt</h3>
 
-<img style="width: 400px" src="img/Page_Under_Construction.jpg" alt="Under construction"/>
+<button onclick="@StartSearch">Start</button>
 
+
+@if (_cancelledEvents == null)
+{
+    <p>Indlæser...</p>
+}
+else if (!_cancelledEvents.Any())
+{
+    <p>Ingen aflyste {begivenheder at finde</p>
+}
+else
+{
+    @foreach (Event item in _cancelledEvents)
+    {
+        <div class="card">
+            <div class="boxes">
+                <b>Titel:</b>
+                <label>@item.Title</label>
+            </div>
+
+            <div class="boxes">
+                <b>Ejer:</b>
+                <label>@item.Owner.Username</label>
+            </div>
+
+            <div class="boxes">
+                <b>Lokation:</b>
+                <label>@item.Location</label>
+            </div>
+
+            <div class="boxes">
+                <b>Dato og tid:</b>
+                <label>@item.DateTime</label>
+            </div>
+
+            <div class="boxes">
+                <b>Beskrivelse:</b>
+                <div id="Description">
+                    @item.Description
+                </div>
+            </div>
+            <div class="boxes">
+                <b>Område:</b>
+                <label>@item.Area</label>
+            </div>
+            <div class="boxes">
+                <b>Kategori</b>
+                <label>@item.Category</label>
+            </div>
+        </div>
+    }
+}
+
+@code
+{
+    private int _userId;
+    private ICollection<Event> _cancelledEvents;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            ClaimsPrincipal claimsPrincipal = await AuthService.GetAuthAsync();
+
+            foreach (var claim in claimsPrincipal.Claims)
+            {
+                if (claim.Type.Equals("UserId"))
+                {
+                    _userId = Int32.Parse(claim.Value);
+                }
+            }
+
+            
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+        }
+    }
+
+
+    public void OnChange(List<Event> events)
+    {
+        Console.WriteLine("cancelledEvents updated");
+        _cancelledEvents = events;
+    }
+
+    public void StartSearch()
+    {
+        EventService.AddListener(OnChange);
+
+        Console.WriteLine("I started GetCancelledEvents");
+        EventService.GetCancelledEvents(_userId);
+    }
+}

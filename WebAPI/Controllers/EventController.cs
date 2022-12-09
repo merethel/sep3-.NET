@@ -81,4 +81,21 @@ public class EventController : ControllerBase
         }
     }
     
+    [HttpGet]
+    [Route("Cancelled/{userId}")]
+    public async Task<ActionResult<List<Event>>>  GetCancelledEventsAsync(int userId)
+    {
+        try
+        {
+            List<Event> cancelledEvents = await EventLogic.GetCancelledEventsAsync(userId);
+            return cancelledEvents;
+        }
+        
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return StatusCode(500, e.Message);
+        }
+    }
+    
 }

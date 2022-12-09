@@ -1,4 +1,5 @@
-﻿using Application.LogicInterfaces;
+﻿using System.Collections;
+using Application.LogicInterfaces;
 using GrpcClient.ClientInterfaces;
 using Shared.Dtos;
 using Shared.Models;
@@ -9,11 +10,15 @@ public class EventLogic : IEventLogic
 {
     private readonly IEventClient _eventClient;
     private readonly IUserClient _userClient;
+    private List<Event> _cancelledEvents;
 
     public EventLogic(IEventClient eventClient, IUserClient userClient)
     {
         _eventClient = eventClient;
         _userClient = userClient;
+        Console.WriteLine();
+        _cancelledEvents = new List<Event>();
+        Console.WriteLine("I made a new list and i am dumb");
     }
     public async Task<Event> CreateAsync(EventCreationDto dto)
     {
@@ -93,6 +98,31 @@ public class EventLogic : IEventLogic
     public async Task<Event> CancelAsync(int eventId)
     {
         Event eventToReturn = (await _eventClient.CancelAsync(eventId))!;
+        
+        Console.WriteLine("Cancelled event added to list: " + eventToReturn);
+        _cancelledEvents.Add(eventToReturn);
+        Console.WriteLine("Added to list, size: " + _cancelledEvents.Count);
+        
         return eventToReturn;
+    }
+
+    public Task<List<Event>> GetCancelledEventsAsync(int userId)
+    {
+        List<Event> list = new List<Event>();
+        /*
+        foreach (var cancelledEvent in _cancelledEvents)
+        {
+            foreach (var user in cancelledEvent.Attendees)
+            {
+                if (user.Id == userId)
+                {
+                    list.Add(cancelledEvent);
+                }
+            }
+        }
+        */
+        Console.WriteLine("Logic: ReturnList(" + list.Count + ")");
+        Console.WriteLine("Logic: List(" + _cancelledEvents.Count + ")");
+        return Task.FromResult(list);
     }
 }
