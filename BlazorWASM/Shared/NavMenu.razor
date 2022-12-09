@@ -17,31 +17,39 @@
                 <span class="oi oi-home" aria-hidden="true"></span> Hjem
             </NavLink>
         </div>
-        <AuthorizeView>
+        
+        <AuthorizeView Policy="User">
             <Authorized>
+                <div class="nav-item px-3">
+                    <NavLink class="nav-link" href="Events">
+                        <span class="oi oi-list" aria-hidden="true"></span> Begivenheder
+                    </NavLink>
+                </div>
+            </Authorized>
+        </AuthorizeView>
+        
+        <AuthorizeView Policy="CompAndUse">
+            <Authorized>
+                
                 <div class="nav-item px-3">
                     <NavLink class="nav-link" href="CreateEvent">
                         <span class="oi oi-calendar" aria-hidden="true"></span> Opret Begivenhed
                     </NavLink>
                 </div>
-            </Authorized>
-        </AuthorizeView>
 
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="Events">
-                <span class="oi oi-list" aria-hidden="true"></span> Begivenheder
-            </NavLink>
-        </div>
-        
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="Info">
-                <span class="oi oi-info" aria-hidden="true"></span> Om os
-            </NavLink>
-        </div>
-        
                 <div class="nav-item px-3">
                     <NavLink class="nav-link" href="MyEvents">
-                        <span class="oi oi-info" aria-hidden="true"></span> Mine Begivenheder
+                        <span class="oi oi-list" aria-hidden="true"></span> Mine Begivenheder
+                    </NavLink>
+                </div>
+
+            </Authorized>
+        </AuthorizeView>
+        
+        
+        <div class="nav-item px-3">
+                    <NavLink class="nav-link" href="Info">
+                        <span class="oi oi-info" aria-hidden="true"></span> Om os
                     </NavLink>
                 </div>
         

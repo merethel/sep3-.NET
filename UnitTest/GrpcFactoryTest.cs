@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Google.Protobuf.Collections;
-using GrpcClient.Services;
+using GrpcClient.sServices;
 using GrpcService1;
 using NUnit.Framework;
 using Shared.Dtos;

@@ -7,7 +7,7 @@ using Shared.Models;
 
 namespace UnitTest.Mockings;
 
-public class EventClientMock : IEventClient
+public class EventGrpcClientMock : IEventGrpcClient
 {
     public Task<Event?> CreateAsync(EventCreationDto eventToCreate)
     {

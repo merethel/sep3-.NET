@@ -6,7 +6,35 @@
 @inject IEventService EventService
 @inject IAuthService AuthService
 
+
+
 <h3 style="text-align: center">Begivenheder</h3>
+
+<div>
+    <select class="form-control" @bind="@Category" style="width: 200px; float: left" >
+        <option disabled selected value> -- Vælg en kategori -- </option>
+        <option value="">Vælg alle kategorier</option>
+        @foreach (var c in _categories)
+        {
+            <option value="@c"> @c </option>
+        }
+    </select>
+    
+    
+    <select class="form-control" @bind="@Area" style="width: 200px; float: left">
+        <option disabled selected value> -- Vælg et område -- </option>
+        <option value="">Vælg alle områder</option>
+        @foreach (var a in _areas)
+        {
+            <option value="@a"> @a </option>
+        }
+    </select>    
+    <div class="button-container" style="padding: 5px">
+        <button class="confirm-button" @onclick="Filter">Filtrer</button>
+    </div>
+</div>
+<br/>
+
 
 @if (_events == null)
 {
@@ -16,8 +44,11 @@ else if (!_events.Any())
 {
     <p>Ingen begivenheder at finde</p>
 }
+
 else
 {
+    <div>
+
     @foreach (Event item in _events)
     {
         <div class="card">
@@ -25,39 +56,35 @@ else
                 <b>Titel:</b>
                 <label>@item.Title</label>
             </div>
-
+            
             <div class="boxes">
-                <b>Ejer:</b>
-                <label>@item.Owner.Username</label>
+                <b>Kategori</b>
+                <label>@item.Category</label>
             </div>
-
+            
             <div class="boxes">
-                <b>Lokation:</b>
-                <label>@item.Location</label>
+            <b>Ejer:</b>
+            <label>@item.Owner.Username</label>
+        </div>
+        
+            <div class="boxes">
+                <b>Område og lokation:</b>
+                <label>@item.Area, @item.Location</label>
             </div>
 
             <div class="boxes">
                 <b>Dato og tid:</b>
                 <label>@item.DateTime</label>
             </div>
-
+                
             <div class="boxes">
                 <b>Beskrivelse:</b>
                 <div id="Description">
                     @item.Description
                 </div>
 
-                <div class="boxes">
-                    <b>Område:</b>
-                    <label>@item.Area</label>
-                </div>
-                <div class="boxes">
-                    <b>Kategori</b>
-                    <label>@item.Category</label>
-                </div>
-
-
-                <AuthorizeView>
+                _
+                <AuthorizeView Policy="User">
                     <div class="button-container">
                         <button class="confirm"
                                 @onclick="@(() => RegisterAttendee(item.Id))" disabled="@Disabled(item.Id)">
@@ -66,15 +93,53 @@ else
                     </div>
                 </AuthorizeView>
             </div>
-        </div>
+            </div>
         <br/>
+                                
     }
+    </div>
+
 }
 
 
 @code {
     private ICollection<Event>? _events;
+    private string _msg = "";
     private int _userId;
+    private string _category = null;
+    private string _area = null;
+    
+
+    string Category
+    {
+        get => _category;
+        set {_category = value;}
+    }
+
+    string Area
+    {
+        get => _area;
+        set {_area = value;}
+    }
+    
+    List<string> _categories = new List<string>()
+    {
+        "Motion",
+        "Klima",
+        "Spil"
+    };
+    
+    List<string> _areas = new List<string>()
+    {
+        "Sjælland",
+        "Jylland",
+        "Fyn",
+        "Bornholm",
+        "Færøerne",
+        "Grønland"
+    };
+
+    private string _role;
 
 
     protected override async Task OnInitializedAsync()
@@ -90,7 +155,7 @@ else
                     _userId = Int32.Parse(claim.Value);
                 }
             }
-
+            
             _events = await EventService.GetEvents(new CriteriaDto());
         }
         catch (Exception e)
@@ -98,15 +163,22 @@ else
             Console.WriteLine(e);
             _msg = e.Message;
         }
+
     }
 
     //knappen disables når du trykker men med et delay, og i dette delay kan du trykke på knappen flere gange hvis du er hurtig.
     private async Task RegisterAttendee(int eventId)
     {
-        var userId = this._userId;
-        await EventService.RegisterAttendeeAsync(userId, eventId);
+        var userId = _userId;
+        Event eventRegisteredTo = await EventService.RegisterAttendeeAsync(userId, eventId);
         _msg = "Tilmeldt!";
-        _events = await EventService.GetEvents(new CriteriaDto());
+        foreach (Event e in _events)
+        {
+            if (e.Id == eventId)
+            {
+                e.Attendees = eventRegisteredTo.Attendees;
+            }
+        }
     }
 
     // Jeg har fixet at knapperne bliver disabled/enabled alt efter om du er tilmeldt eller ikke.
@@ -147,4 +219,12 @@ else
         }
     }
 
+    private async Task Filter()
+    {
+
+        if (_category != null || _area != null)
+        {
+            _events = await EventService.GetEvents(new CriteriaDto(0,_category,_area));
+        }
+    }
 }

@@ -3,7 +3,6 @@ using Application.LogicInterfaces;
 using Application.Logic;
 using GrpcClient.ClientImplementations;
 using GrpcClient.ClientInterfaces;
-using GrpcClient.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Shared.Authorization;
@@ -20,8 +19,9 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<IUserLogic, UserLogic>();
 builder.Services.AddScoped<IEventLogic, EventLogic>();
-builder.Services.AddScoped<IUserClient, UserService>();
-builder.Services.AddScoped<IEventClient, EventService>();
+builder.Services.AddScoped<IUserGrpcClient, UserGrpcService>();
+builder.Services.AddScoped<IEventGrpcClient, EventGrpcService>();
+
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
 {

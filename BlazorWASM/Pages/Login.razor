@@ -21,7 +21,7 @@
                 </label>
                 <input type="password" placeholder="Enter Password" @bind="_password" @bind:event="oninput" @onkeydown="@Enter">
                 <div class="button-container">
-                    <button class="confirm" @onclick="LoginAsync" disabled="@(string.IsNullOrEmpty(_userName) || string.IsNullOrEmpty(_password))">Login</button><br/>
+                    <button class="confirm" @onclick="LoginAsync" disabled="@(string.IsNullOrEmpty(_userName) || string.IsNullOrEmpty(_password))">Log ind</button><br/>
                     <span class="psw">Ny på 3vent4u? <a class="signup-link" href="/CreateUser">Opret konto</a></span>
                 </div><br/>
 

@@ -5,7 +5,7 @@ using Shared.Models;
 
 namespace UnitTest.Mockings;
 
-public class UserClientMock : IUserClient
+public class UserGrpcClientMock : IUserGrpcClient
 {
     public Task<User> CreateAsync(UserCreationDto user)
     {
@@ -19,6 +19,11 @@ public class UserClientMock : IUserClient
         User userToCreate = new User(username, "password", "email@email.dk", "User");
         userToCreate.Id = 1;
         return Task.FromResult(userToCreate)!;    }
+
+    public Task<User?> DeleteUserAsync(int userId)
+    {
+        throw new System.NotImplementedException();
+    }
 
     public Task<User?> GetByIdAsync(int id)
     {

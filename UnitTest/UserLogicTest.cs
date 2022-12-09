@@ -14,7 +14,7 @@ public class UserLogicTest
 
     public UserLogicTest()
     {
-        _userLogic = new UserLogic(new UserClientMock());
+        _userLogic = new UserLogic(new UserGrpcClientMock());
     }
 
     [SetUp]
@@ -166,5 +166,5 @@ public class UserLogicTest
             var result = _userLogic.ValidateUser("username", "wrongpassword").Result;
         });
     }
-    
+
 }

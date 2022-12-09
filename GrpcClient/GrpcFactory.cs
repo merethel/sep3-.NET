@@ -4,7 +4,7 @@ using GrpcService1;
 using Shared.Dtos;
 using Shared.Models;
 
-namespace GrpcClient.Services;
+namespace GrpcClient.sServices;
 
 public class GrpcFactory
 {

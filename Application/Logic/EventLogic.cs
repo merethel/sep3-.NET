@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using Application.LogicInterfaces;
+﻿using Application.LogicInterfaces;
 using GrpcClient.ClientInterfaces;
 using Shared.Dtos;
 using Shared.Models;
@@ -8,27 +7,23 @@ namespace Application.Logic;
 
 public class EventLogic : IEventLogic
 {
-    private readonly IEventClient _eventClient;
-    private readonly IUserClient _userClient;
-    private List<Event> _cancelledEvents;
+    private readonly IEventGrpcClient _eventGrpcClient;
+    private readonly IUserGrpcClient _userGrpcClient;
 
-    public EventLogic(IEventClient eventClient, IUserClient userClient)
+    public EventLogic(IEventGrpcClient eventGrpcClient, IUserGrpcClient userGrpcClient)
     {
-        _eventClient = eventClient;
-        _userClient = userClient;
-        Console.WriteLine();
-        _cancelledEvents = new List<Event>();
-        Console.WriteLine("I made a new list and i am dumb");
+        _eventGrpcClient = eventGrpcClient;
+        _userGrpcClient = userGrpcClient;
     }
     public async Task<Event> CreateAsync(EventCreationDto dto)
     {
-        User? owner = await _userClient.GetByUsernameAsync(dto.Username);
+        User? owner = await _userGrpcClient.GetByUsernameAsync(dto.Username);
         if (owner == null)
             throw new Exception($"The User with this username: {dto.Username} does not exist");
         
         ValidateData(dto);
         
-        Event created = (await _eventClient.CreateAsync(dto))!;
+        Event created = (await _eventGrpcClient.CreateAsync(dto))!;
         
         return created;
     }
@@ -86,43 +81,18 @@ public class EventLogic : IEventLogic
     
     public Task<List<Event>> GetAsync(CriteriaDto criteriaDto)
     {
-        return _eventClient.GetAsync(criteriaDto);
+        return _eventGrpcClient.GetAsync(criteriaDto);
     }
 
     public async Task<Event> RegisterAttendeeAsync(int userId, int eventId)
     {
-        Event eventToReturn = await _eventClient.RegisterAttendeeAsync(userId,eventId);
+        Event eventToReturn = await _eventGrpcClient.RegisterAttendeeAsync(userId,eventId);
         return eventToReturn;
     }
 
     public async Task<Event> CancelAsync(int eventId)
     {
-        Event eventToReturn = (await _eventClient.CancelAsync(eventId))!;
-        
-        Console.WriteLine("Cancelled event added to list: " + eventToReturn);
-        _cancelledEvents.Add(eventToReturn);
-        Console.WriteLine("Added to list, size: " + _cancelledEvents.Count);
-        
+        Event eventToReturn = (await _eventGrpcClient.CancelAsync(eventId))!;
         return eventToReturn;
-    }
-
-    public Task<List<Event>> GetCancelledEventsAsync(int userId)
-    {
-        List<Event> list = new List<Event>();
-        /*
-        foreach (var cancelledEvent in _cancelledEvents)
-        {
-            foreach (var user in cancelledEvent.Attendees)
-            {
-                if (user.Id == userId)
-                {
-                    list.Add(cancelledEvent);
-                }
-            }
-        }
-        */
-        Console.WriteLine("Logic: ReturnList(" + list.Count + ")");
-        Console.WriteLine("Logic: List(" + _cancelledEvents.Count + ")");
-        return Task.FromResult(list);
     }
 }

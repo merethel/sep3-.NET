@@ -9,14 +9,11 @@ public static class AuthorizationPolicies
     {
         services.AddAuthorizationCore(options =>
         {
-            options.AddPolicy("Owner", a =>
-                a.RequireAuthenticatedUser().RequireClaim("Role", "Owner"));
+            options.AddPolicy("Owner", policy => policy.RequireClaim("Role", "Owner"));
 
-            options.AddPolicy("Company", a =>
-                a.RequireAuthenticatedUser().RequireClaim("Role", "Company"));
-            options.AddPolicy("User", a =>
-                a.RequireAuthenticatedUser().RequireClaim("Role", "User"));
+            options.AddPolicy("Company", policy => policy.RequireClaim("Role", "Company"));
+            options.AddPolicy("User", policy => policy.RequireClaim("Role", "User"));
+            options.AddPolicy("CompAndUse", policy => policy.RequireClaim("Role", "User", "Company"));
         });
     }
-    
 }
