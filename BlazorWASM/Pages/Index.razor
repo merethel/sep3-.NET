@@ -81,12 +81,30 @@ else
             
             while (_userId != 0)
             {
-                _cancelledEvents = await EventService.GetEvents(new CriteriaDto()
+                ICollection<Event> sortedEvents = new List<Event>();
+                ICollection<Event> events = await EventService.GetEvents(new CriteriaDto()
                 {
                     IsCancelled = true,
                     Attendee = _userId
                     
                 });
+
+                //Denne sortering burde laves med Hibernate men det kan vi ikke få til at virke så vi laver den her.
+                //Dette er dog ikke skalerbart hvis vi har mange aflyste begivenheder.
+                
+                foreach (Event eventInList in events)
+                {
+                    foreach (User user in eventInList.Attendees)
+                    {
+                        if (user.Id == _userId)
+                        {
+                            sortedEvents.Add(eventInList);
+                        }
+                    }
+                }
+
+                _cancelledEvents = sortedEvents;
+                
                 StateHasChanged();
                 Console.WriteLine(_cancelledEvents.Count);
                 await Task.Delay(30000);
