@@ -14,7 +14,6 @@ service EventService {
   rpc getAllEvents (CriteriaDtoMessage) returns (ListEventMessage);
   rpc cancel (IntRequest) returns (EventMessage);
   rpc addAttendeeToEventAttendeeList (AddAttendeeRequest) returns (EventMessage);
-  rpc getCancelledEvents(IntRequest) returns (ListEventMessage);
 }
 
 service UserService {
@@ -95,4 +94,7 @@ message CriteriaDtoMessage {
   int32 ownerId = 1;
   string category = 2;
   string area = 3;
+  bool isCancelled = 4;
+  int32 Attendee = 5;
+
 }

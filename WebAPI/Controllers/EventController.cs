@@ -37,12 +37,19 @@ public class EventController : ControllerBase
 
 
     [HttpGet]
-    public async Task<ActionResult<List<Event>>> GetAsync([FromQuery] int ownerId, [FromQuery] string? area, [FromQuery] string? category)
+    public async Task<ActionResult<List<Event>>> GetAsync([FromQuery] int ownerId, [FromQuery] string? area, [FromQuery] string? category, [FromQuery] bool? isCancelled, [FromQuery] int? attendee)
     {
         try
         {
-            Console.WriteLine(category + " ---------" + area);
-            List<Event> events = await EventLogic.GetAsync(new CriteriaDto(ownerId, category, area));
+            List<Event> events = await EventLogic.GetAsync(new CriteriaDto()
+            {
+                OwnerId = ownerId,
+                Area = area,
+                Attendee = attendee,
+                IsCancelled = isCancelled,
+                Category = category
+            });
+            Console.WriteLine(events.Count);
             return events;
         }
         
@@ -66,7 +73,7 @@ public class EventController : ControllerBase
             return StatusCode(500, e.Message);
         }
     }
-    
+
     [HttpDelete]
     public async Task<ActionResult<Event>> CancelAsync(IntRequest eventId)
     {
@@ -81,22 +88,4 @@ public class EventController : ControllerBase
             return StatusCode(500, e.Message);
         }
     }
-    
-    [HttpGet]
-    [Route("Cancelled/{userId}")]
-    public async Task<ActionResult<List<Event>>>  GetCancelledEventsAsync(int userId)
-    {
-        try
-        {
-            List<Event> cancelledEvents = await EventLogic.GetCancelledEventsAsync(userId);
-            return cancelledEvents;
-        }
-        
-        catch (Exception e)
-        {
-            Console.WriteLine(e);
-            return StatusCode(500, e.Message);
-        }
-    }
-    
 }

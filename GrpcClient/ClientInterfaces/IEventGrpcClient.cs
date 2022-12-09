@@ -13,5 +13,4 @@ public interface IEventGrpcClient
     
     Task<Event?> CancelAsync(int eventId);
 
-    Task<List<Event>> getCancelledEvents(int userId);
 }

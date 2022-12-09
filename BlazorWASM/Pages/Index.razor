@@ -10,11 +10,11 @@
 
 @if (_cancelledEvents == null)
 {
-    <p>Indlæser...</p>
+<p>Indlæser...</p>
 }
 else if (!_cancelledEvents.Any())
 {
-    <p>Ingen aflyste {begivenheder at finde</p>
+<p>Ingen aflyste begivenheder at finde</p>
 }
 else
 {
@@ -62,7 +62,7 @@ else
 @code
 {
     private int _userId;
-    private ICollection<Event> _cancelledEvents;
+    private ICollection<Event>? _cancelledEvents;
 
     protected override async Task OnInitializedAsync()
     {
@@ -81,8 +81,15 @@ else
             
             while (_userId != 0)
             {
-                _cancelledEvents = await EventService.GetCancelledEvents(_userId);
-                await Task.Delay(2000);
+                _cancelledEvents = await EventService.GetEvents(new CriteriaDto()
+                {
+                    IsCancelled = true,
+                    Attendee = _userId
+                    
+                });
+                StateHasChanged();
+                Console.WriteLine(_cancelledEvents.Count);
+                await Task.Delay(30000);
             }
             
         }

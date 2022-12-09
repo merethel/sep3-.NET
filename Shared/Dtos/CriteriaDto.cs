@@ -8,6 +8,11 @@ public class CriteriaDto
     
     public string? Area { get; set; }
     
+    public bool? IsCancelled { get; set; }
+    
+    public int? Attendee { get; set; }
+    
+    
     public CriteriaDto(int ownerId, string? category, string? area)
     {
         OwnerId = ownerId;
@@ -16,5 +21,6 @@ public class CriteriaDto
     }
     
     public CriteriaDto()
-    {}
+    {
+    }
 }

@@ -10,7 +10,4 @@ public interface IEventService
     Task<Event> RegisterAttendeeAsync(int userId, int eventId);
 
     Task<Event> CancelAsync(int eventId);
-
-    Task<ICollection<Event>> GetCancelledEvents(int userId);
-
 }

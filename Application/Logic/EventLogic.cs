@@ -95,9 +95,4 @@ public class EventLogic : IEventLogic
         Event eventToReturn = (await _eventGrpcClient.CancelAsync(eventId))!;
         return eventToReturn;
     }
-
-    public Task<List<Event>> GetCancelledEventsAsync(int userId)
-    {
-        return _eventGrpcClient.getCancelledEvents(userId);
-    }
 }

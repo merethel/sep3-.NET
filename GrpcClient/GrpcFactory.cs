@@ -136,7 +136,10 @@ public class GrpcFactory
             criteriaDtoMessage.Area = dto.Area;
         if (dto.Category != null)
             criteriaDtoMessage.Category = dto.Category;
-
+        if (dto.IsCancelled != null)
+            criteriaDtoMessage.IsCancelled = (bool)dto.IsCancelled;
+        if (dto.Attendee != null)
+            criteriaDtoMessage.Attendee = (int) dto.Attendee;
         return criteriaDtoMessage;
     }
 }

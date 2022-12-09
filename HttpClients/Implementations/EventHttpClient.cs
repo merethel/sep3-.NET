@@ -68,7 +68,8 @@ public class EventHttpClient : IEventService
             {
                 queryString += "?area=" + criteriaDto.Area;
                 firstIsSet = true;
-            }   
+            }
+        
         if (criteriaDto.Category != null)
             if (firstIsSet)
             {
@@ -79,6 +80,28 @@ public class EventHttpClient : IEventService
                 queryString += "?category=" + criteriaDto.Category;
                 firstIsSet = true;
             }
+        if (criteriaDto.IsCancelled != null)
+            if (firstIsSet)
+            {
+                queryString += "&isCancelled=" + criteriaDto.IsCancelled;
+            }
+            else
+            {
+                queryString += "?isCancelled=" + criteriaDto.IsCancelled;
+                firstIsSet = true;
+            }
+        
+        if (criteriaDto.Attendee != null)
+            if (firstIsSet)
+            {
+                queryString += "&attendee=" + criteriaDto.Attendee;
+            }
+            else
+            {
+                queryString += "?attendee=" + criteriaDto.Attendee;
+                firstIsSet = true;
+            }
+        
         Console.WriteLine("QUERYSTRING ===========" + queryString);
         
         HttpRequestMessage requestMessage = new HttpRequestMessage(HttpMethod.Get, "/event" + queryString);
@@ -142,28 +165,6 @@ public class EventHttpClient : IEventService
         }
 
         Event eventToReturn = JsonSerializer.Deserialize<Event>(result, new JsonSerializerOptions
-        {
-            PropertyNameCaseInsensitive = true
-        })!;
-        return eventToReturn;
-    }
-
-    public async Task<ICollection<Event>> GetCancelledEvents(int userId)
-    {
-        HttpRequestMessage requestMessage = new HttpRequestMessage(HttpMethod.Get, $"/Event/Cancelled/{userId}");
-        
-        //Dette bliver sendte til http endpoint
-        HttpResponseMessage response = await Client.SendAsync(requestMessage);
-        //
-        
-        string result = await response.Content.ReadAsStringAsync();
-
-        if (!response.IsSuccessStatusCode)
-        {
-            throw new Exception(result);
-        }
-        
-        List<Event> eventToReturn = JsonSerializer.Deserialize<List<Event>>(result, new JsonSerializerOptions
         {
             PropertyNameCaseInsensitive = true
         })!;
