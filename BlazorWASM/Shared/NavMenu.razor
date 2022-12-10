@@ -1,13 +1,13 @@
-﻿@inherits LayoutComponentBase
+﻿@*@inherits LayoutComponentBase
 @using Login
 
-@*<div class="top-row ps-3 navbar navbar-dark">
+$1$<div class="top-row ps-3 navbar navbar-dark">
     <div class="container-fluid navbar-brand-container">
         <button title="Navigation menu" class="navbar-toggler" @onclick="ToggleNavMenu">
             <span class="navbar-toggler-icon"></span>
         </button>
     </div>
-</div>*@
+</div>#1#
 
 <div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
     <nav class="flex-column">
@@ -68,6 +68,108 @@
      private void ToggleNavMenu()
     {
         collapseNavMenu = !collapseNavMenu;
+    }
+
+}*@
+
+@inherits LayoutComponentBase
+@using Login
+<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark box-shadow mb-3 fixed-top" style="background-color: transparent">
+    @*<a class="navbar-brand text-light" asp-area="" asp-page="">
+                <img style="width: 40%; display: block; margin-left: auto; margin-right: auto; margin-top: 1%" src="img/3vent4uLogo.JPG" alt="Logo"/>
+            </a>*@
+    <div class="container" style="padding-top: 0; padding-bottom: 0">
+        <button class="navbar-toggler" @onclick="ToggleNavMenu" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="@NavMenuCssClass navbar-collapse d-sm-inline-flex flex-sm-row-reverse" @onclick="CollapseNavMenu">
+            <ul class="navbar-nav flex-grow-1">
+                <li class="nav-item">
+                    <div class="nav-item px-3">
+                        <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
+                            <span class="oi oi-home" aria-hidden="true"></span> Hjem
+                        </NavLink>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <AuthorizeView Policy="User">
+                        <Authorized>
+                            <div class="nav-item px-3">
+                                <NavLink class="nav-link" href="Events">
+                                    <span class="oi oi-list" aria-hidden="true"></span> Begivenheder
+                                </NavLink>
+                            </div>
+                        </Authorized>
+                    </AuthorizeView>
+                </li>
+                <li class="nav-item">
+                    <AuthorizeView Policy="CompAndUse">
+                        <Authorized>
+
+                            <div class="nav-item px-3">
+                                <NavLink class="nav-link" href="CreateEvent">
+                                    <span class="oi oi-calendar" aria-hidden="true"></span> Opret Begivenhed
+                                </NavLink>
+                            </div>
+                        </Authorized>
+                    </AuthorizeView>
+                </li>
+
+                <li class="nav-item">
+                    <AuthorizeView Policy="CompAndUse">
+                        <Authorized>
+
+                            <div class="nav-item px-3">
+                                <NavLink class="nav-link" href="MyEvents">
+                                    <span class="oi oi-list" aria-hidden="true"></span> Mine Begivenheder
+                                </NavLink>
+                            </div>
+                        </Authorized>
+                    </AuthorizeView>
+                </li>
+                <li class="nav-item">
+                    <AuthorizeView Policy="User">
+                        <Authorized>
+                            <div class="nav-item px-3">
+                                <NavLink class="nav-link" href="CancelledEvents">
+                                    <span class="oi oi-list" aria-hidden="true"></span> Notifikationer
+                                </NavLink>
+                            </div>
+                        </Authorized>
+                    </AuthorizeView>
+                </li>
+
+                <li class="nav-item">
+                    <div class="nav-item px-3">
+                        <NavLink class="nav-link" href="Info">
+                            <span class="oi oi-info" aria-hidden="true"></span> Om os
+                        </NavLink>
+                    </div>
+                </li>
+            </ul>
+            <div class="nav-item px-3" style="position: absolute; bottom: 0">
+                <LoginButtons/>
+            </div>
+        </div>
+    </div>
+
+</nav>
+
+
+@code {
+    bool collapseNavMenu = true;
+
+    string NavMenuCssClass => collapseNavMenu ? "collapse" : null;
+
+    void ToggleNavMenu()
+    {
+        collapseNavMenu = !collapseNavMenu;
+    }
+
+    void CollapseNavMenu()
+    {
+        collapseNavMenu = true;
     }
 
 }

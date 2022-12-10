@@ -7,8 +7,9 @@
 @inject IAuthService AuthService
 
 
+<div class="container-pages">
 
-<h3 style="text-align: center">Begivenheder</h3>
+<h3 class="page-header" style="text-align: center">Begivenheder</h3>
 
 <div>
     <select class="form-control" @bind="@Category" style="width: 200px; float: left" >
@@ -86,7 +87,7 @@ else
                 _
                 <AuthorizeView Policy="User">
                     <div class="button-container">
-                        <button class="confirm"
+                        <button class="confirm-button"
                                 @onclick="@(() => RegisterAttendee(item.Id))" disabled="@Disabled(item.Id)">
                             @GetButtonText(item.Id)
                         </button>
@@ -100,7 +101,7 @@ else
     </div>
 
 }
-
+</div>
 
 @code {
     private ICollection<Event>? _events;

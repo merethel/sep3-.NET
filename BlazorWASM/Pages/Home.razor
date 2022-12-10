@@ -1,123 +1,19 @@
 ﻿@page "/"
-@using System.Security.Claims
-@using global::Shared.Dtos
-@using global::Shared.Models
-@using HttpClients.ClientInterfaces
-@inject IAuthService AuthService
-@inject IEventService EventService
 
-<h3 style="text-align: center">Hjem</h3>
 
-<AuthorizeView>
-<h4 style="text-align: center">Aflyste Begivenheder hvor du har været tilmeldt</h4>
 
-@if (_cancelledEvents == null)
-{
-<p>Indlæser...</p>
-}
-else if (!_cancelledEvents.Any())
-{
-<p>Ingen aflyste begivenheder at finde</p>
-}
-else
-{
-    @foreach (Event item in _cancelledEvents)
-    {
-        <div class="card">
-            <div class="boxes">
-                <b>Titel:</b>
-                <label>@item.Title</label>
-            </div>
+<link href="Home.razor.css" rel="stylesheet"/>
+<div class="container-pages">
+    <div class="frontpage-infobox">
+        <img class="frontpage-logo" src="img/3vENT_4U.png" alt="Logo"/>
+        
+        <h3 style="text-align: center; font-size: xxx-large; font-family: Impact; color: whitesmoke ">Velkommen til 3vent 4U!</h3>
+        <h4 style="text-align: center; font-size: x-large; font-family: Brush Script MT;  color: whitesmoke" >     - dit samlingspunkt</h4>
+        
+    </div>
 
-            <div class="boxes">
-                <b>Ejer:</b>
-                <label>@item.Owner.Username</label>
-            </div>
+</div>
 
-            <div class="boxes">
-                <b>Lokation:</b>
-                <label>@item.Location</label>
-            </div>
-
-            <div class="boxes">
-                <b>Dato og tid:</b>
-                <label>@item.DateTime</label>
-            </div>
-
-            <div class="boxes">
-                <b>Beskrivelse:</b>
-                <div id="Description">
-                    @item.Description
-                </div>
-            </div>
-            <div class="boxes">
-                <b>Område:</b>
-                <label>@item.Area</label>
-            </div>
-            <div class="boxes">
-                <b>Kategori</b>
-                <label>@item.Category</label>
-            </div>
-        </div>
-        <br/>
-    }
-}
-</AuthorizeView>
 @code
 {
-    private int _userId;
-    private ICollection<Event>? _cancelledEvents;
-
-    protected override async Task OnInitializedAsync()
-    {
-        try
-        {
-            ClaimsPrincipal claimsPrincipal = await AuthService.GetAuthAsync();
-
-            foreach (var claim in claimsPrincipal.Claims)
-            {
-                if (claim.Type.Equals("UserId"))
-                {
-                    _userId = Int32.Parse(claim.Value);
-                }
-            }
-
-            
-            while (_userId != 0)
-            {
-                ICollection<Event> sortedEvents = new List<Event>();
-                ICollection<Event> events = await EventService.GetEvents(new CriteriaDto()
-                {
-                    IsCancelled = true,
-                    Attendee = _userId
-                    
-                });
-
-                //Denne sortering burde laves med Hibernate men det kan vi ikke få til at virke så vi laver den her.
-                //Dette er dog ikke skalerbart hvis vi har mange aflyste begivenheder.
-                
-                foreach (Event eventInList in events)
-                {
-                    foreach (User user in eventInList.Attendees)
-                    {
-                        if (user.Id == _userId)
-                        {
-                            sortedEvents.Add(eventInList);
-                        }
-                    }
-                }
-
-                _cancelledEvents = sortedEvents;
-                
-                StateHasChanged();
-                Console.WriteLine(_cancelledEvents.Count);
-                await Task.Delay(30000);
-            }
-            
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine(e);
-        }
-    }
 }

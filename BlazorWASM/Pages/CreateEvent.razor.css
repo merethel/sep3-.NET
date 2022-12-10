@@ -3,13 +3,6 @@
     padding: 5px;
 }
 
-.card {
-    border: 5px solid #c4dea4;
-    background-color: #f6f6db;
-    margin: 20px;
-    padding: 20px;
-}
-
 input {
     padding: 12px 20px;
     margin: 8px 0;
@@ -41,11 +34,9 @@ confirm-button:hover {
     opacity: 0.8;
 }
 
-
 confirm-button:disabled,
 confirm-button[disabled]{
     border: 1px solid #999999;
     background-color: #6D9775;
     opacity: 1;
-
 }

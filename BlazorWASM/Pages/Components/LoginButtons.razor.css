@@ -11,9 +11,9 @@
     font-size: 14px;
     font-weight: 700;
     line-height: 16px;
-    min-height: 40px;
+    min-height: 32px;
     outline: 0;
-    padding: 12px 14px;
+    padding: 8px;
     text-align: center;
     text-rendering: geometricprecision;
     text-transform: none;
@@ -21,7 +21,7 @@
     -webkit-user-select: none;
     touch-action: manipulation;
     vertical-align: middle;
-    margin: 0.5rem;
+    margin: 8px;
     
 }
 

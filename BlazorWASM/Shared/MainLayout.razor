@@ -1,4 +1,4 @@
-﻿@inherits LayoutComponentBase
+﻿@*@inherits LayoutComponentBase
 @using Login
 
 <div class="page">
@@ -19,4 +19,20 @@
         </article>
     </main>
     
+</div>*@
+
+@inherits LayoutComponentBase
+
+<body class="background1">
+<NavMenu />
+
+<div class="container">
+    @Body
 </div>
+</body>
+
+<footer class="border-top footer text-muted fixed-bottom" style="height: 5%">
+    <div class="container" style="padding: 2px">
+        &copy; 3vent4U
+    </div>
+</footer>

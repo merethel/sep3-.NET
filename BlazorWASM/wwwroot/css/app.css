@@ -3,10 +3,35 @@
 html, body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
+body{
+    background-color: transparent;
+}
 
+html{
+    background-image: url("../img/background_image.jpg");
+    height: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+}
+
+.container-pages{
+ margin-top: 5%;
+}
 
 h1:focus {
     outline: none;
+}
+
+p{
+    color: whitesmoke;
+}
+
+.page-header{
+    color: whitesmoke;
+    font-family: Gabriola;
+    font-size: xxx-large;
 }
 
 a, .btn-link {
@@ -64,9 +89,15 @@ a, .btn-link {
         content: "An error has occurred."
     }
 
+    
+/*Event bokse med begivenhedsinformationer*/
 .card {
     border: 5px solid #c4dea4;
     background-color: #f6f6db;
+    margin: 20px;
+    padding: 20px;
+    width: 60%;
+    position: center !important;
 }
 
 #Description {
@@ -81,3 +112,67 @@ a, .btn-link {
 }
 
 
+/*Navbar stuff*/
+
+.nav-item a {
+    color: #d7d7d7;
+    border-radius: 4px;
+    height: 2rem;
+    display: flex;
+    align-items: center;
+    line-height: 2rem;
+}
+
+.nav-item a.active {
+    background-color: rgba(255,255,255,0.25);
+    color: white;
+}
+
+.nav-item a:hover {
+    background-color: rgba(255,255,255,0.1);
+    color: white;
+}
+
+.navbar-toggler {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+@media (min-width: 768px) {
+
+    .navbar-toggler {
+        display: none;
+    }
+}
+
+/*Bliver brugt i login og create user*/
+.form {
+    border: 5px solid #c4dea4;
+    background-color: #f6f6db;
+}
+
+.confirm {
+    background-color: #0c2204;
+}
+
+.confirm:disabled {
+    background-color: #6D9775;
+}
+
+/*Forside boks - vil åbenbart ikke virke i home.razor.css*/
+.frontpage-logo{
+    width: 30%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    position: center;
+    border-radius: 50%;
+}
+
+
+.frontpage-infobox{
+    padding: 7%;
+    padding-top: 1%;
+    -moz-border-radius:10px;  /* for Firefox */
+    -webkit-border-radius:10px; /* for Webkit-Browsers */
+    border-radius:10px; /* regular */
+}

@@ -3,16 +3,3 @@
     font-size: smaller;
     color: #5A5A5A;
 }
-
-.form {
-    border: 5px solid #c4dea4;
-    background-color: #f6f6db;
-}
-
-.confirm {
-    background-color: #0c2204;
-}
-
-.confirm:disabled {
-    background-color: #6D9775;
-}

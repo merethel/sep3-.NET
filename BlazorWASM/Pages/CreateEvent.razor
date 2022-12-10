@@ -6,74 +6,78 @@
 
 @inject IEventService EventService
 
+
+
 <link href="css/Login.css" rel="stylesheet"/>
-<b><h3 style="text-align: center">Opret din begivenhed</h3></b>
+<div class="container-pages">
+    <b>
+        <h3 class="page-header" style="text-align: center">Opret din begivenhed</h3>
+    </b>
 
-
-<div class="card">
-    <div>
-        <label>
-            <b>Titel</b>
-        </label><br/>
-        <input class="full-width" type="text" @bind="_title" @bind:event="oninput"/>
-    </div>
-    <div>
-        <label>
-            <b>Beskrivelse</b>
-        </label><br/>
-        <input class="full-width" type="text" @bind="_description" @bind:event="oninput"/>
-    </div>
-    <div>
-        <label>
-            <b>Lokation</b>
-        </label><br/>
-        <input class="full-width" type="text" @bind="_location" @bind:event="oninput"/>
-    </div>
-    <div>
-        <label>
-            <b>Dato</b>
-        </label><br/>
-        <a style="font-size: small">Day</a> <input class="smallinput" type="text" @bind="_day" @bind:event="oninput"/>
-        <a style="font-size: small">Måned</a> <input class="smallinput" type="text" @bind="_month" @bind:event="oninput"/>
-        <a style="font-size: small">År</a> <input style="width: 60px" class="smallinput" type="text" @bind="_year" @bind:event="oninput"/>
-    </div>
-    <div>
-        <label>
-            <b>Tid</b>
-        </label><br/>
-        <input class="smallinput" type="text" @bind="_hour" @bind:event="oninput"/><b style="font-size: large"> :</b>
-        <input class="smallinput" type="text" @bind="_min" @bind:event="oninput"/>
-    </div>
-    
-    <div>
-    <select class="form-control" @bind="@Category" style="width: 200px; float: left" >
-        <option disabled selected value> -- Vælg en kategori -- </option>
-        @foreach (var c in _categories)
-        {
-            <option value="@c"> @c </option>
-        }
-    </select>
-    
-        <select class="form-control" @bind="@Area" style="width: 200px; float: left">
-            <option disabled selected value> -- Vælg et område -- </option>
-            @foreach (var a in _areas)
-            {
-                <option value="@a"> @a </option>
-            }
-        </select>
+    <div class="card">
+        <div>
+            <label>
+                <b>Titel</b>
+            </label><br/>
+            <input class="full-width" type="text" @bind="_title" @bind:event="oninput"/>
         </div>
-    
-    <div>
-        @if (!string.IsNullOrEmpty(_resultMsg))
-        {
-            <label style="color: @_color">@_resultMsg</label>
-        }
-    </div>
-    <div class="button-container">
-        <button class="confirm-button" @onclick="Create" disabled="@(string.IsNullOrEmpty(_title) || string.IsNullOrEmpty(_description) || string.IsNullOrEmpty(_year) || string.IsNullOrEmpty(_month) || string.IsNullOrEmpty(_day) || string.IsNullOrEmpty(_hour) || string.IsNullOrEmpty(_min))">Opret</button>
+        <div>
+            <label>
+                <b>Beskrivelse</b>
+            </label><br/>
+            <input class="full-width" type="text" @bind="_description" @bind:event="oninput"/>
+        </div>
+        <div>
+            <label>
+                <b>Lokation</b>
+            </label><br/>
+            <input class="full-width" type="text" @bind="_location" @bind:event="oninput"/>
+        </div>
+        <div>
+            <label>
+                <b>Dato</b>
+            </label><br/>
+            <a style="font-size: small">Day</a> <input class="smallinput" type="text" @bind="_day" @bind:event="oninput"/>
+            <a style="font-size: small">Måned</a> <input class="smallinput" type="text" @bind="_month" @bind:event="oninput"/>
+            <a style="font-size: small">År</a> <input style="width: 60px" class="smallinput" type="text" @bind="_year" @bind:event="oninput"/>
+        </div>
+        <div>
+            <label>
+                <b>Tid</b>
+            </label><br/>
+            <input class="smallinput" type="text" @bind="_hour" @bind:event="oninput"/><b style="font-size: large"> :</b>
+            <input class="smallinput" type="text" @bind="_min" @bind:event="oninput"/>
+        </div>
+
+        <div>
+            <select class="form-control" @bind="@Category" style="width: 200px; float: left">
+                <option disabled selected value> -- Vælg en kategori -- </option>
+                @foreach (var c in _categories)
+                {
+                    <option value="@c"> @c </option>
+                }
+            </select>
+
+            <select class="form-control" @bind="@Area" style="width: 200px; float: left">
+                <option disabled selected value> -- Vælg et område -- </option>
+                @foreach (var a in _areas)
+                {
+                    <option value="@a"> @a </option>
+                }
+            </select>
+        </div>
+
+        <div>
+            @if (!string.IsNullOrEmpty(_resultMsg))
+            {
+                <label style="color: @_color">@_resultMsg</label>
+            }
+        </div>
+        <div class="button-container">
+            <button class="confirm-button" @onclick="Create" disabled="@(string.IsNullOrEmpty(_title) || string.IsNullOrEmpty(_description) || string.IsNullOrEmpty(_year) || string.IsNullOrEmpty(_month) || string.IsNullOrEmpty(_day) || string.IsNullOrEmpty(_hour) || string.IsNullOrEmpty(_min))">Opret</button>
+        </div>
     </div>
 </div>
-
 
 @code {
     private string _title = "";
@@ -97,23 +101,23 @@
     string Category
     {
         get => _category;
-        set {_category = value;}
+        set { _category = value; }
     }
 
     string Area
     {
         get => _area;
-        set {_area = value;}
+        set { _area = value; }
     }
 
-    
+
     List<string> _categories = new List<string>()
     {
         "Motion",
         "Klima",
         "Spil"
     };
-    
+
     List<string> _areas = new List<string>()
     {
         "Sjælland",
@@ -123,8 +127,8 @@
         "Færøerne",
         "Grønland"
     };
-    
-    
+
+
     private async Task Create()
     {
         _resultMsg = "";
@@ -139,9 +143,8 @@
                 Int32.Parse(_min),
                 0);
         }
-        
-        
-        
+
+
         catch (Exception e)
         {
             _color = "red";
@@ -176,4 +179,5 @@
             _color = "red";
         }
     }
+
 }

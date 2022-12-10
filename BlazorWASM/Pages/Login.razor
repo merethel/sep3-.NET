@@ -3,7 +3,7 @@
 @inject IAuthService AuthService
 
 <link rel="stylesheet" href="css/Login.css">
-
+<div class="container-pages">
 <AuthorizeView>
     <NotAuthorized>
         <div class="form">
@@ -42,6 +42,7 @@
         </div>
     </Authorized>
 </AuthorizeView>
+</div>
 
 @code {
     private string _userName = "";

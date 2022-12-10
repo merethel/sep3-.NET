@@ -6,7 +6,8 @@
 @inject IEventService EventService
 @inject IUserService UserService
 
-<h3 style="text-align: center"><b>Mine begivenheder</b></h3>
+<div class="container-pages">
+<h3 class="page-header" style="text-align: center">Mine begivenheder</h3>
 
 @if (_events == null)
 {
@@ -67,7 +68,7 @@ else
     }
 
 }
-
+</div>
 
 @code {
     private ICollection<Event>? _events;

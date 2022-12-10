@@ -1,11 +1,12 @@
+/*
 .page {
     position: relative;
     display: flex;
     flex-direction: column;
     background-color: #Ecebc1;
 }
-/* ^^^ STYLE HER FOR GLOBAL
-*/
+!* ^^^ STYLE HER FOR GLOBAL
+*!
 
 main {
     flex: 1;
@@ -83,3 +84,4 @@ main {
     }
     
 }
+*/
