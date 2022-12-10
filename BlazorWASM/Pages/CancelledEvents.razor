@@ -22,46 +22,77 @@
     }
     else
     {
-        @foreach (Event item in _cancelledEvents)
-        {
-            <div class="card">
-                <div class="boxes">
-                    <b>Titel:</b>
-                    <label>@item.Title</label>
-                </div>
+         <div style="text-align: center; align-content: center;">
 
-                <div class="boxes">
-                    <b>Ejer:</b>
-                    <label>@item.Owner.Username</label>
-                </div>
+            @foreach (Event item in _cancelledEvents)
+            {
+                <div >
+                    <div class="card-events">
 
-                <div class="boxes">
-                    <b>Lokation:</b>
-                    <label>@item.Location</label>
-                </div>
+                        @if (item.Category.Equals("Motion"))
+                        {
+                            <div class="boxes" style="background-image: url('img/excercise.jpg'); height: 100px">
+                                
+                            </div>
+                        }
+                        
+                        @if (item.Category.Equals("Klima"))
+                        {
+                            <div class="boxes" style="background-image: url('img/climate.jpg'); height: 100px">
+                                
+                            </div>
+                        }
 
-                <div class="boxes">
-                    <b>Dato og tid:</b>
-                    <label>@item.DateTime</label>
-                </div>
+                        @if (item.Category.Equals("Spil"))
+                        {
+                            <div class="boxes" style="background-image: url('img/boardgames.jpg'); height: 100px">
+                                
+                            </div>
+                        }
 
-                <div class="boxes">
-                    <b>Beskrivelse:</b>
-                    <div id="Description">
-                        @item.Description
+                        <div class="boxes" style="padding-bottom: 0px">
+                            <label class="card-title">@item.Title</label>
+                        </div>
+                        <div class="boxes" style="padding-top: 0px">
+                            Afholdes af
+                            <label class="card-creater">
+                                <b>@item.Owner.Username</b>
+                            </label>
+                        </div>
+                        <br/>
+                        <br/>
+
+                        <div class="boxes">
+                            <b>Beskrivelse:</b>
+                            <div class="card-description" id="Description">
+                                @item.Description
+                            </div>
+
+                            <div style="display: flex; align-items: flex-start ">
+                                <div class="boxes">
+                                    <b>Kategori</b>
+                                    <label class="card-category">@item.Category</label>
+                                </div>
+
+                                <div class="boxes">
+                                    <b>Område og lokation:</b>
+                                    <label class="card-area">@item.Area, @item.Location</label>
+                                </div>
+
+                                <div class="boxes">
+                                    <b>Dato og tid:</b>
+                                    <label class="card-datetime">@item.DateTime</label>
+                                </div>
+                            </div>
+
+
+                        </div>
                     </div>
                 </div>
-                <div class="boxes">
-                    <b>Område:</b>
-                    <label>@item.Area</label>
-                </div>
-                <div class="boxes">
-                    <b>Kategori</b>
-                    <label>@item.Category</label>
-                </div>
-            </div>
-            <br/>
-        }
+                <br/>
+            }
+        </div>
+        
     }
 </AuthorizeView>
 
