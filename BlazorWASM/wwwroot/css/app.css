@@ -108,7 +108,6 @@ a, .btn-link {
 
 .boxes {
     width: 100%;
-    border: 2px solid #c4dea4;
     padding: 5px
 }
 
@@ -123,6 +122,15 @@ a, .btn-link {
     justify-content: center;
     margin: auto;
 }
+
+.card-title{
+    font-family: "Lucida Sans";
+    font-size: x-large;    
+}
+
+.card-creater{}
+
+.car
 
 /*Navbar stuff*/
 

@@ -3,106 +3,134 @@
 @using HttpClients.ClientInterfaces
 @using System.Security.Claims
 @using global::Shared.Dtos
+@using Syncfusion.Blazor.Buttons
 @inject IEventService EventService
 @inject IAuthService AuthService
 
 
 <div class="container-pages">
 
-<h3 class="page-header" style="text-align: center">Begivenheder</h3>
+    <h3 class="page-header" style="text-align: center">Begivenheder</h3>
 
-<div style="text-align: center; justify-content: center;">
-    <select class="form-control" @bind="@Category" style="width: 200px; float: left; margin: 2px; position: center !important;" >
-        <option disabled selected value> -- Vælg en kategori -- </option>
-        <option value="">Vælg alle kategorier</option>
-        @foreach (var c in _categories)
-        {
-            <option value="@c"> @c </option>
-        }
-    </select>
-    
-    
-    <select class="form-control-events" @bind="@Area" style="width: 200px; float: left; margin: 2px; position: center !important;" >
-        <option disabled selected value> -- Vælg et område -- </option>
-        <option value="">Vælg alle områder</option>
-        @foreach (var a in _areas)
-        {
-            <option value="@a"> @a </option>
-        }
-    </select>    
-    <div class="button-container" style="padding: 5px; float: left">
-        <button class="confirm-button" @onclick="Filter">Filtrer</button>
-    </div>
-</div>
-    <br/>
-    <br/>
-    <br/>
+    <div style="text-align: center; justify-content: center;">
+        <select class="form-control" @bind="@Category" style="width: 200px; float: left; margin: 2px; position: center !important;">
+            <option disabled selected value> -- Vælg en kategori -- </option>
+            <option value="">Vælg alle kategorier</option>
+            @foreach (var c in _categories)
+            {
+                <option value="@c"> @c </option>
+            }
+        </select>
 
 
-@if (_events == null)
-{
-    <p>Indlæser...</p>
-}
-else if (!_events.Any())
-{
-    <p>Ingen begivenheder at finde</p>
-}
-
-else
-{
-    <div style="text-align: center; align-content: center; child-align: inherit">
-
-    @foreach (Event item in _events)
-    {
-        <div class="card-events">
-            <div class="boxes">
-                <b>Titel:</b>
-                <label>@item.Title</label>
-            </div>
-            
-            <div class="boxes">
-                <b>Kategori</b>
-                <label>@item.Category</label>
-            </div>
-            
-            <div class="boxes">
-            <b>Ejer:</b>
-            <label>@item.Owner.Username</label>
+        <select class="form-control-events" @bind="@Area" style="width: 200px; float: left; margin: 2px; position: center !important;">
+            <option disabled selected value> -- Vælg et område -- </option>
+            <option value="">Vælg alle områder</option>
+            @foreach (var a in _areas)
+            {
+                <option value="@a"> @a </option>
+            }
+        </select>
+        <div class="button-container" style="padding: 5px; float: left">
+            <button class="confirm-button" @onclick="Filter">Filtrer</button>
         </div>
-        
-            <div class="boxes">
-                <b>Område og lokation:</b>
-                <label>@item.Area, @item.Location</label>
-            </div>
-
-            <div class="boxes">
-                <b>Dato og tid:</b>
-                <label>@item.DateTime</label>
-            </div>
-                
-            <div class="boxes">
-                <b>Beskrivelse:</b>
-                <div id="Description">
-                    @item.Description
-                </div>
-
-                _
-                <AuthorizeView Policy="User">
-                    <div class="button-container">
-                        <button class="confirm-button"
-                                @onclick="@(() => RegisterAttendee(item.Id))" disabled="@Disabled(item.Id)">
-                            @GetButtonText(item.Id)
-                        </button>
-                    </div>
-                </AuthorizeView>
-            </div>
-            </div>
-        <br/>
-                                
-    }
     </div>
+    <br/>
+    <br/>
+    <br/>
 
-}
+
+    @if (_events == null)
+    {
+        <p>Indlæser...</p>
+    }
+    else if (!_events.Any())
+    {
+        <p>Ingen begivenheder at finde</p>
+    }
+
+    else
+    {
+        <div style="text-align: center; align-content: center;">
+
+            @foreach (Event item in _events)
+            {
+                <div >
+                    <div class="card-events">
+
+                        @if (item.Category.Equals("Motion"))
+                        {
+                            <div class="boxes" style="background-image: url('img/excercise.jpg'); height: 100px">
+                                
+                            </div>
+                        }
+                        
+                        @if (item.Category.Equals("Klima"))
+                        {
+                            <div class="boxes" style="background-image: url('img/climate.jpg'); height: 100px">
+                                
+                            </div>
+                        }
+
+                        @if (item.Category.Equals("Spil"))
+                        {
+                            <div class="boxes" style="background-image: url('img/boardgames.jpg'); height: 100px">
+                                
+                            </div>
+                        }
+
+                        <div class="boxes" style="padding-bottom: 0px">
+                            <label class="card-title">@item.Title</label>
+                        </div>
+                        <div class="boxes" style="padding-top: 0px">
+                            Afholdes af
+                            <label class="card-creater">
+                                <b>@item.Owner.Username</b>
+                            </label>
+                        </div>
+                        <br/>
+                        <br/>
+
+                        <div class="boxes">
+                            <b>Beskrivelse:</b>
+                            <div class="card-description" id="Description">
+                                @item.Description
+                            </div>
+
+                            <AuthorizeView Policy="User">
+                                <div class="button-container">
+                                    <button class="confirm-button"
+                                            @onclick="@(() => RegisterAttendee(item.Id))" disabled="@Disabled(item.Id)">
+                                        @GetButtonText(item.Id)
+                                    </button>
+                                </div>
+                            </AuthorizeView>
+
+                            <div style="display: flex; align-items: flex-start ">
+                                <div class="boxes">
+                                    <b>Kategori</b>
+                                    <label class="card-category">@item.Category</label>
+                                </div>
+
+                                <div class="boxes">
+                                    <b>Område og lokation:</b>
+                                    <label class="card-area">@item.Area, @item.Location</label>
+                                </div>
+
+                                <div class="boxes">
+                                    <b>Dato og tid:</b>
+                                    <label class="card-datetime">@item.DateTime</label>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+                <br/>
+            }
+        </div>
+    }
 </div>
 
 @code {
@@ -111,27 +139,28 @@ else
     private int _userId;
     private string _category = null;
     private string _area = null;
-    
+    private string backgroundImage = null;
+
 
     string Category
     {
         get => _category;
-        set {_category = value;}
+        set { _category = value; }
     }
 
     string Area
     {
         get => _area;
-        set {_area = value;}
+        set { _area = value; }
     }
-    
+
     List<string> _categories = new List<string>()
     {
         "Motion",
         "Klima",
         "Spil"
     };
-    
+
     List<string> _areas = new List<string>()
     {
         "Sjælland",
@@ -158,7 +187,7 @@ else
                     _userId = Int32.Parse(claim.Value);
                 }
             }
-            
+
             _events = await EventService.GetEvents(new CriteriaDto());
         }
         catch (Exception e)
@@ -166,7 +195,6 @@ else
             Console.WriteLine(e);
             _msg = e.Message;
         }
-
     }
 
     //knappen disables når du trykker men med et delay, og i dette delay kan du trykke på knappen flere gange hvis du er hurtig.
@@ -224,10 +252,9 @@ else
 
     private async Task Filter()
     {
-
         if (_category != null || _area != null)
         {
-            _events = await EventService.GetEvents(new CriteriaDto(0,_category,_area));
+            _events = await EventService.GetEvents(new CriteriaDto(0, _category, _area));
         }
     }
-}
+    }
