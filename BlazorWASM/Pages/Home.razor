@@ -6,7 +6,10 @@
 @inject IAuthService AuthService
 @inject IEventService EventService
 
-<h3 style="text-align: center">Aflyste Begivenheder hvor du har været tilmeldt</h3>
+<h3 style="text-align: center">Hjem</h3>
+
+<AuthorizeView>
+<h4 style="text-align: center">Aflyste Begivenheder hvor du har været tilmeldt</h4>
 
 @if (_cancelledEvents == null)
 {
@@ -56,9 +59,10 @@ else
                 <label>@item.Category</label>
             </div>
         </div>
+        <br/>
     }
 }
-
+</AuthorizeView>
 @code
 {
     private int _userId;
