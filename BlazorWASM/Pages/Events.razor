@@ -11,8 +11,8 @@
 
 <h3 class="page-header" style="text-align: center">Begivenheder</h3>
 
-<div>
-    <select class="form-control" @bind="@Category" style="width: 200px; float: left" >
+<div style="text-align: center; justify-content: center;">
+    <select class="form-control" @bind="@Category" style="width: 200px; float: left; margin: 2px; position: center !important;" >
         <option disabled selected value> -- Vælg en kategori -- </option>
         <option value="">Vælg alle kategorier</option>
         @foreach (var c in _categories)
@@ -22,7 +22,7 @@
     </select>
     
     
-    <select class="form-control" @bind="@Area" style="width: 200px; float: left">
+    <select class="form-control-events" @bind="@Area" style="width: 200px; float: left; margin: 2px; position: center !important;" >
         <option disabled selected value> -- Vælg et område -- </option>
         <option value="">Vælg alle områder</option>
         @foreach (var a in _areas)
@@ -30,11 +30,13 @@
             <option value="@a"> @a </option>
         }
     </select>    
-    <div class="button-container" style="padding: 5px">
+    <div class="button-container" style="padding: 5px; float: left">
         <button class="confirm-button" @onclick="Filter">Filtrer</button>
     </div>
 </div>
-<br/>
+    <br/>
+    <br/>
+    <br/>
 
 
 @if (_events == null)
@@ -48,11 +50,11 @@ else if (!_events.Any())
 
 else
 {
-    <div>
+    <div style="text-align: center; align-content: center; child-align: inherit">
 
     @foreach (Event item in _events)
     {
-        <div class="card">
+        <div class="card-events">
             <div class="boxes">
                 <b>Titel:</b>
                 <label>@item.Title</label>
