@@ -6,7 +6,7 @@
 <div class="container-pages">
 <AuthorizeView>
     <NotAuthorized>
-        <div class="form">
+        <div class="form-login">
             <div class="imgcontainer">
                 <img src="img/img_avatar2.png" alt="Avatar" class="avatar">
             </div>
@@ -21,7 +21,7 @@
                 </label>
                 <input type="password" placeholder="Enter Password" @bind="_password" @bind:event="oninput" @onkeydown="@Enter">
                 <div class="button-container">
-                    <button class="confirm" @onclick="LoginAsync" disabled="@(string.IsNullOrEmpty(_userName) || string.IsNullOrEmpty(_password))">Log ind</button><br/>
+                    <button class="btn btn-light" @onclick="LoginAsync" disabled="@(string.IsNullOrEmpty(_userName) || string.IsNullOrEmpty(_password))">Log ind</button><br/>
                     <span class="psw">Ny på 3vent4u? <a class="signup-link" href="/CreateUser">Opret konto</a></span>
                 </div><br/>
 
@@ -37,8 +37,8 @@
         </div>
     </NotAuthorized>
     <Authorized>
-        <div class="card">
-            <h3>Velkommen, @context.User.Identity!.Name</h3>
+        <div style="text-align: center">
+            <h3 class="page-header" >Velkommen, @context.User.Identity!.Name</h3>
         </div>
     </Authorized>
 </AuthorizeView>

@@ -8,7 +8,7 @@
 <div class="container-pages">
 <h3 class="page-header" style="text-align: center">Opret konto</h3>
 
-<div class="form">
+<div class="form-signup">
     <div class="container">
         <label>
             <b>Brugernavn</b>
@@ -45,7 +45,7 @@
 
     </div>
     <div class="button-container">
-        <button class="confirm"
+        <button class="btn btn-light"
             disabled="@(string.IsNullOrEmpty(_username) || string.IsNullOrEmpty(_password) || string.IsNullOrEmpty(_email) || !_checkbox)"
             @onclick="Create">
             Opret

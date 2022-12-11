@@ -19,7 +19,7 @@ public class EventLogic : IEventLogic
     {
         User? owner = await _userGrpcClient.GetByUsernameAsync(dto.Username);
         if (owner == null)
-            throw new Exception($"The User with this username: {dto.Username} does not exist");
+            throw new Exception($"Bruger med brugernavn: {dto.Username} eksisterer ikke");
         
         ValidateData(dto);
         
@@ -37,46 +37,59 @@ public class EventLogic : IEventLogic
         DateTime today = DateTime.Today;
         string category = eventToCreate.Category;
         string area = eventToCreate.Area;
+        string exceptionString = "";
 
+        
         if (title.Length < 3)
-            throw new Exception("Title must be at least 3 characters!");
+        {
+            exceptionString += "\nTitel skal have mere end 3 tegn";
+            //throw new Exception(exceptionString);
+        }
 
         if (title.Length > 32)
-            throw new Exception("Title must be less than 32 characters!");
+        {
+            exceptionString += "\nTitel skal være mindre end 32 tegn";
+            //throw new Exception(exceptionString);
+        }
+
         if (description.Length <= 0)
         {
-            throw new Exception("Description cannot be empty");
+            exceptionString += "\nBeskrivelsen må ikke være tom";
+            //throw new Exception(exceptionString);
         }
         
         if (location.Length <= 0)
         {
-            throw new Exception("Location cannot be empty");
+            exceptionString += "\nLokation skal udfyldes";
+            //throw new Exception(exceptionString);
         }
         
         if (date.CompareTo(today) < 0)
         {
-            throw new Exception("Unless you can time travel please pick a later date.");
+            exceptionString += "\nMed mindre du kan rejse i tiden, så vælg venligst en senere dato";
+            //throw new Exception(exceptionString);
         }
 
         if (date.Year > 2100)
-            throw new Exception("You are probably gonna be dead by then dont you think?");
-        
-
-        if (description.Length <= 0)
         {
-            throw new Exception("Description cannot be empty");
+            exceptionString += "\nDu er højst sandsynlig død til den tid, tror du ikke?";
+            //throw new Exception(exceptionString);
         }
-        
+
         if (category.Length == 0)
         {
-            throw new Exception("You must choose a category");
+            exceptionString += "\nDu skal vælge en kategori";
+            //throw new Exception(exceptionString);
         }
 
         
         if (area.Length == 0)
         {
-            throw new Exception("You must choose an area for your event");
+            exceptionString += "\nDu skal vælge et område";
+            //throw new Exception(exceptionString);
         }
+
+        throw new Exception(exceptionString);
     }
     
     public Task<List<Event>> GetAsync(CriteriaDto criteriaDto)

@@ -7,19 +7,19 @@
 @inject IUserService UserService
 
 <div class="container-pages">
-<h3 class="page-header" style="text-align: center">Mine begivenheder</h3>
+    <h3 class="page-header" style="text-align: center">Mine begivenheder</h3>
 
-@if (_events == null)
-{
-    <p>Indlæser...</p>
-}
-else if (!_events.Any())
-{
-    <p>Ingen begivenheder at finde</p>
-}
-else
-{
-     <div style="text-align: center; align-content: center;">
+    @if (_events == null)
+    {
+        <p>Indlæser...</p>
+    }
+    else if (!_events.Any())
+    {
+        <p>Ingen begivenheder at finde</p>
+    }
+    else
+    {
+        <div style="text-align: center; align-content: center; display: flex; flex-direction: column-reverse;">
 
             @foreach (Event item in _events)
             {
@@ -29,21 +29,21 @@ else
                         @if (item.Category.Equals("Motion"))
                         {
                             <div class="boxes" style="background-image: url('img/excercise.jpg'); height: 100px">
-                                
+
                             </div>
                         }
-                        
+
                         @if (item.Category.Equals("Klima"))
                         {
                             <div class="boxes" style="background-image: url('img/climate.jpg'); height: 100px">
-                                
+
                             </div>
                         }
 
                         @if (item.Category.Equals("Spil"))
                         {
                             <div class="boxes" style="background-image: url('img/boardgames.jpg'); height: 100px">
-                                
+
                             </div>
                         }
 
@@ -64,10 +64,21 @@ else
                             <div class="card-description" id="Description">
                                 @item.Description
                             </div>
-
+                            <AuthorizeView>
+                                <div class="button-container">
+                                    <button class="btn btn-outline-dark"
+                                            @onclick="@(() => CancelEvent(item.Id))">
+                                        Aflys begivenhed
+                                    </button>
+                                </div>
+                            </AuthorizeView>
+                            
+                            <br/>
+                            
                             <div style="display: flex; align-items: flex-start ">
                                 <div class="boxes">
-                                    <b>Kategori</b>
+                                    <b>Kategori:</b>
+                                    <br/>
                                     <label class="card-category">@item.Category</label>
                                 </div>
 
@@ -82,14 +93,12 @@ else
                                 </div>
                             </div>
 
-
                         </div>
                     </div>
                 </div>
                 <br/>
             }
         </div>
-                                
     }
 
 </div>
@@ -103,7 +112,7 @@ else
     {
         try
         {
-            /*ClaimsPrincipal claimsPrincipal = await AuthService.GetAuthAsync();
+    /*ClaimsPrincipal claimsPrincipal = await AuthService.GetAuthAsync();
 
             foreach (var claim in claimsPrincipal.Claims)
             {
@@ -123,7 +132,6 @@ else
             Console.WriteLine(e);
             _msg = e.Message;
         }
-        
     }
 
     //knappen disables når du trykker men med et delay, og i dette delay kan du trykke på knappen flere gange hvis du er hurtig.
@@ -136,11 +144,11 @@ else
             OwnerId = userId
         });
     }
-    
+
     // Jeg har fixet at knapperne bliver disabled/enabled alt efter om du er tilmeldt eller ikke.
-    
+
     //2 ting som ikke virker men nu er kl 23:51 og jeg er træt...
     //Der står med grøn skrift "Tilmeldt!" på alle eventsne når man trykker på en tilmend knap.
     //Den opdatere ikke i realtime, så når du har trykket tilmeld disabler den først knappen når du har reloadet siden, det skal også kigges på.
-    
+
 }

@@ -8,13 +8,15 @@
 
 
 
+
+
 <link href="css/Login.css" rel="stylesheet"/>
 <div class="container-pages">
     <b>
         <h3 class="page-header" style="text-align: center">Opret din begivenhed</h3>
     </b>
 
-    <div class="card">
+    <div class="form-create-event">
         <div>
             <label>
                 <b>Titel</b>
@@ -50,7 +52,7 @@
         </div>
 
         <div>
-            <select class="form-control" @bind="@Category" style="width: 200px; float: left">
+            <select class="form-control" @bind="@Category" style="width: 200px; float: left; margin-right: 2%">
                 <option disabled selected value> -- Vælg en kategori -- </option>
                 @foreach (var c in _categories)
                 {
@@ -58,7 +60,7 @@
                 }
             </select>
 
-            <select class="form-control" @bind="@Area" style="width: 200px; float: left">
+            <select class="form-control" @bind="@Area" style="width: 200px; float: left; margin-left: 2%">
                 <option disabled selected value> -- Vælg et område -- </option>
                 @foreach (var a in _areas)
                 {
@@ -73,8 +75,9 @@
                 <label style="color: @_color">@_resultMsg</label>
             }
         </div>
+        <br/>
         <div class="button-container">
-            <button class="confirm-button" @onclick="Create" disabled="@(string.IsNullOrEmpty(_title) || string.IsNullOrEmpty(_description) || string.IsNullOrEmpty(_year) || string.IsNullOrEmpty(_month) || string.IsNullOrEmpty(_day) || string.IsNullOrEmpty(_hour) || string.IsNullOrEmpty(_min))">Opret</button>
+            <button class="btn btn-light" @onclick="Create" disabled="@(string.IsNullOrEmpty(_title) || string.IsNullOrEmpty(_description) || string.IsNullOrEmpty(_year) || string.IsNullOrEmpty(_month) || string.IsNullOrEmpty(_day) || string.IsNullOrEmpty(_hour) || string.IsNullOrEmpty(_min))">Opret</button>
         </div>
     </div>
 </div>
@@ -148,7 +151,7 @@
         catch (Exception e)
         {
             _color = "red";
-            _resultMsg = "Invalid date or time";
+            _resultMsg = "Forkert dato eller tidspunkt";
             return;
         }
 
@@ -169,7 +172,7 @@
 
             _dateTime = DateTime.MaxValue;
 
-            _resultMsg = "Event created!";
+            _resultMsg = "Begivenhed oprettet!";
             _color = "green";
         }
         catch (Exception e)

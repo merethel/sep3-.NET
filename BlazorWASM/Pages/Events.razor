@@ -31,8 +31,8 @@
                 <option value="@a"> @a </option>
             }
         </select>
-        <div class="button-container" style="padding: 5px; float: left">
-            <button class="confirm-button" @onclick="Filter">Filtrer</button>
+        <div style="margin: 2px; float: left;">
+            <button class="btn btn-light" @onclick="Filter">Filtrer</button>
         </div>
     </div>
     <br/>
@@ -51,7 +51,7 @@
 
     else
     {
-        <div style="text-align: center; align-content: center;">
+        <div style="text-align: center; align-content: center; display: flex; flex-direction: column-reverse;">
 
             @foreach (Event item in _events)
             {
@@ -99,16 +99,18 @@
 
                             <AuthorizeView Policy="User">
                                 <div class="button-container">
-                                    <button class="confirm-button"
+                                    <button class="btn btn-outline-dark"
                                             @onclick="@(() => RegisterAttendee(item.Id))" disabled="@Disabled(item.Id)">
                                         @GetButtonText(item.Id)
                                     </button>
                                 </div>
                             </AuthorizeView>
+                            <br/>
 
                             <div style="display: flex; align-items: flex-start ">
                                 <div class="boxes">
-                                    <b>Kategori</b>
+                                    <b>Kategori:</b>
+                                    <br/>
                                     <label class="card-category">@item.Category</label>
                                 </div>
 
