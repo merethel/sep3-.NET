@@ -38,58 +38,52 @@ public class EventLogic : IEventLogic
         string category = eventToCreate.Category;
         string area = eventToCreate.Area;
         string exceptionString = "";
-
         
         if (title.Length < 3)
         {
-            exceptionString += "\nTitel skal have mere end 3 tegn";
-            //throw new Exception(exceptionString);
+            exceptionString += Environment.NewLine + "Titel skal have mere end 3 tegn";
         }
 
         if (title.Length > 32)
         {
-            exceptionString += "\nTitel skal være mindre end 32 tegn";
-            //throw new Exception(exceptionString);
+            exceptionString += Environment.NewLine + "Titel skal være mindre end 32 tegn";
         }
 
         if (description.Length <= 0)
         {
-            exceptionString += "\nBeskrivelsen må ikke være tom";
-            //throw new Exception(exceptionString);
+            exceptionString += Environment.NewLine + "Beskrivelsen må ikke være tom";
         }
         
         if (location.Length <= 0)
         {
-            exceptionString += "\nLokation skal udfyldes";
-            //throw new Exception(exceptionString);
+            exceptionString += Environment.NewLine + "Lokation skal udfyldes";
         }
         
         if (date.CompareTo(today) < 0)
         {
-            exceptionString += "\nMed mindre du kan rejse i tiden, så vælg venligst en senere dato";
-            //throw new Exception(exceptionString);
+            exceptionString += Environment.NewLine + "Med mindre du kan rejse i tiden, så vælg venligst en senere dato";
         }
 
         if (date.Year > 2100)
         {
-            exceptionString += "\nDu er højst sandsynlig død til den tid, tror du ikke?";
-            //throw new Exception(exceptionString);
+            exceptionString += Environment.NewLine + "Du er højst sandsynlig død til den tid, tror du ikke?";
         }
 
         if (category.Length == 0)
         {
-            exceptionString += "\nDu skal vælge en kategori";
-            //throw new Exception(exceptionString);
+            exceptionString += Environment.NewLine + "Du skal vælge en kategori";
         }
 
         
         if (area.Length == 0)
         {
-            exceptionString += "\nDu skal vælge et område";
-            //throw new Exception(exceptionString);
+            exceptionString += Environment.NewLine + "Du skal vælge et område";
         }
 
-        throw new Exception(exceptionString);
+        if (!exceptionString.Equals(null))
+        {
+            throw new Exception(exceptionString);
+        }
     }
     
     public Task<List<Event>> GetAsync(CriteriaDto criteriaDto)
