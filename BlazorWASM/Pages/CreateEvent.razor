@@ -72,7 +72,10 @@
         <div>
             @if (!string.IsNullOrEmpty(_resultMsg))
             {
-                <label style="color: @_color">@_resultMsg</label>
+                foreach (var s in results)
+                {
+                    <label style="color: @_color">@s</label>  <br/>
+                }
             }
         </div>
         <br/>
@@ -100,6 +103,8 @@
     private string _location = "";
     private string _category = "";
     private string _area = "";
+    private List<string> results;
+
 
     string Category
     {
@@ -135,6 +140,7 @@
     private async Task Create()
     {
         _resultMsg = "";
+        results = new List<string>();
 
         try
         {
@@ -152,7 +158,7 @@
         {
             _color = "red";
             _resultMsg = "Forkert dato eller tidspunkt";
-            return;
+            results.Add("Forkert dato eller tidspunkt");
         }
 
         try
@@ -173,12 +179,23 @@
             _dateTime = DateTime.MaxValue;
 
             _resultMsg = "Begivenhed oprettet!";
+            
+            results = new List<string>();
+            results.Add("Begivenhed oprettet!");
+            
             _color = "green";
         }
         catch (Exception e)
         {
-            Console.WriteLine(e);
-            _resultMsg = e.Message;
+            string[] split = { ">>", "<<" };
+            string[] result = e.Message.Split(split, StringSplitOptions.None);
+
+            foreach (var s in result)
+            {
+                Console.WriteLine(s);
+                _resultMsg += s + "\n";
+                results.Add(s);
+            }
             _color = "red";
         }
     }

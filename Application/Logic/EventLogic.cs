@@ -38,49 +38,49 @@ public class EventLogic : IEventLogic
         string category = eventToCreate.Category;
         string area = eventToCreate.Area;
         string exceptionString = "";
-        
+
         if (title.Length < 3)
         {
-            exceptionString += Environment.NewLine + "Titel skal have mere end 3 tegn";
+            exceptionString += Environment.NewLine + "<<Titel skal have mere end 3 tegn>>";
         }
 
         if (title.Length > 32)
         {
-            exceptionString += Environment.NewLine + "Titel skal være mindre end 32 tegn";
+            exceptionString += Environment.NewLine + "<<Titel skal være mindre end 32 tegn>>";
         }
 
         if (description.Length <= 0)
         {
-            exceptionString += Environment.NewLine + "Beskrivelsen må ikke være tom";
+            exceptionString += Environment.NewLine + "<<Beskrivelsen må ikke være tom>>";
         }
         
         if (location.Length <= 0)
         {
-            exceptionString += Environment.NewLine + "Lokation skal udfyldes";
+            exceptionString += Environment.NewLine + "<<Lokation skal udfyldes>>";
         }
         
         if (date.CompareTo(today) < 0)
         {
-            exceptionString += Environment.NewLine + "Med mindre du kan rejse i tiden, så vælg venligst en senere dato";
+            exceptionString += Environment.NewLine + "<<Med mindre du kan rejse i tiden, så vælg venligst en senere dato>>";
         }
 
         if (date.Year > 2100)
         {
-            exceptionString += Environment.NewLine + "Du er højst sandsynlig død til den tid, tror du ikke?";
+            exceptionString += Environment.NewLine + "<<Du er højst sandsynlig død til den tid, tror du ikke?>>";
         }
 
         if (category.Length == 0)
         {
-            exceptionString += Environment.NewLine + "Du skal vælge en kategori";
+            exceptionString += Environment.NewLine + "<<Du skal vælge en kategori>>";
         }
 
         
         if (area.Length == 0)
         {
-            exceptionString += Environment.NewLine + "Du skal vælge et område";
+            exceptionString += Environment.NewLine + "<<Du skal vælge et område>>";
         }
 
-        if (!exceptionString.Equals(null))
+        if (!exceptionString.Equals(""))
         {
             throw new Exception(exceptionString);
         }
