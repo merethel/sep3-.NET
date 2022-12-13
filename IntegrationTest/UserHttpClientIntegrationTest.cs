@@ -18,10 +18,6 @@ public class UserHttpClientIntegrationTest
         });
     }
 
-    [SetUp]
-    public void Setup()
-    {
-    }
 
     [Test]
     public void TestCreateUser()
@@ -29,37 +25,41 @@ public class UserHttpClientIntegrationTest
         //Arrange
         UserCreationDto dto = new UserCreationDto()
         {
-            Username = "testUser2",
+            Username = "newTestUser120",
             Email = "email@gmail.com",
             Password = "password",
             Role = "User"
         };
+
         //Act
-        User user = _userHttpClient.Create(dto).Result;
+        
+        User userToCreate = _userHttpClient.Create(dto).Result;
 
         //Assert
-        Assert.AreEqual(dto.Username, user.Username);
+        Assert.AreEqual(userToCreate.Username, dto.Username);
+        _userHttpClient.DeleteUser(userToCreate.Id);
     }
     
     [Test]
     public void DeletingUser()
     {
         //Arrange
-        UserCreationDto user = new UserCreationDto
+        bool thrown = false;
+        UserCreationDto dto = new UserCreationDto()
         {
-            Email = "mail@via.dk",
-            Username = "username",
+            Username = "newTestUser110",
+            Email = "email@gmail.com",
             Password = "password",
             Role = "User"
         };
-        User userTest =_userHttpClient.Create(user).Result;
+
+        User userToCreate = _userHttpClient.Create(dto).Result;
         
         //Act
-        _userHttpClient.DeleteUser(userTest.Id);
+        User userDeleted = _userHttpClient.DeleteUser(userToCreate.Id).Result;
         
         //Assert
-        Assert.Pass();
-        //Fordi vi ikke får feedback tilbage og vi ikke har en getUserMetode, så går vi ud fra a thvis den ikke throw en exception, så 
+        Assert.True(userDeleted.Id == userToCreate.Id);
     }
     
 }

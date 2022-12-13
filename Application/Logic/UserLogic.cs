@@ -21,7 +21,7 @@ public class UserLogic : IUserLogic
 
         //QUICKFIX
         if (existing != null && existing.Username.Length != 0)
-            throw new Exception("Username already taken!" + " (ノಠ益ಠ)ノ彡┻━┻");
+            throw new Exception("Brugernavn er allerede taget!" + " (ノಠ益ಠ)ノ彡┻━┻");
 
         ValidateData(dto);
 
@@ -34,18 +34,16 @@ public class UserLogic : IUserLogic
     {
         User? existingUser = await _userGrpcClient.GetByUsernameAsync(username);
 
-        //QUICKFIX
-
 
         if (existingUser!.Username.Length == 0 || existingUser is null)
 
         {
-            throw new Exception("Username not found");
+            throw new Exception("Brugernavn ikke fundet");
         }
 
         if (!existingUser.Password.Equals(password))
         {
-            throw new Exception("Password incorrect" + " (ノಠ益ಠ)ノ彡┻━┻");
+            throw new Exception("Kodeord er forkert" + " (ノಠ益ಠ)ノ彡┻━┻");
         }
 
         return await Task.FromResult(existingUser);
@@ -58,24 +56,24 @@ public class UserLogic : IUserLogic
     }
 
    
-    private static void ValidateData(UserCreationDto userToCreate)
+    private void ValidateData(UserCreationDto userToCreate)
     {
         string userName = userToCreate.Username;
         string password = userToCreate.Password;
         string email = userToCreate.Email;
 
         if (userName.Length < 3)
-            throw new Exception("Username must be at least 3 characters!" + " (ノಠ益ಠ)ノ彡┻━┻");
+            throw new Exception("Brugernavn skal være mindst 3 tegn lang!" + " (ノಠ益ಠ)ノ彡┻━┻");
 
         if (userName.Length > 15)
-            throw new Exception("Username must be less than 16 characters!" + " (ノಠ益ಠ)ノ彡┻━┻");
+            throw new Exception("Brugernavn skal være mindre end 16 tegn!" + " (ノಠ益ಠ)ノ彡┻━┻");
         if (password.Length < 8)
         {
-            throw new Exception("Password must be more than 8 characters!" + " (ノಠ益ಠ)ノ彡┻━┻");
+            throw new Exception("Adgangskode skal være mere end 8 tegn lang!" + " (ノಠ益ಠ)ノ彡┻━┻");
         }
         if (!email.Contains("@"))
         {
-            throw new Exception("This is not a valid email!" + " (ノಠ益ಠ)ノ彡┻━┻");
+            throw new Exception("Dette er ikke en korrekt e-mail!" + " (ノಠ益ಠ)ノ彡┻━┻");
         }
     }
 

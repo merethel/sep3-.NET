@@ -13,10 +13,20 @@ namespace IntegrationTest;
 public class EventHttpClientIntegrationTest
 {
     private readonly EventHttpClient _eventHttpClient;
+    private readonly UserHttpClient _userHttpClient;
 
+    
+    /*!! Da CancelAsync() er ændret fra at blive slettet i databasen, til at få en attribut ændret i stedet,
+     så har vi ikke en reel metode til at slette efter vores test (de kan kun køres én gang)
+     */
+    
+    
     public EventHttpClientIntegrationTest()
     {
         _eventHttpClient = new EventHttpClient(new HttpClient(){
+            BaseAddress = new Uri("https://localhost:7122")
+        });
+        _userHttpClient = new UserHttpClient(new HttpClient(){
             BaseAddress = new Uri("https://localhost:7122")
         });
     }
@@ -65,19 +75,40 @@ public class EventHttpClientIntegrationTest
     {
         //Arrange
 
-        //Act
-        var result = _eventHttpClient.RegisterAttendeeAsync(21, 19).Result;
-        User userToCreate = null;
-        foreach (var user in result.Attendees)
+        EventCreationDto dto = new EventCreationDto()
         {
-            if (user.Id == 21)
+            Username = "Jakob",
+            Title = "title",
+            Description = "description",
+            Location = "location",
+            DateTime = DateTime.Now.AddMonths(2),
+            Category = "category",
+            Area = "area"
+        };
+        
+        UserCreationDto dtoUser = new UserCreationDto()
+        {
+            Username = "testUser2",
+            Email = "email@gmail.com",
+            Password = "password",
+            Role = "User"
+        };
+        
+        Event @event = _eventHttpClient.CreateAsync(dto).Result;
+        User user = _userHttpClient.Create(dtoUser).Result;
+
+        
+        //Act
+        var result = _eventHttpClient.RegisterAttendeeAsync(user.Id, @event.Id).Result;
+        List<User> users = result.Attendees;
+        //Assert
+        foreach (var u in users)
+        {
+            if (u.Id == user.Id)
             {
-                userToCreate = user;
+                Assert.Pass();
             }
         }
-
-        //Assert
-        Assert.True(result.Attendees.Contains(userToCreate));
     }
     
     [Test]

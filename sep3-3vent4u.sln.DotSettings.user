@@ -1,11 +1,15 @@
 ﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=8b30aba5_002D2294_002D4a27_002Da40e_002Def14f2b44664/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="All tests from &amp;lt;UnitTest&amp;gt;" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=8b30aba5_002D2294_002D4a27_002Da40e_002Def14f2b44664/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="All tests from &amp;lt;UnitTest&amp;gt;" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
   &lt;TestAncestor&gt;&#xD;
     &lt;TestId&gt;NUnit3x::D6F78DE8-BB27-4E1A-A6B9-5A73DAED3B3A::net6.0::IntegrationTest.EventHttpClientIntegrationTest&lt;/TestId&gt;&#xD;
     &lt;TestId&gt;NUnit3x::D6F78DE8-BB27-4E1A-A6B9-5A73DAED3B3A::net6.0::IntegrationTest.UserHttpClientIntegrationTest.DeletingUser&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::5BC2D6C7-81E3-4366-A286-4B1822FAFF5C::net6.0::UnitTest.EventLogicTest.GrpcFactoryTest&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::5BC2D6C7-81E3-4366-A286-4B1822FAFF5C::net6.0::UnitTest.UserLogicTest&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::D6F78DE8-BB27-4E1A-A6B9-5A73DAED3B3A::net6.0::IntegrationTest.UserHttpClientIntegrationTest.TestCreateUser&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::D6F78DE8-BB27-4E1A-A6B9-5A73DAED3B3A::net6.0::IntegrationTest.UserHttpClientIntegrationTest&lt;/TestId&gt;&#xD;
   &lt;/TestAncestor&gt;&#xD;
 &lt;/SessionState&gt;</s:String>
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=db7fef2f_002D2a2a_002D43d5_002D9914_002Dab09322810b4/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="TestThatAttendeeListCanHaveMultipleAttendees" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=db7fef2f_002D2a2a_002D43d5_002D9914_002Dab09322810b4/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="TestThatAttendeeListCanHaveMultipleAttendees" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
   &lt;TestAncestor&gt;&#xD;
     &lt;TestId&gt;NUnit3x::5BC2D6C7-81E3-4366-A286-4B1822FAFF5C::net6.0::UnitTest.EventLogicTest.EventLogicTest.TestThatAttendeeListCanHaveMultipleAttendees&lt;/TestId&gt;&#xD;
     &lt;TestId&gt;NUnit3x::5BC2D6C7-81E3-4366-A286-4B1822FAFF5C::net6.0::UnitTest.EventLogicTest.EventLogicTest.CreateEvent&lt;/TestId&gt;&#xD;
@@ -20,6 +24,7 @@
     &lt;TestId&gt;NUnit3x::D6F78DE8-BB27-4E1A-A6B9-5A73DAED3B3A::net6.0::IntegrationTest.JwtAuthHttpClientIntegrationTest.TestLogin&lt;/TestId&gt;&#xD;
     &lt;TestId&gt;NUnit3x::D6F78DE8-BB27-4E1A-A6B9-5A73DAED3B3A::net6.0::IntegrationTest.EventHttpClientIntegrationTest.TestGetAllEventsWithCriteria&lt;/TestId&gt;&#xD;
     &lt;TestId&gt;NUnit3x::D6F78DE8-BB27-4E1A-A6B9-5A73DAED3B3A::net6.0::IntegrationTest.UserHttpClientIntegrationTest.DeletingUser&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::5BC2D6C7-81E3-4366-A286-4B1822FAFF5C::net6.0::UnitTest.EventLogicTest.EventLogicTest&lt;/TestId&gt;&#xD;
   &lt;/TestAncestor&gt;&#xD;
 &lt;/SessionState&gt;</s:String>
 </wpf:ResourceDictionary>

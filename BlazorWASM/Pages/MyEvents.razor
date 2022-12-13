@@ -1,10 +1,10 @@
 ﻿@page "/MyEvents"
 @using global::Shared.Models
 @using HttpClients.ClientInterfaces
-@using HttpClients.Implementations
 @using global::Shared.Dtos
+@using System.Security.Claims
 @inject IEventService EventService
-@inject IUserService UserService
+@inject IAuthService AuthService
 
 <div class="container-pages">
     <h3 class="page-header" style="text-align: center">Mine begivenheder</h3>
@@ -114,7 +114,15 @@
     {
         try
         {
-            _userId = await UserService.GetUserId(JwtAuthService.Username!);
+            ClaimsPrincipal claimsPrincipal = await AuthService.GetAuthAsync();
+
+            foreach (var claim in claimsPrincipal.Claims)
+            {
+                if (claim.Type.Equals("UserId"))
+                {
+                    _userId = Int32.Parse(claim.Value);
+                }
+            }
             _events = await EventService.GetEvents(new CriteriaDto
             {
                 OwnerId = _userId

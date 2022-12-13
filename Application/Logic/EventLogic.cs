@@ -28,7 +28,7 @@ public class EventLogic : IEventLogic
         return created;
     }
 
-    private static void ValidateData(EventCreationDto eventToCreate)
+    private void ValidateData(EventCreationDto eventToCreate)
     {
         string title = eventToCreate.Title;
         string description = eventToCreate.Description;
