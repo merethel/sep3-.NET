@@ -12,8 +12,9 @@
 
     <h3 class="page-header" style="text-align: center">Begivenheder</h3>
 
+    @* Filtrering dropdowns *@
     <div style="text-align: center; justify-content: center;">
-        <select class="form-control" @bind="@Category" style="width: 200px; float: left; margin: 2px; position: center !important;">
+        <select class="form-control" @bind="@_category" style="width: 200px; float: left; margin: 2px; position: center !important;">
             <option disabled selected value> -- Vælg en kategori -- </option>
             <option value="">Vælg alle kategorier</option>
             @foreach (var c in _categories)
@@ -22,8 +23,7 @@
             }
         </select>
 
-
-        <select class="form-control-events" @bind="@Area" style="width: 200px; float: left; margin: 2px; position: center !important;">
+        <select class="form-control-events" @bind="@_area" style="width: 200px; float: left; margin: 2px; position: center !important;">
             <option disabled selected value> -- Vælg et område -- </option>
             <option value="">Vælg alle områder</option>
             @foreach (var a in _areas)
@@ -40,6 +40,7 @@
     <br/>
 
 
+    @* Indlæsning af siden og tjek efter begivenheder  *@
     @if (_events == null)
     {
         <p>Indlæser...</p>
@@ -48,7 +49,8 @@
     {
         <p>Ingen begivenheder at finde</p>
     }
-
+    
+    @* Begivenheder cards *@
     else
     {
         <div style="text-align: center; align-content: center; display: flex; flex-direction: column-reverse;">
@@ -56,29 +58,31 @@
             @foreach (Event item in _events)
             {
                 <div >
+                    @* Topbillede på begivenheds-card, som viser tilpasset billede til kategorien  *@
                     <div class="card-events">
 
                         @if (item.Category.Equals("Motion"))
                         {
                             <div class="boxes" style="background-image: url('img/excercise.jpg'); height: 100px">
-                                
+
                             </div>
                         }
-                        
+
                         @if (item.Category.Equals("Klima"))
                         {
                             <div class="boxes" style="background-image: url('img/climate.jpg'); height: 100px">
-                                
+
                             </div>
                         }
 
                         @if (item.Category.Equals("Spil"))
                         {
                             <div class="boxes" style="background-image: url('img/boardgames.jpg'); height: 100px">
-                                
+
                             </div>
                         }
 
+                        @* Begivenhedsinformationer  *@
                         <div class="boxes" style="padding-bottom: 0px">
                             <label class="card-title">@item.Title</label>
                         </div>
@@ -97,6 +101,7 @@
                                 @item.Description
                             </div>
 
+                            @* Tilmeldingsknappen vises kun hvis man er registreret som "User" i systemet*@
                             <AuthorizeView Policy="User">
                                 <div class="button-container">
                                     <button class="btn btn-outline-dark"
@@ -137,33 +142,20 @@
 
 @code {
     private ICollection<Event>? _events;
-    private string _msg = "";
     private int _userId;
-    private string _category = null;
-    private string _area = null;
-    private string backgroundImage = null;
+    private string _category;
+    private string _area;
+    private string _backgroundImage = null;
+    private string _role;
 
-
-    string Category
-    {
-        get => _category;
-        set { _category = value; }
-    }
-
-    string Area
-    {
-        get => _area;
-        set { _area = value; }
-    }
-
-    List<string> _categories = new List<string>()
+    private List<string> _categories = new List<string>()
     {
         "Motion",
         "Klima",
         "Spil"
     };
 
-    List<string> _areas = new List<string>()
+    private List<string> _areas = new List<string>()
     {
         "Sjælland",
         "Jylland",
@@ -172,8 +164,6 @@
         "Færøerne",
         "Grønland"
     };
-
-    private string _role;
 
 
     protected override async Task OnInitializedAsync()
@@ -195,16 +185,13 @@
         catch (Exception e)
         {
             Console.WriteLine(e);
-            _msg = e.Message;
         }
     }
 
-    //knappen disables når du trykker men med et delay, og i dette delay kan du trykke på knappen flere gange hvis du er hurtig.
     private async Task RegisterAttendee(int eventId)
     {
         var userId = _userId;
         Event eventRegisteredTo = await EventService.RegisterAttendeeAsync(userId, eventId);
-        _msg = "Tilmeldt!";
         foreach (Event e in _events)
         {
             if (e.Id == eventId)
@@ -213,12 +200,6 @@
             }
         }
     }
-
-    // Jeg har fixet at knapperne bliver disabled/enabled alt efter om du er tilmeldt eller ikke.
-
-    //2 ting som ikke virker men nu er kl 23:51 og jeg er træt...
-    //Der står med grøn skrift "Tilmeldt!" på alle eventsne når man trykker på en tilmend knap.
-    //Den opdatere ikke i realtime, så når du har trykket tilmeld disabler den først knappen når du har reloadet siden, det skal også kigges på.
 
     private bool Disabled(int eventId)
     {
@@ -259,4 +240,5 @@
             _events = await EventService.GetEvents(new CriteriaDto(0, _category, _area));
         }
     }
-    }
+
+}

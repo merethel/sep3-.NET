@@ -10,13 +10,11 @@ namespace WebAPI.Controllers;
 [Route("[controller]")]
 public class UserController : ControllerBase
 {
-    private readonly IUserLogic UserLogic;
-    private readonly IConfiguration Config;
+    private readonly IUserLogic _userLogic;
 
-    public UserController(IUserLogic userLogic, IConfiguration config)
+    public UserController(IUserLogic userLogic)
     {
-        UserLogic = userLogic;
-        Config = config;
+        _userLogic = userLogic;
     }
 
     [HttpPost]
@@ -24,7 +22,7 @@ public class UserController : ControllerBase
     {
         try
         {
-            User user = await UserLogic.CreateAsync(dto);
+            User user = await _userLogic.CreateAsync(dto);
             return Created($"/users/{user.Id}", user);
         }
         catch (Exception e)
@@ -39,7 +37,7 @@ public class UserController : ControllerBase
     {
         try
         {
-            User user = await UserLogic.GetUser(username);
+            User user = await _userLogic.GetUser(username);
             return user;
         }
         
@@ -55,7 +53,7 @@ public class UserController : ControllerBase
     {
         try
         {
-            User user = await UserLogic.DeleteUser(userId.Int);
+            User user = await _userLogic.DeleteUser(userId.Int);
             return user;
         }
         catch (Exception e)

@@ -10,17 +10,18 @@ namespace HttpClients.Implementations;
 
 public class UserHttpClient : IUserService
 {
-    private readonly HttpClient Client;
-    public static int? userId { get; private set; } = 0;
+    private readonly HttpClient _client;
+    public static int? UserId { get; private set; }
     
     public UserHttpClient(HttpClient client)
     {
-        Client = client;
+        _client = client;
+        UserId = 0;
     }
 
     public async Task<User> Create(UserCreationDto dto)
     {
-        HttpResponseMessage response = await Client.PostAsJsonAsync("/user", dto);
+        HttpResponseMessage response = await _client.PostAsJsonAsync("/user", dto);
         string result = await response.Content.ReadAsStringAsync();
         if (!response.IsSuccessStatusCode)
         {
@@ -36,7 +37,7 @@ public class UserHttpClient : IUserService
 
     public async Task<int> GetUserId(string username)
     {
-        HttpResponseMessage response = await Client.GetAsync("/user?username="+username);
+        HttpResponseMessage response = await _client.GetAsync("/user?username="+username);
         string result = await response.Content.ReadAsStringAsync();
         if (!response.IsSuccessStatusCode)
         {
@@ -47,7 +48,7 @@ public class UserHttpClient : IUserService
         {
             PropertyNameCaseInsensitive = true
         })!;
-        userId = user.Id;
+        UserId = user.Id;
         return user.Id;
     }
 
@@ -58,7 +59,7 @@ public class UserHttpClient : IUserService
         {
             Int = userId
         });
-        HttpResponseMessage response = await Client.SendAsync(requestMessage);
+        HttpResponseMessage response = await _client.SendAsync(requestMessage);
         string result = await response.Content.ReadAsStringAsync();
         
         if (!response.IsSuccessStatusCode)

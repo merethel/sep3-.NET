@@ -3,7 +3,6 @@ using Application.Logic;
 using NUnit.Framework;
 using Shared.Dtos;
 using Shared.Models;
-using UnitTest.EventLogicTest;
 using UnitTest.Mockings;
 
 namespace UnitTest;

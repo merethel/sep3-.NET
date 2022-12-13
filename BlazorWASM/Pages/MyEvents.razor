@@ -9,6 +9,7 @@
 <div class="container-pages">
     <h3 class="page-header" style="text-align: center">Mine begivenheder</h3>
 
+    @* Indlæser siden og tjekker for events*@
     @if (_events == null)
     {
         <p>Indlæser...</p>
@@ -18,12 +19,14 @@
         <p>Ingen begivenheder at finde</p>
     }
     else
+    @* Indlæser begivenheder*@
     {
         <div style="text-align: center; align-content: center; display: flex; flex-direction: column-reverse;">
 
             @foreach (Event item in _events)
             {
                 <div >
+                    @* Tilknytter billede relevant til den enkelte begivenheds kategori*@
                     <div class="card-events">
 
                         @if (item.Category.Equals("Motion"))
@@ -47,6 +50,7 @@
                             </div>
                         }
 
+                        @* Begivenhedsinformationer*@
                         <div class="boxes" style="padding-bottom: 0px">
                             <label class="card-title">@item.Title</label>
                         </div>
@@ -64,17 +68,16 @@
                             <div class="card-description" id="Description">
                                 @item.Description
                             </div>
-                            <AuthorizeView>
-                                <div class="button-container">
-                                    <button class="btn btn-outline-dark"
-                                            @onclick="@(() => CancelEvent(item.Id))">
-                                        Aflys begivenhed
-                                    </button>
-                                </div>
-                            </AuthorizeView>
-                            
+
+                            <div class="button-container">
+                                <button class="btn btn-outline-dark"
+                                        @onclick="@(() => CancelEvent(item.Id))">
+                                    Aflys begivenhed
+                                </button>
+                            </div>
+
                             <br/>
-                            
+
                             <div style="display: flex; align-items: flex-start ">
                                 <div class="boxes">
                                     <b>Kategori:</b>
@@ -106,21 +109,11 @@
 @code {
     private ICollection<Event>? _events;
     private int _userId;
-    private string? _msg;
-
+    
     protected override async Task OnInitializedAsync()
     {
         try
         {
-    /*ClaimsPrincipal claimsPrincipal = await AuthService.GetAuthAsync();
-
-            foreach (var claim in claimsPrincipal.Claims)
-            {
-                if (claim.Type.Equals("UserId"))
-                {
-                    userId = Int32.Parse(claim.Value);
-                }
-            }*/
             _userId = await UserService.GetUserId(JwtAuthService.Username!);
             _events = await EventService.GetEvents(new CriteriaDto
             {
@@ -130,11 +123,9 @@
         catch (Exception e)
         {
             Console.WriteLine(e);
-            _msg = e.Message;
         }
     }
-
-    //knappen disables når du trykker men med et delay, og i dette delay kan du trykke på knappen flere gange hvis du er hurtig.
+    
     private async Task CancelEvent(int eventId)
     {
         var userId = this._userId;
@@ -144,11 +135,4 @@
             OwnerId = userId
         });
     }
-
-    // Jeg har fixet at knapperne bliver disabled/enabled alt efter om du er tilmeldt eller ikke.
-
-    //2 ting som ikke virker men nu er kl 23:51 og jeg er træt...
-    //Der står med grøn skrift "Tilmeldt!" på alle eventsne når man trykker på en tilmend knap.
-    //Den opdatere ikke i realtime, så når du har trykket tilmeld disabler den først knappen når du har reloadet siden, det skal også kigges på.
-
 }

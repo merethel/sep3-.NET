@@ -7,11 +7,11 @@
 @inject IEventService EventService
 
 
-
 <div class="container-pages">
-    <AuthorizeView>
     <h3 class="page-header" style="text-align: center">Aflyste Begivenheder</h3>
 
+
+    @*Indlæser side og tjekker for events*@
     @if (_cancelledEvents == null)
     {
         <p>Indlæser...</p>
@@ -21,83 +21,86 @@
         <p>Ingen aflyste begivenheder at finde</p>
     }
     else
-    {
-         <div style="text-align: center; align-content: center; display: flex; flex-direction: column-reverse;">
-         
-                     @foreach (Event item in _cancelledEvents)
-                     {
-                         <div >
-                             <div class="card-events">
-         
-                                 @if (item.Category.Equals("Motion"))
-                                 {
-                                     <div class="boxes" style="background-image: url('img/excercise.jpg'); height: 100px">
-                                         
-                                     </div>
-                                 }
-                                 
-                                 @if (item.Category.Equals("Klima"))
-                                 {
-                                     <div class="boxes" style="background-image: url('img/climate.jpg'); height: 100px">
-                                         
-                                     </div>
-                                 }
-         
-                                 @if (item.Category.Equals("Spil"))
-                                 {
-                                     <div class="boxes" style="background-image: url('img/boardgames.jpg'); height: 100px">
-                                         
-                                     </div>
-                                 }
-         
-                                 <div class="boxes" style="padding-bottom: 0px">
-                                     <label class="card-title">@item.Title</label>
-                                 </div>
-                                 <div class="boxes" style="padding-top: 0px">
-                                     Afholdes af
-                                     <label class="card-creater">
-                                         <b>@item.Owner.Username</b>
-                                     </label>
-                                 </div>
-                                 <br/>
-                                 <br/>
-         
-                                 <div class="boxes">
-                                     <b>Beskrivelse:</b>
-                                     <div class="card-description" id="Description">
-                                         @item.Description
-                                     </div>
-
-                                     <div style="display: flex; align-items: flex-start ">
-                                         <div class="boxes">
-                                             <b>Kategori:</b>
-                                             <br/>
-                                             <label class="card-category">@item.Category</label>
-                                         </div>
-         
-                                         <div class="boxes">
-                                             <b>Område og lokation:</b>
-                                             <label class="card-area">@item.Area, @item.Location</label>
-                                         </div>
-         
-                                         <div class="boxes">
-                                             <b>Dato og tid:</b>
-                                             <label class="card-datetime">@item.DateTime</label>
-                                         </div>
-                                     </div>
-         
-         
-                                 </div>
-                             </div>
-                         </div>
-                         <br/>
-                     }
-                 </div>
         
-    }
-</AuthorizeView>
+        @*Indlæser begivenheder*@
+    {
+        <div style="text-align: center; align-content: center; display: flex; flex-direction: column-reverse;">
 
-    </div>
+            @foreach (Event item in _cancelledEvents)
+            {
+                         @*Tilpasser billede til den enkelte begivenheds kategori*@
+                <div>
+                    <div class="card-events">
+
+                        @if (item.Category.Equals("Motion"))
+                        {
+                            <div class="boxes" style="background-image: url('img/excercise.jpg'); height: 100px">
+
+                            </div>
+                        }
+
+                        @if (item.Category.Equals("Klima"))
+                        {
+                            <div class="boxes" style="background-image: url('img/climate.jpg'); height: 100px">
+
+                            </div>
+                        }
+
+                        @if (item.Category.Equals("Spil"))
+                        {
+                            <div class="boxes" style="background-image: url('img/boardgames.jpg'); height: 100px">
+
+                            </div>
+                        }
+
+                        @*begivenhedsinformationer*@
+                        <div class="boxes" style="padding-bottom: 0px">
+                            <label class="card-title">@item.Title</label>
+                        </div>
+                        <div class="boxes" style="padding-top: 0px">
+                            Afholdes af
+                            <label class="card-creater">
+                                <b>@item.Owner.Username</b>
+                            </label>
+                        </div>
+                        <br/>
+                        <br/>
+
+                        <div class="boxes">
+                            <b>Beskrivelse:</b>
+                            <div class="card-description" id="Description">
+                                @item.Description
+                            </div>
+
+                            <div style="display: flex; align-items: flex-start ">
+                                <div class="boxes">
+                                    <b>Kategori:</b>
+                                    <br/>
+                                    <label class="card-category">@item.Category</label>
+                                </div>
+
+                                <div class="boxes">
+                                    <b>Område og lokation:</b>
+                                    <label class="card-area">@item.Area, @item.Location</label>
+                                </div>
+
+                                <div class="boxes">
+                                    <b>Dato og tid:</b>
+                                    <label class="card-datetime">@item.DateTime</label>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+                <br/>
+            }
+        </div>
+    }
+
+</div>
+
 @code
 {
     private int _userId;
@@ -117,7 +120,7 @@
                 }
             }
 
-            
+
             while (_userId != 0)
             {
                 ICollection<Event> sortedEvents = new List<Event>();
@@ -125,15 +128,14 @@
                 {
                     IsCancelled = true,
                     Attendee = _userId
-                    
                 });
 
-                //Denne sortering burde laves med Hibernate men det kan vi ikke få til at virke så vi laver den her.
-                //Dette er dog ikke skalerbart hvis vi har mange aflyste begivenheder.
-                
+    //Denne sortering burde laves med Hibernate men det kan vi ikke få til at virke så vi laver den her.
+    //Dette er dog ikke skalerbart hvis vi har mange aflyste begivenheder.
+
                 foreach (Event eventInList in events)
                 {
-                    foreach (User user in eventInList.Attendees) 
+                    foreach (User user in eventInList.Attendees)
                     {
                         if (user.Id == _userId)
                         {
@@ -143,12 +145,10 @@
                 }
 
                 _cancelledEvents = sortedEvents;
-                
+
                 StateHasChanged();
-                Console.WriteLine(_cancelledEvents.Count);
                 await Task.Delay(30000);
             }
-            
         }
         catch (Exception e)
         {

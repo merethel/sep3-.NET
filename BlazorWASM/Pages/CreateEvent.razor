@@ -52,7 +52,7 @@
         </div>
 
         <div>
-            <select class="form-control" @bind="@Category" style="width: 200px; float: left; margin-right: 2%">
+            <select class="form-control" @bind="@_category" style="width: 200px; float: left; margin-right: 2%">
                 <option disabled selected value> -- Vælg en kategori -- </option>
                 @foreach (var c in _categories)
                 {
@@ -60,7 +60,7 @@
                 }
             </select>
 
-            <select class="form-control" @bind="@Area" style="width: 200px; float: left; margin-left: 2%">
+            <select class="form-control" @bind="@_area" style="width: 200px; float: left; margin-left: 2%">
                 <option disabled selected value> -- Vælg et område -- </option>
                 @foreach (var a in _areas)
                 {
@@ -72,7 +72,7 @@
         <div>
             @if (!string.IsNullOrEmpty(_resultMsg))
             {
-                foreach (var s in results)
+                foreach (var s in _results)
                 {
                     <label style="color: @_color">@s</label>  <br/>
                 }
@@ -103,30 +103,17 @@
     private string _location = "";
     private string _category = "";
     private string _area = "";
-    private List<string> results;
+    private List<string> _results;
 
 
-    string Category
-    {
-        get => _category;
-        set { _category = value; }
-    }
-
-    string Area
-    {
-        get => _area;
-        set { _area = value; }
-    }
-
-
-    List<string> _categories = new List<string>()
+    private List<string> _categories = new List<string>()
     {
         "Motion",
         "Klima",
         "Spil"
     };
 
-    List<string> _areas = new List<string>()
+    private List<string> _areas = new List<string>()
     {
         "Sjælland",
         "Jylland",
@@ -140,7 +127,7 @@
     private async Task Create()
     {
         _resultMsg = "";
-        results = new List<string>();
+        _results = new List<string>();
 
         try
         {
@@ -157,8 +144,8 @@
         catch (Exception e)
         {
             _color = "red";
-            _resultMsg = "Forkert dato eller tidspunkt";
-            results.Add("Forkert dato eller tidspunkt");
+            _resultMsg = "Ugyldig dato eller tidspunkt";
+            _results.Add("Ugyldig dato eller tidspunkt");
         }
 
         try
@@ -180,8 +167,8 @@
 
             _resultMsg = "Begivenhed oprettet!";
             
-            results = new List<string>();
-            results.Add("Begivenhed oprettet!");
+            _results = new List<string>();
+            _results.Add("Begivenhed oprettet!");
             
             _color = "green";
         }
@@ -194,7 +181,7 @@
             {
                 Console.WriteLine(s);
                 _resultMsg += s + "\n";
-                results.Add(s);
+                _results.Add(s);
             }
             _color = "red";
         }

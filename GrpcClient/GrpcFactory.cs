@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using Grpc.Net.Client;
+﻿using Grpc.Net.Client;
 using GrpcService1;
 using Shared.Dtos;
 using Shared.Models;
@@ -14,6 +13,7 @@ public class GrpcFactory
         var client = new GrpcService1.EventService.EventServiceClient(channel);
         return client;
     }
+    
     public static GrpcService1.UserService.UserServiceClient GetUserClient()
     {
         GrpcChannel channel = GrpcChannel.ForAddress("http://localhost:9090");

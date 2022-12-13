@@ -5,7 +5,7 @@ namespace GrpcClient.ClientInterfaces;
 
 public interface IUserGrpcClient
 {
-    Task<User?> CreateAsync(UserCreationDto userDto);
+    Task<User> CreateAsync(UserCreationDto userDto);
     Task<User?> GetByUsernameAsync(string username);
-    Task<User?> DeleteUserAsync(int userId);
+    Task<User> DeleteUserAsync(int userId);
 }

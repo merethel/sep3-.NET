@@ -25,6 +25,7 @@
                     <span class="psw">Ny på 3vent4u? <a class="signup-link" href="/CreateUser">Opret konto</a></span>
                 </div><br/>
 
+                @* Vi skriver errorlabel, hvis oplysninger ikke passer *@
                 @if (!string.IsNullOrEmpty(_errorLabel))
                 {
                     <div class="field">
@@ -36,6 +37,8 @@
             </div>
         </div>
     </NotAuthorized>
+    
+    @* Hvis login passer, skriver siden velkommen til en - derfor athorized tag*@
     <Authorized>
         <div style="text-align: center">
             <h3 class="page-header" >Velkommen, @context.User.Identity!.Name</h3>

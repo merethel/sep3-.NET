@@ -9,11 +9,11 @@ namespace HttpClients.Implementations;
 
 public class EventHttpClient : IEventService
 {
-    private readonly HttpClient Client;
+    private readonly HttpClient _client;
 
     public EventHttpClient(HttpClient client)
     {
-        Client = client;
+        _client = client;
     }
 
     public async Task<Event> CreateAsync(EventCreationDto dto)
@@ -23,7 +23,7 @@ public class EventHttpClient : IEventService
         HttpRequestMessage requestMessage = new HttpRequestMessage(HttpMethod.Post, "/Event");
         requestMessage.Headers.Add("Authorization", "Bearer " + jwt);
         requestMessage.Content = JsonContent.Create(dto);
-        HttpResponseMessage response = await Client.SendAsync(requestMessage);
+        HttpResponseMessage response = await _client.SendAsync(requestMessage);
         
         string result = await response.Content.ReadAsStringAsync();
         if (!response.IsSuccessStatusCode)
@@ -102,11 +102,10 @@ public class EventHttpClient : IEventService
                 firstIsSet = true;
             }
         
-        Console.WriteLine("QUERYSTRING ===========" + queryString);
         
         HttpRequestMessage requestMessage = new HttpRequestMessage(HttpMethod.Get, "/event" + queryString);
         requestMessage.Headers.Add("Authorization", "Bearer " + jwt);
-        HttpResponseMessage response = await Client.SendAsync(requestMessage);
+        HttpResponseMessage response = await _client.SendAsync(requestMessage);
         
         
         string result = await response.Content.ReadAsStringAsync();
@@ -127,12 +126,12 @@ public class EventHttpClient : IEventService
         string? jwt = JwtAuthService.Jwt;
 
         RegisterAttendeeDto dto = new RegisterAttendeeDto(userId, eventId);
-        HttpRequestMessage requestMessage = new HttpRequestMessage(HttpMethod.Patch, "/Event");
+        HttpRequestMessage requestMessage = new HttpRequestMessage(HttpMethod.Put, "/Event");
         
         //Dette bliver sendte til http endpoint
         requestMessage.Headers.Add("Authorization", "Bearer " + jwt);
         requestMessage.Content = JsonContent.Create(dto);
-        HttpResponseMessage response = await Client.SendAsync(requestMessage); //den her response (allerede her) giver server error fejl 500
+        HttpResponseMessage response = await _client.SendAsync(requestMessage); //den her response (allerede her) giver server error fejl 500
         //
         
         string result = await response.Content.ReadAsStringAsync();
@@ -156,7 +155,7 @@ public class EventHttpClient : IEventService
         {
             Int = eventId
         });
-        HttpResponseMessage response = await Client.SendAsync(requestMessage);
+        HttpResponseMessage response = await _client.SendAsync(requestMessage);
         string result = await response.Content.ReadAsStringAsync();
         
         if (!response.IsSuccessStatusCode)

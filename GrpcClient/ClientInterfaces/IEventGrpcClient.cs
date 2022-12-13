@@ -7,10 +7,9 @@ public interface IEventGrpcClient
 {
     Task<Event?> CreateAsync(EventCreationDto eventDto);
 
-    Task<List<Event>> GetAsync(CriteriaDto criteriaDto);
+    Task<List<Event?>> GetAsync(CriteriaDto criteriaDto);
 
     Task<Event> RegisterAttendeeAsync(int userId, int eventId);
     
-    Task<Event?> CancelAsync(int eventId);
-
+    Task<Event> CancelAsync(int eventId);
 }

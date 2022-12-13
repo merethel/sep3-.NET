@@ -13,11 +13,11 @@ namespace WebAPI.Controllers;
 [Route("[controller]")]
 public class EventController : ControllerBase
 {
-    private readonly IEventLogic EventLogic;
+    private readonly IEventLogic _eventLogic;
 
     public EventController(IEventLogic eventLogic)
     {
-        EventLogic = eventLogic;
+        _eventLogic = eventLogic;
     }
     
     [HttpPost]
@@ -25,7 +25,7 @@ public class EventController : ControllerBase
     {
         try
         {
-            Event @event = await EventLogic.CreateAsync(dto);
+            Event @event = await _eventLogic.CreateAsync(dto);
             return Created($"/users/{@event.Id}", @event);
         }
         catch (Exception e)
@@ -41,7 +41,7 @@ public class EventController : ControllerBase
     {
         try
         {
-            List<Event> events = await EventLogic.GetAsync(new CriteriaDto()
+            List<Event> events = await _eventLogic.GetAsync(new CriteriaDto()
             {
                 OwnerId = ownerId,
                 Area = area,
@@ -49,7 +49,6 @@ public class EventController : ControllerBase
                 IsCancelled = isCancelled,
                 Category = category
             });
-            Console.WriteLine(events.Count);
             return events;
         }
         
@@ -60,12 +59,12 @@ public class EventController : ControllerBase
         }
     }
     
-    [HttpPatch]
+    [HttpPut]
     public async Task<ActionResult<Event>> RegisterAttendeeAsync(RegisterAttendeeDto dto)
     {
         try
         {
-            Event eventToReturn = await EventLogic.RegisterAttendeeAsync(dto.UserId, dto.EventId);
+            Event eventToReturn = await _eventLogic.RegisterAttendeeAsync(dto.UserId, dto.EventId);
             return eventToReturn;
         }
         catch (Exception e)
@@ -79,7 +78,7 @@ public class EventController : ControllerBase
     {
         try
         {
-            Event @event = await EventLogic.CancelAsync(eventId.Int);
+            Event @event = await _eventLogic.CancelAsync(eventId.Int);
             return @event;
         }
         catch (Exception e)

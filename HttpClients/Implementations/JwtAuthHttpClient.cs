@@ -8,17 +8,17 @@ namespace HttpClients.Implementations;
 
 public class JwtAuthService : IAuthService
 {
-    private readonly HttpClient Client;
-
-    public JwtAuthService(HttpClient client)
-    {
-        Client = client;
-    }
-
+    private readonly HttpClient _client;
     public static string? Jwt { get; private set; } = "";
     public static string? Username { get; private set; } = "";
-
     public Action<ClaimsPrincipal> OnAuthStateChanged { get; set; } = null!;
+    
+    
+    public JwtAuthService(HttpClient client)
+    {
+        _client = client;
+    }
+    
 
     public async Task LoginAsync(string username, string password)
     {
@@ -27,7 +27,7 @@ public class JwtAuthService : IAuthService
         string userAsJson = JsonSerializer.Serialize(userLoginDto);
         StringContent content = new(userAsJson, Encoding.UTF8, "application/json");
         
-        HttpResponseMessage response = await Client.PostAsync("auth/login", content);
+        HttpResponseMessage response = await _client.PostAsync("auth/login", content);
         string responseContent = await response.Content.ReadAsStringAsync();
 
         if (!response.IsSuccessStatusCode)
